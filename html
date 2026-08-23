@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case File — 90 Day Cybersecurity Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EAF1F7;
+    --card:#F4FAFD;
+    --ink:#0B1D2E;
+    --muted:#4C6478;
+    --line:#BFD8E8;
+    --red:#C23A3A;
+    --red-bg:#F8DEDE;
+    --green:#0E9F6E;
+    --green-bg:#D8F3E8;
+    --tab:#0E7C9C;
+    --tab-bg:#D3ECF4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;}
+  body{
+    background-image:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 1px, transparent 1px, transparent 3px);
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:34px 20px 70px;}
+  .top-section{max-width:800px;}
+
+  /* LAYOUT: main roadmap (left) + sidebar (right) */
+  .layout{display:flex;gap:26px;align-items:flex-start;}
+  .main-col{flex:1;min-width:0;max-width:800px;}
+  .side-col{width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:20px;position:sticky;top:20px;}
+  @media (max-width:960px){
+    .layout{flex-direction:column;}
+    .side-col{width:100%;position:static;}
+  }
+
+  /* HEADER */
+  .header{position:relative;border-bottom:3px double var(--ink);padding-bottom:18px;margin-bottom:22px;}
+  .eyebrow{
+    font-family:'Special Elite',monospace;
+    font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);
+  }
+  h1{
+    font-family:'Special Elite',monospace;
+    font-size:clamp(22px,5.5vw,34px);
+    letter-spacing:0.02em;
+    margin:8px 0 4px;
+    line-height:1.15;
+  }
+  .subline{font-size:14px;color:var(--muted);}
+  .stamp{
+    position:absolute;
+    top:6px; right:6px;
+    border:3px solid var(--red);
+    color:var(--red);
+    font-family:'Special Elite',monospace;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:6px 10px;
+    transform:rotate(7deg);
+    border-radius:4px;
+    opacity:0.85;
+    text-align:center;
+    line-height:1.3;
+    background:var(--paper);
+    transition:all 0.3s ease;
+  }
+  .stamp.done{border-color:var(--green);color:var(--green);}
+  @media (max-width:560px){ .stamp{ position:static; display:inline-block; margin-top:12px; transform:rotate(-2deg);} }
+
+  /* QUICK FACTS */
+  .facts-strip{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin:22px 0 24px;
+  }
+  .fact{background:var(--card);padding:12px 14px;}
+  .fact .f-label{font-family:'Special Elite',monospace;font-size:9.5px;text-transform:uppercase;color:var(--muted);letter-spacing:0.05em;}
+  .fact .f-val{font-size:14px;font-weight:600;margin-top:3px;}
+  @media (max-width:560px){ .facts-strip{grid-template-columns:repeat(2,1fr);} }
+
+  .framework-note{
+    border:1px dashed var(--muted);
+    padding:14px 16px;
+    font-size:13.5px;
+    line-height:1.65;
+    margin-bottom:26px;
+    background:rgba(255,255,255,0.25);
+  }
+  .framework-note b{color:var(--red);}
+
+  /* PROGRESS */
+  .progress-block{
+    border:1px solid var(--ink);
+    background:var(--card);
+    padding:14px 16px;
+    margin-bottom:22px;
+  }
+  .progress-top{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-family:'Special Elite',monospace;
+    font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);
+    margin-bottom:8px;
+  }
+  .progress-top span.count{color:var(--ink);font-size:13px;}
+  .progress-track{
+    height:16px;background:var(--tab-bg);border:1px solid var(--line);position:relative;overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;background:var(--tab);width:0%;transition:width 0.35s ease;
+  }
+  /* tick marks like a ruler / case tracker */
+  .progress-track::after{
+    content:"";position:absolute;inset:0;
+    background-image:repeating-linear-gradient(90deg, rgba(0,0,0,0.12) 0, rgba(0,0,0,0.12) 1px, transparent 1px, transparent 10%);
+    pointer-events:none;
+  }
+  .completion-banner{
+    display:none;
+    margin-top:10px;
+    border-left:3px solid var(--green);
+    background:var(--green-bg);
+    padding:8px 12px;
+    font-size:13px;
+    font-weight:600;
+  }
+
+  /* CONTROLS */
+  .controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+  .btn{
+    font-family:'Special Elite',monospace;
+    font-size:11px;letter-spacing:0.05em;text-transform:uppercase;
+    background:var(--card);
+    border:1px solid var(--ink);
+    color:var(--ink);
+    padding:8px 12px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+  }
+  .btn:hover{background:var(--ink);color:var(--paper);}
+  .btn.danger{border-color:var(--red);color:var(--red);}
+  .btn.danger:hover{background:var(--red);color:#fff;}
+  .btn.go{border-color:var(--green);color:var(--green);}
+  .btn.go:hover{background:var(--green);color:#fff;}
+
+  /* PHASE / FILE SECTIONS */
+  .phase{
+    display:flex;
+    margin-bottom:14px;
+    border:1px solid var(--ink);
+  }
+  .tab{
+    width:40px;
+    flex-shrink:0;
+    background:var(--tab);
+    color:#fff;
+    font-family:'Special Elite',monospace;
+    font-size:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+    letter-spacing:0.1em;
+    padding:10px 0;
+    cursor:pointer;
+    user-select:none;
+    transition:background 0.2s ease;
+  }
+  .phase.expanded .tab{background:var(--red);}
+  .phase-body{flex:1;background:var(--card);}
+  .phase-header{
+    padding:14px 16px;
+    cursor:pointer;
+    user-select:none;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .phase-icon{font-size:22px;flex-shrink:0;}
+  .phase-heading{flex:1;min-width:0;}
+  .file-title{
+    font-family:'Special Elite',monospace;
+    font-size:15px;
+    margin:0 0 3px;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+  .phase-days{font-size:11.5px;color:var(--muted);}
+  .phase-count{
+    font-family:'Special Elite',monospace;
+    font-size:10.5px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .expand-icon{
+    font-size:14px;color:var(--muted);transition:transform 0.25s ease;flex-shrink:0;
+  }
+  .phase.expanded .expand-icon{transform:rotate(180deg);}
+
+  .phase-content{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
+  .phase.expanded .phase-content{max-height:3000px;}
+
+  .task-list{list-style:none;margin:0;padding:0 16px 16px;}
+  .task-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:rgba(255,255,255,0.35);
+    border-left:3px solid var(--tab);
+    padding:9px 11px;
+    margin-bottom:7px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+  }
+  .task-item:hover{background:rgba(255,255,255,0.6);}
+  .task-item.completed{border-left-color:var(--green);opacity:0.75;}
+  .task-checkbox{
+    width:16px;height:16px;flex-shrink:0;margin-top:2px;
+    border:2px solid var(--tab);
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:700;color:transparent;
+    background:var(--paper);
+    transition:all 0.2s ease;
+  }
+  .task-item.completed .task-checkbox{background:var(--green);border-color:var(--green);color:#fff;}
+  .task-title{font-size:13.3px;line-height:1.5;}
+  .task-item.completed .task-title{text-decoration:line-through;color:var(--muted);}
+  .task-link{
+    display:block;margin-top:3px;font-size:11.5px;color:var(--red);
+    text-decoration:none;border-bottom:1px dotted var(--red);word-break:break-all;
+  }
+  .task-link:hover{color:var(--ink);}
+
+  /* SIDEBAR WIDGETS */
+  .side-widget{
+    border:1px solid var(--ink);
+    background:var(--card);
+    box-shadow:3px 3px 0 rgba(43,32,24,0.12);
+  }
+  .widget-tab{
+    font-family:'Special Elite',monospace;
+    font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    color:#fff;padding:6px 12px;
+  }
+  .custom-checklist .widget-tab{background:var(--tab);}
+  .sticky-note .widget-tab{background:var(--red);}
+  .widget-body{padding:14px 14px 16px;}
+  .widget-title{
+    font-family:'Special Elite',monospace;
+    font-size:13.5px;margin-bottom:10px;
+  }
+
+  /* Custom checklist */
+  .add-row{display:flex;gap:6px;margin-bottom:12px;}
+  .add-row input{
+    flex:1;min-width:0;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    padding:7px 9px;
+    border:1px solid var(--line);
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .add-row input:focus{outline:1px solid var(--tab);}
+  .add-row button{
+    font-family:'Special Elite',monospace;
+    font-size:16px;
+    width:34px;flex-shrink:0;
+    border:1px solid var(--ink);
+    background:var(--tab);color:#fff;
+    cursor:pointer;
+  }
+  .add-row button:hover{background:var(--ink);}
+  .custom-task-list{list-style:none;margin:0;padding:0;}
+  .custom-task-list li{
+    display:flex;align-items:flex-start;gap:8px;
+    background:rgba(255,255,255,0.35);
+    border-left:3px solid var(--tab);
+    padding:7px 9px;margin-bottom:6px;
+  }
+  .custom-task-list li.done{border-left-color:var(--green);opacity:0.7;}
+  .custom-task-list .ctb{
+    width:14px;height:14px;flex-shrink:0;margin-top:2px;cursor:pointer;
+    border:2px solid var(--tab);
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:700;color:transparent;background:var(--paper);
+  }
+  .custom-task-list li.done .ctb{background:var(--green);border-color:var(--green);color:#fff;}
+  .custom-task-list .ctext{
+    flex:1;font-size:12.5px;line-height:1.5;
+    outline:none;border-bottom:1px dashed transparent;cursor:text;
+  }
+  .custom-task-list .ctext:focus{border-bottom:1px dashed var(--muted);}
+  .custom-task-list li.done .ctext{text-decoration:line-through;color:var(--muted);}
+  .custom-task-list .cdel{
+    flex-shrink:0;cursor:pointer;color:var(--red);font-size:14px;
+    line-height:1;padding:0 2px;opacity:0.6;
+  }
+  .custom-task-list .cdel:hover{opacity:1;}
+  .empty-hint{font-size:11.5px;color:var(--muted);font-style:italic;}
+
+  /* Sticky note */
+  .sticky-note .widget-body{padding-top:12px;}
+  #stickyNote{
+    width:100%;
+    min-height:180px;
+    resize:vertical;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    line-height:1.8;
+    color:var(--ink);
+    background:
+      repeating-linear-gradient(var(--card) 0 27px, var(--line) 27px 28px);
+    border:1px solid var(--line);
+    padding:6px 8px 6px 8px;
+    outline:none;
+  }
+  #stickyNote:focus{border-color:var(--tab);}
+  .note-status{
+    font-size:10.5px;color:var(--muted);margin-top:6px;text-align:right;
+    font-style:italic;
+  }
+
+  /* FOOTER */
+  footer{
+    margin-top:36px;
+    padding-top:16px;
+    border-top:1px dashed var(--muted);
+    font-size:11.5px;
+    color:var(--muted);
+    line-height:1.7;
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="layout">
+    <div class="main-col">
+      <div class="top-section">
+        <div class="header">
+          <div class="stamp" id="stamp">CASE<br>OPEN</div>
+          <div class="eyebrow">Training Case File · No. CYBER-90</div>
+          <h1>90-Day Cybersecurity Roadmap</h1>
+          <div class="subline">Self-Study Track · Network+ → Security+ → Linux → Python → Job Ready</div>
+        </div>
+
+        <div class="progress-block">
+          <div class="progress-top">
+            <span>Investigation Progress</span>
+            <span class="count"><span id="completedCount">0</span> / <span id="totalCount">0</span> tasks</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="completion-banner" id="completionBanner">✓ Case Closed — 90-Day Roadmap Complete.</div>
+        </div>
+
+        <div class="controls">
+          <button class="btn" onclick="expandAll()">Open All Files</button>
+          <button class="btn" onclick="collapseAll()">Close All Files</button>
+          <button class="btn go" onclick="exportProgress()">Export Progress</button>
+          <button class="btn danger" onclick="resetProgress()">Reset Case</button>
+        </div>
+      </div>
+
+      <div id="roadmap"></div>
+
+      <footer>
+        Har phase ke resources free hain (YouTube, free courses, labs). Progress browser localStorage mein save hoti hai — dusre device par carry nahi hogi. "Export Progress" se JSON backup nikal sakte ho.
+      </footer>
+    </div>
+
+    <div class="side-col">
+      <!-- Custom editable checklist -->
+      <div class="side-widget custom-checklist">
+        <div class="widget-tab">My Own Checklist</div>
+        <div class="widget-body">
+          <div class="widget-title">➕ Apni List Banao</div>
+          <div class="add-row">
+            <input type="text" id="customInput" placeholder="Naya task type karo..." onkeydown="if(event.key==='Enter')addCustomTask()">
+            <button onclick="addCustomTask()">+</button>
+          </div>
+          <ul class="custom-task-list" id="customTaskList"></ul>
+        </div>
+      </div>
+
+      <!-- Sticky note -->
+      <div class="side-widget sticky-note">
+        <div class="widget-tab">Sticky Note</div>
+        <div class="widget-body">
+          <div class="widget-title">📌 Quick Notes</div>
+          <textarea id="stickyNote" placeholder="Yahan kuch bhi likho — reminders, links, ideas... khud save ho jayega."></textarea>
+          <div class="note-status" id="noteStatus">saved</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const roadmapData = [
+    { icon:'🌐', name:'Day 1-7: Network+ Concepts', days:'7 Days', tasks:[
+      { title:'Watch Professor Messer N10-009 Playlist', link:'https://www.youtube.com/watch?v=k7IOn3TiUc8&list=PLG49S3nxzAnl_tQe3kvnmeMid0mjF8Le8' },
+      { title:'Complete practice questions and exercises', link:null }
+    ]},
+    { icon:'🔐', name:'Day 8-14: Security+ Concepts', days:'7 Days', tasks:[
+      { title:'Watch Professor Messer SY0-701 Playlist (Recommended)', link:'https://www.youtube.com/watch?v=KiEptGbnEBc&list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv' },
+      { title:'Alternative: Pete Zerger SY0-701 Playlist', link:'https://www.youtube.com/watch?v=1E7pI7PB4KI&list=PL7XJSuT7Dq_UDJgYoQGIW9viwM5hc4C7n' },
+      { title:'Complete practice questions and exercises', link:null }
+    ]},
+    { icon:'🐧', name:'Day 15-28: Linux Fundamentals', days:'14 Days', tasks:[
+      { title:'Linux Journey Tutorials', link:'https://linuxjourney.com/' },
+      { title:'Cisco NetAcad - Linux Unhatched Course', link:'https://www.netacad.com/courses/linux-unhatched' },
+      { title:'LabEx - Free Linux Labs', link:'https://labex.io/free-labs/linux' },
+      { title:'Practice: TryHackMe Linux Fundamentals', link:null }
+    ]},
+    { icon:'🐍', name:'Day 29-42: Python Programming', days:'14 Days', tasks:[
+      { title:'Codecademy Learn Python Track', link:'https://codecademy.com/learn/learn-python' },
+      { title:'SoloLearn Python Tutorial', link:'https://sololearn.com/Course/Python/' },
+      { title:'Learn Python the Hard Way', link:'https://learnpythonthehardway.org' },
+      { title:'The Cyber Mentor - Python Course (YouTube)', link:'https://www.youtube.com/watch?v=egg-GoT5iVk&ab_channel=TheCyberMentor' },
+      { title:'HackerRank Python Challenges', link:'https://www.hackerrank.com/domains/python' },
+      { title:'LabEx Learn Python Labs', link:'https://labex.io/free-labs/python' },
+      { title:'Python.org Official Documentation', link:'https://www.python.org/' },
+      { title:'Real Python Tutorials', link:'https://realpython.com/' }
+    ]},
+    { icon:'📊', name:'Day 43-56: Traffic Analysis', days:'14 Days', tasks:[
+      { title:'Wireshark University Course', link:'https://www.wireshark.org/#educationalContent' },
+      { title:'Wireshark Tutorial on guru99', link:'https://guru99.com/wireshark-tutorial.html' },
+      { title:'Wireshark Tutorial for Beginners (YouTube Series)', link:'https://www.youtube.com/watch?v=NjvR4LmwcMU&list=PLBf0hzazHTGPgyxeEj_9LBHiqjtNEjsgt&pp=iAQB' },
+      { title:'TCPdump Tutorial by Daniel Miessler', link:'https://danielmiessler.com/study/tcpdump/' },
+      { title:'Suricata IDS/IPS System Tutorial (YouTube)', link:'https://www.youtube.com/watch?v=DZl7mW8OvZg' },
+      { title:'Suricata Network IDS/IPS (YouTube)', link:'https://www.youtube.com/watch?v=S0-vsjhPDN0&pp=ygUhIFN1cmljYXRhIElEUy9JUFMgU3lzdGVtIFR1dG9yaWFs' },
+      { title:'Suricata on pfSense Documentation', link:'https://doc.pfsense.org/index.php/Suricata' }
+    ]},
+    { icon:'📝', name:'Day 57-63: Git Version Control', days:'7 Days', tasks:[
+      { title:'Codecademy Git for Beginners', link:'https://codecademy.com/learn/learn-git' },
+      { title:'Git Immersion Tutorial', link:'http://gitimmersion.com' },
+      { title:'Try Git Interactive Tutorial', link:'https://try.github.io' },
+      { title:'Learn Git Branching (Interactive Simulator)', link:'https://learngitbranching.js.org/' }
+    ]},
+    { icon:'📈', name:'Day 64-70: ELK Stack (SIEM)', days:'7 Days', tasks:[
+      { title:'ELK Stack Tutorial on Logz.io', link:'https://logz.io/learn/complete-elk-stack-tutorial/' },
+      { title:'ELK Stack on Elastic.co', link:'https://elastic.co/learn/elastic-stack' },
+      { title:'Elastic.co ELK Features', link:'https://www.elastic.co/elastic-stack/features' }
+    ]},
+    { icon:'☁️', name:'Day 71-77: Cloud Platforms', days:'7 Days', tasks:[
+      { title:'GCP Getting Started', link:'https://cloud.google.com/getting-started/' },
+      { title:'GCP Documentation', link:'https://cloud.google.com/docs/' },
+      { title:'Google Cloud Skills Boost', link:'https://www.cloudskillsboost.google' },
+      { title:'AWS Getting Started', link:'https://aws.amazon.com/getting-started/' },
+      { title:'AWS Tutorials', link:'https://aws.amazon.com/tutorials/' },
+      { title:'AWS Cloud Quest (Gamified Labs)', link:'https://aws.amazon.com/training/digital/aws-cloud-quest/' },
+      { title:'Azure Fundamentals', link:'https://learn.microsoft.com/en-us/training/azure/' },
+      { title:'Microsoft Learn Azure Labs', link:'https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/' }
+    ]},
+    { icon:'⚡', name:'Day 78-84: Additional Practice', days:'7 Days', tasks:[
+      { title:'TryHackMe - Structured Learning Paths', link:'https://tryhackme.com' },
+      { title:'Review all previous concepts', link:null },
+      { title:'Practice with labs and challenges', link:null }
+    ]},
+    { icon:'🎯', name:'Day 85-90: Ethical Hacking & Penetration Testing', days:'6 Days', tasks:[
+      { title:'Hack the Box - CTF Challenges', link:'https://hackthebox.com' },
+      { title:'VulnHub - Vulnerable Machines', link:'https://vulnhub.com' },
+      { title:'The Cyber Mentor - Ethical Hacking Part 1 (YouTube)', link:'https://www.youtube.com/watch?v=3FNYvj2U0HM&ab_channel=TheCyberMentor' },
+      { title:'The Cyber Mentor - Ethical Hacking Part 2 (YouTube)', link:'https://www.youtube.com/watch?v=sH4JCwjybGs&ab_channel=TheCyberMentor' }
+    ]},
+    { icon:'📄', name:'Day 91-92: Resume & Portfolio', days:'2 Days', tasks:[
+      { title:'BowTiedCyber - Killer Cyber Resume', link:'https://bowtiedcyber.substack.com/p/killer-cyber-resume-part-ii' },
+      { title:'Indeed - Cybersecurity Resume Template', link:'https://www.indeed.com/career-advice/resumes-cover-letters/cybersecurity-resume' },
+      { title:'Resume-Now Cybersecurity Template', link:'https://www.resume-now.com/templates/cyber-security-resume' },
+      { title:'BowTiedCyber - Portfolio Guide', link:'https://bowtiedcyber.substack.com/p/how-to-make-a-killer-cyber-portfolio' },
+      { title:'WordPress Portfolio Setup on DigitalOcean', link:'https://digitalocean.com/community/tutorials/how-to-use-the-wordpress-one-click-install-on-digitalocean-2' }
+    ]},
+    { icon:'💼', name:'Day 93-95: Job Search & Applications', days:'3 Days', tasks:[
+      { title:'Indeed Job Search', link:'https://indeed.com' },
+      { title:'LinkedIn Job Search & Networking', link:'https://linkedin.com' },
+      { title:'Cyber Talents - CTF & Job Opportunities', link:'https://cybertalents.com' },
+      { title:'Apply to 5+ job postings', link:null }
+    ]}
+  ];
+
+  function getTotalTasks(){ return roadmapData.reduce((s,p)=>s+p.tasks.length,0); }
+
+  function renderRoadmap(){
+    const roadmap = document.getElementById('roadmap');
+    roadmap.innerHTML = '';
+    roadmapData.forEach((phase, pIdx) => {
+      const el = document.createElement('div');
+      el.className = 'phase';
+      el.id = `phase-${pIdx}`;
+
+      const headerHTML = `
+        <div class="tab" onclick="togglePhase(${pIdx})">${String(pIdx+1).padStart(2,'0')}</div>
+        <div class="phase-body">
+          <div class="phase-header" onclick="togglePhase(${pIdx})">
+            <div class="phase-icon">${phase.icon}</div>
+            <div class="phase-heading">
+              <div class="file-title">${phase.name}</div>
+              <div class="phase-days">${phase.days}</div>
+            </div>
+            <div class="phase-count" id="phase-count-${pIdx}"></div>
+            <div class="expand-icon">▼</div>
+          </div>
+          <div class="phase-content">
+            <ul class="task-list">
+              ${phase.tasks.map((t, tIdx) => `
+                <li class="task-item" id="task-${pIdx}-${tIdx}" onclick="toggleTask(${pIdx}, ${tIdx}, event)">
+                  <div class="task-checkbox">✓</div>
+                  <div>
+                    <div class="task-title">${t.title}</div>
+                    ${t.link ? `<a href="${t.link}" target="_blank" class="task-link">${t.link}</a>` : ''}
+                  </div>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+      el.innerHTML = headerHTML;
+      roadmap.appendChild(el);
+    });
+
+    document.getElementById('totalCount').textContent = getTotalTasks();
+  }
+
+  function togglePhase(pIdx){
+    document.getElementById(`phase-${pIdx}`).classList.toggle('expanded');
+    saveProgress();
+  }
+
+  function toggleTask(pIdx, tIdx, event){
+    if(event.target.tagName === 'A') return;
+    document.getElementById(`task-${pIdx}-${tIdx}`).classList.toggle('completed');
+    updateProgress();
+    saveProgress();
+  }
+
+  function updateProgress(){
+    const completed = document.querySelectorAll('.task-item.completed').length;
+    const total = getTotalTasks();
+    const pct = total ? Math.round((completed/total)*100) : 0;
+
+    document.getElementById('completedCount').textContent = completed;
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    roadmapData.forEach((phase, pIdx) => {
+      const done = document.querySelectorAll(`#phase-${pIdx} .task-item.completed`).length;
+      const countEl = document.getElementById(`phase-count-${pIdx}`);
+      if (countEl) countEl.textContent = `${done}/${phase.tasks.length}`;
+    });
+
+    const stamp = document.getElementById('stamp');
+    const banner = document.getElementById('completionBanner');
+    if(pct === 100){
+      banner.style.display = 'block';
+      stamp.classList.add('done');
+      stamp.innerHTML = 'CASE<br>CLOSED';
+    } else {
+      banner.style.display = 'none';
+      stamp.classList.remove('done');
+      stamp.innerHTML = 'CASE<br>OPEN';
+    }
+  }
+
+  function expandAll(){
+    document.querySelectorAll('.phase').forEach(p => p.classList.add('expanded'));
+    saveProgress();
+  }
+  function collapseAll(){
+    document.querySelectorAll('.phase').forEach(p => p.classList.remove('expanded'));
+    saveProgress();
+  }
+
+  function saveProgress(){
+    const progress = {
+      completed: Array.from(document.querySelectorAll('.task-item.completed')).map(el => el.id),
+      expanded: Array.from(document.querySelectorAll('.phase.expanded')).map(el => el.id)
+    };
+    localStorage.setItem('cybersecurity90DaysProgress', JSON.stringify(progress));
+  }
+
+  function loadProgress(){
+    const saved = localStorage.getItem('cybersecurity90DaysProgress');
+    if(saved){
+      const progress = JSON.parse(saved);
+      progress.completed.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('completed'); });
+      progress.expanded.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('expanded'); });
+    }
+  }
+
+  function resetProgress(){
+    if(confirm('Poora progress reset karna hai? Ye undo nahi ho sakta.')){
+      localStorage.removeItem('cybersecurity90DaysProgress');
+      document.querySelectorAll('.task-item').forEach(el => el.classList.remove('completed'));
+      document.querySelectorAll('.phase').forEach(el => el.classList.remove('expanded'));
+      updateProgress();
+    }
+  }
+
+  function exportProgress(){
+    const progress = localStorage.getItem('cybersecurity90DaysProgress');
+    const completed = document.querySelectorAll('.task-item.completed').length;
+    const total = getTotalTasks();
+    const exportData = {
+      timestamp: new Date().toLocaleString(),
+      completedTasks: completed,
+      totalTasks: total,
+      percentage: total ? Math.round((completed/total)*100) : 0,
+      details: progress ? JSON.parse(progress) : {}
+    };
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `cybersecurity-case-progress-${Date.now()}.json`;
+    link.click();
+  }
+
+  // ===== CUSTOM EDITABLE CHECKLIST =====
+  let customTasks = [];
+
+  function loadCustomTasks(){
+    const saved = localStorage.getItem('customChecklist');
+    customTasks = saved ? JSON.parse(saved) : [];
+  }
+
+  function saveCustomTasks(){
+    localStorage.setItem('customChecklist', JSON.stringify(customTasks));
+  }
+
+  function renderCustomTasks(){
+    const list = document.getElementById('customTaskList');
+    if(customTasks.length === 0){
+      list.innerHTML = '<div class="empty-hint">Abhi koi task nahi — upar likh kar + dabao.</div>';
+      return;
+    }
+    list.innerHTML = customTasks.map(t => `
+      <li class="${t.done ? 'done' : ''}" data-id="${t.id}">
+        <div class="ctb" onclick="toggleCustomTask('${t.id}')">✓</div>
+        <div class="ctext" contenteditable="true" onblur="editCustomTask('${t.id}', this.textContent)">${t.text}</div>
+        <div class="cdel" onclick="deleteCustomTask('${t.id}')">×</div>
+      </li>
+    `).join('');
+  }
+
+  function addCustomTask(){
+    const input = document.getElementById('customInput');
+    const val = input.value.trim();
+    if(!val) return;
+    customTasks.push({ id: 'c' + Date.now(), text: val, done: false });
+    input.value = '';
+    saveCustomTasks();
+    renderCustomTasks();
+  }
+
+  function toggleCustomTask(id){
+    const t = customTasks.find(x => x.id === id);
+    if(t){ t.done = !t.done; saveCustomTasks(); renderCustomTasks(); }
+  }
+
+  function editCustomTask(id, newText){
+    const t = customTasks.find(x => x.id === id);
+    if(t){ t.text = newText.trim() || t.text; saveCustomTasks(); }
+  }
+
+  function deleteCustomTask(id){
+    customTasks = customTasks.filter(x => x.id !== id);
+    saveCustomTasks();
+    renderCustomTasks();
+  }
+
+  // ===== STICKY NOTE =====
+  let noteTimer = null;
+
+  function loadStickyNote(){
+    const saved = localStorage.getItem('stickyNoteContent');
+    document.getElementById('stickyNote').value = saved || '';
+  }
+
+  function initStickyNote(){
+    const textarea = document.getElementById('stickyNote');
+    const status = document.getElementById('noteStatus');
+    textarea.addEventListener('input', () => {
+      status.textContent = 'saving...';
+      clearTimeout(noteTimer);
+      noteTimer = setTimeout(() => {
+        localStorage.setItem('stickyNoteContent', textarea.value);
+        status.textContent = 'saved';
+      }, 400);
+    });
+  }
+
+  function init(){
+    renderRoadmap();
+    loadProgress();
+    updateProgress();
+
+    loadCustomTasks();
+    renderCustomTasks();
+
+    loadStickyNote();
+    initStickyNote();
+  }
+
+  window.addEventListener('load', init);
+</script>
+</body>
+</html>
+Link copied
