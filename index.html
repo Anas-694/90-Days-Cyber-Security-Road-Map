@@ -206,7 +206,7 @@
   .phase.expanded .expand-icon{transform:rotate(180deg);}
 
   .phase-content{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
-  .phase.expanded .phase-content{max-height:3000px;}
+  .phase.expanded .phase-content{max-height:10000px;}
 
   .task-list{list-style:none;margin:0;padding:0 16px 16px;}
   .task-item{
@@ -267,6 +267,9 @@
     border: 1px solid var(--line);
     font-size: 13.5px;
     line-height: 1.65;
+    max-height: 550px; /* Limit height so it doesn't take too much vertical space */
+    overflow-y: auto;  /* Add dedicated vertical scrollbar */
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.06); /* Styling detail */
   }
   .study-notes-container.expanded {
     display: block;
