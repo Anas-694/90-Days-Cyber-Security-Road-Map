@@ -239,6 +239,156 @@
   }
   .task-link:hover{color:var(--ink);}
 
+  /* STUDY NOTES STYLING */
+  .study-notes-btn {
+    background: var(--tab);
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 16px 14px;
+    user-select: none;
+    border-radius: 2px;
+  }
+  .study-notes-btn:hover {
+    background: var(--ink);
+  }
+  .study-notes-container {
+    display: none;
+    margin: 0 16px 16px;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .study-notes-container.expanded {
+    display: block;
+  }
+  .notes-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .trick-box {
+    border: 1px dashed var(--tab);
+    background: var(--tab-bg);
+    padding: 12px 14px;
+    margin: 16px 0;
+    text-align: center;
+  }
+  .trick-title {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .trick-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  
+  /* Layer Cards */
+  .layer-card {
+    border: 1px solid var(--line);
+    background: var(--card);
+    margin-bottom: 16px;
+    padding: 14px 16px;
+  }
+  .layer-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+  }
+  .layer-num {
+    background: var(--tab);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+  }
+  .layer-title-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .layer-subtitle-text {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+  .layer-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--tab);
+    margin-top: 10px;
+    margin-bottom: 4px;
+  }
+  .layer-status-strip {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+  }
+  .status-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 2px;
+    align-self: center;
+  }
+  .status-tag.bura {
+    background: var(--red-bg);
+    color: var(--red);
+  }
+  .status-tag.acha {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+  
+  /* Tables inside study notes */
+  .notes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+  .notes-table th, .notes-table td {
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    font-size: 12.5px;
+  }
+  .notes-table th {
+    background: var(--tab-bg);
+    text-align: left;
+    font-weight: 600;
+  }
+  .notes-table tr:nth-child(even) {
+    background: rgba(255,255,255,0.4);
+  }
+
   /* SIDEBAR WIDGETS */
   .side-widget{
     border:1px solid var(--ink);
@@ -409,11 +559,358 @@
 </div>
 
 <script>
+  const osiNotesHTML = `
+    <div class="notes-title">OSI Model Kya Hai?</div>
+    <p><b>OSI (Open Systems Interconnection)</b> ek reference model/framework hai jo humein batata hai ke data hamare network se guzar kar kaise ek device se doosri device tak jata hai. Yeh koi actual protocol nahi hai, balke ek broad overview/tasveer hai jisay hum kisi bhi protocol (jaise TCP/IP) ko samajhne aur troubleshoot karne ke liye use karte hain.</p>
+    <p><b>Faida:</b> Jab IT professionals aapas mein baat karte hain, aur koi kahe <i>"yeh Layer 3 ka problem hai"</i> ya <i>"yeh Layer 7 ka issue hai"</i>, to har koi bina lambi tafseel ke samajh jata hai ke issue router mein hai ya application (website/app) mein.</p>
+    
+    <div class="trick-box">
+      <div class="trick-title">Yaad Rakhne Ki Trick (Upar se Neeche)</div>
+      <div class="trick-text">"All People Seem To Need Data Processing"</div>
+      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">
+        (Application, Presentation, Session, Transport, Network, Data Link, Physical)
+      </div>
+    </div>
+
+    <!-- Layer 1 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">1</div>
+        <div class="layer-title-text">Physical Layer</div>
+        <div class="layer-subtitle-text">Cables, Fiber, Wireless Signals</div>
+      </div>
+      <div class="layer-section-title">YEH KYA KARTI HAI?</div>
+      <p>Layer 1 sirf raw signal transmission ke baray mein hai — koi "smart" decision yahan nahi hota, bas bits (0s aur 1s) ko electrical, light ya radio waves mein convert kar ke wire ya air par bhejti hai.</p>
+      <div class="layer-section-title">DEVICES & CABLES</div>
+      <ul>
+        <li>Cables: Copper cables (jaise Ethernet Cat5/Cat6), Fiber optic cables.</li>
+        <li>Wireless: Radio frequency waves (WiFi).</li>
+        <li>Devices: Hubs, Repeaters, Network Adapters (physical hardware).</li>
+      </ul>
+      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
+      <p>Loose cable, damaged fiber, signal attenuation (lambi distance ki wajah se signal kamzor hona), ya electromagnetic interference. Troubleshooting ke liye loopback tests, cable testing, aur adapter cards check kiye jate hain.</p>
+      <div class="layer-status-strip">
+        <span class="status-tag bura">BURA</span>
+        <div>Signal weak, cable disconnect, interference</div>
+      </div>
+      <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
+        <span class="status-tag acha">ACHA</span>
+        <div>Stable signal, active link lights, zero physical damage</div>
+      </div>
+    </div>
+
+    <!-- Layer 2 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">2</div>
+        <div class="layer-title-text">Data Link Layer</div>
+        <div class="layer-subtitle-text">MAC Address & Switching</div>
+      </div>
+      <div class="layer-section-title">YEH KYA KARTI HAI?</div>
+      <p>Layer 2 do devices ke darmiyan direct communication ka fundamental tareeqa hai. Yeh Layer 1 ke raw bits ko organized "frames" mein convert karti hai taake data samajh mein aaye. Isay "MAC Address Layer" ya "Switching Layer" bhi kehte hain.</p>
+      <div class="layer-section-title">MAC ADDRESS & DEVICES</div>
+      <ul>
+        <li>MAC Address: Media Access Control address, unique hardware identity jo network card par permanently burned-in hoti hai (factory se).</li>
+        <li>DLC (Data Link Control): Layer jo ensure karti hai ke data sahi device tak MAC address ke zariye pohnche.</li>
+        <li>Devices: Network Switches (MAC address dekh kar decide karte hain ke kis port par data bhejenge).</li>
+        <li>EUI Addresses: Extended Unique Identifier formats (jaise EUI-48 ya EUI-64).</li>
+      </ul>
+      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
+      <p>Switch ports breakdown, invalid MAC configurations, frame drops, ya collision errors.</p>
+      <div class="layer-status-strip">
+        <span class="status-tag bura">BURA</span>
+        <div>MAC address conflict, frame drops, switch error</div>
+      </div>
+      <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
+        <span class="status-tag acha">ACHA</span>
+        <div>Direct switching active, smooth local frame delivery</div>
+      </div>
+    </div>
+
+    <!-- Layer 3 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">3</div>
+        <div class="layer-title-text">Network Layer</div>
+        <div class="layer-subtitle-text">IP Address & Routing</div>
+      </div>
+      <div class="layer-section-title">YEH KYA KARTI HAI?</div>
+      <p>Layer 3 ko "Routing Layer" kehte hain. Iska main kaam hai data ko sahi destination tak routing Tables use kar ke path selection (routing) karwana.</p>
+      <div class="layer-section-title">IP ADDRESS & FRAGMENTATION</div>
+      <ul>
+        <li>IP Address: Logical address jo routing ke liye global address space faraham karta hai (poori duniya mein kisi bhi network tak data le jaane ke liye).</li>
+        <li>Routing: Routers destination IP aur Routing Tables use kar ke decide karte hain ke agla "hop" (agla step/router) kaunsa hoga.</li>
+        <li>Fragmentation: Bare packet size ko chote pieces mein todna taake network capacity ke mutabiq guzra ja sake, aur dosri taraf unhe jorna.</li>
+        <li>Subnet Mask: IP address ke Network ID aur Host ID ko divide karta hai (taake pata chale device local network mein hai ya kisi doosre network mein).</li>
+      </ul>
+      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
+      <p>IP conflicts, wrong gateway, routing loops, routing table errors, ya bad subnet configurations.</p>
+      
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Layer 2 (Data Link)</th>
+            <th>Layer 3 (Network)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Address Type</b></td>
+            <td>MAC Address (Hardware)</td>
+            <td>IP Address (Logical)</td>
+          </tr>
+          <tr>
+            <td><b>Core Device</b></td>
+            <td>Switch</td>
+            <td>Router</td>
+          </tr>
+          <tr>
+            <td><b>Scope</b></td>
+            <td>Local network only</td>
+            <td>Internet / Multiple networks</td>
+          </tr>
+          <tr>
+            <td><b>Primary Action</b></td>
+            <td>Switching</td>
+            <td>Routing</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="layer-status-strip">
+        <span class="status-tag bura">BURA</span>
+        <div>IP conflict, gateway unreachable, routing table error</div>
+      </div>
+      <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
+        <span class="status-tag acha">ACHA</span>
+        <div>Packets routed successfully, network range resolved</div>
+      </div>
+    </div>
+
+    <!-- Layer 4 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">4</div>
+        <div class="layer-title-text">Transport Layer</div>
+        <div class="layer-subtitle-text">TCP/UDP & Ports</div>
+      </div>
+      <div class="layer-section-title">YEH KYA KARTI HAI?</div>
+      <p>Layer 4 ko "Post Office Layer" kehte hain — data ko reliably ek device se doosre tak deliver karti hai. Yahan data ko chote pieces (segments) mein tod kar bhejna aur dobara jorna hota hai.</p>
+      <div class="layer-section-title">TCP VS UDP & PORTS</div>
+      <ul>
+        <li>TCP (Transmission Control Protocol): Reliable, connection-oriented (3-way handshake), error validation, checks for error, tracks packet delivery, resends lost packets. Use cases: HTTPS, Email, Files.</li>
+        <li>UDP (User Datagram Protocol): Fast, connectionless, no handshake or delivery confirmation. Use cases: Streaming, Gaming, VoIP.</li>
+        <li>Port Numbers: Application destinations ko resolve karti hai (HTTP=80, HTTPS=443, DNS=53).</li>
+      </ul>
+      <div class="layer-section-title">CONNECTION HEALTH MEASUREMENTS</div>
+      <ul>
+        <li><b>Packet Loss:</b> Lost packets ki count. High loss = Bura connection.</li>
+        <li><b>Latency:</b> Device se server tak time delay (in milliseconds).</li>
+        <li><b>Jitter:</b> Packet arrival delay mein variations.</li>
+        <li><b>Retransmissions:</b> TCP packets ko agar bar bar dobara bhejna pare.</li>
+        <li><b>Throughput & Tools:</b> Kitna data per second transfer ho raha hai. Tools: Wireshark, ping, traceroute, netstat.</li>
+      </ul>
+
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>TCP</th>
+            <th>UDP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Reliability</b></td>
+            <td>High (Guaranteed delivery)</td>
+            <td>Low (No guarantee)</td>
+          </tr>
+          <tr>
+            <td><b>Speed</b></td>
+            <td>Slower (Due to validation)</td>
+            <td>Fast / Real-time</td>
+          </tr>
+          <tr>
+            <td><b>Handshake</b></td>
+            <td>Yes (3-way handshake)</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td><b>Common Ports</b></td>
+            <td>80, 443, 22</td>
+            <td>53 (DNS), 67/68 (DHCP)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="layer-status-strip">
+        <span class="status-tag bura">BURA</span>
+        <div>High packet loss, high latency/jitter, retransmissions</div>
+      </div>
+      <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
+        <span class="status-tag acha">ACHA</span>
+        <div>Stable transmission, low latency, active TCP sessions</div>
+      </div>
+    </div>
+
+    <!-- Layer 5 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">5</div>
+        <div class="layer-title-text">Session Layer</div>
+        <div class="layer-subtitle-text">Connection Management</div>
+      </div>
+      <div class="layer-section-title">YEH KYA KARTI HAI?</div>
+      <p>Layer 5 do endpoints ke darmiyan communication sessions ko coordinate, authenticate, aur manage karti hai (start, maintain, stop/restart).</p>
+      <div class="layer-section-title">SESSION CONTROL & TUNNELING</div>
+      <ul>
+        <li>Session Lifecycle: Active login session monitor karna aur logouts / timeouts ko handle karna (jaise active website login states or video calls).</li>
+        <li>Tunneling Protocols: Ek protocol ke packet ko doosre protocol ke andar tunnel karna bhi is layer se related hota hai.</li>
+      </ul>
+      <div class="layer-section-title">CONNECTION HEALTH FACTORS</div>
+      <ul>
+        <li><b>Session Timeout:</b> Connection bina activity ke expire ho jana.</li>
+        <li><b>Session Drops:</b> Active call/session ka toot jana.</li>
+        <li><b>Re-authentication frequency:</b> Bar bar login prompts aana.</li>
+        <li><b>Concurrent Sessions:</b> Kitne sessions ek time par active hain, aur server unhe handle kar pa raha hai.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag bura">BURA</span>
+        <div>Frequent session timeout, connection drops, repetitive login prompts</div>
+      </div>
+      <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
+        <span class="status-tag acha">ACHA</span>
+        <div>Persistent login state, stable tunneling sessions</div>
+      </div>
+    </div>
+
+    <!-- Layer 6 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">6</div>
+        <div class="layer-title-text">Presentation Layer</div>
+        <div class="layer-subtitle-text">Data Formatting & Encryption</div>
+      </div>
+      <div class="layer-section-title">YEH KYA KARTI HAI?</div>
+      <p>Layer 6 data ko compatible formats mein convert karti hai taake applications isay read kar sakein (character encoding, compression, encryption).</p>
+      <div class="layer-section-title">ENCRYPTION & ENCODING</div>
+      <ul>
+        <li>Encryption/Decryption: SSL/TLS handshakes aur securely locked data transfer (HTTPS).</li>
+        <li>Character Encoding: Standard maps jaise ASCII, UTF-8, Unicode. Ensure karti hai ke Roman Urdu ya koi bhi language standard format mein read ho sake.</li>
+        <li>Formats & Compression: Media formatting (JPEG, MP4, MP3) aur data compression (ZIP).</li>
+      </ul>
+      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
+      <p>Invalid/expired SSL certificates, weak protocols (TLS 1.0/1.1), characters mismatch (garbled text / question marks).</p>
+      <div class="layer-status-strip">
+        <span class="status-tag bura">BURA</span>
+        <div>Invalid SSL warning, encoding errors (garbled text), compression corrupt</div>
+      </div>
+      <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
+        <span class="status-tag acha">ACHA</span>
+        <div>Valid TLS padlock, properly rendered text and media assets</div>
+      </div>
+    </div>
+
+    <!-- Layer 7 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">7</div>
+        <div class="layer-title-text">Application Layer</div>
+        <div class="layer-subtitle-text">User Interaction</div>
+      </div>
+      <div class="layer-section-title">YEH KYA KARTI HAI?</div>
+      <p>Layer 7 sabse upar wali layer hai jis se user browser, email, ya games ke zariye direct network par interaction karta hai.</p>
+      <div class="layer-section-title">APPLICATION PROTOCOLS</div>
+      <ul>
+        <li>Web Browsing: HTTP, HTTPS.</li>
+        <li>Files & Directories: FTP, SFTP.</li>
+        <li>Names Resolution: DNS.</li>
+        <li>Mails: SMTP, POP3, IMAP.</li>
+      </ul>
+      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
+      <p>Application crashes, website loads slow, DNS resolution failures, server errors (404, 500).</p>
+      <div class="layer-status-strip">
+        <span class="status-tag bura">BURA</span>
+        <div>Server error (500), Not found (404), DNS resolve fail, App crash</div>
+      </div>
+      <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
+        <span class="status-tag acha">ACHA</span>
+        <div>Fast response time, seamless user experience, zero error pages</div>
+      </div>
+    </div>
+
+    <!-- Summary Table -->
+    <div class="notes-title" style="margin-top: 24px;">OSI Model Quick Summary Table</div>
+    <table class="notes-table">
+      <thead>
+        <tr>
+          <th>Layer #</th>
+          <th>Naam</th>
+          <th>Kaam</th>
+          <th>Example</th>
+          <th>Bura Kaise Pata Chalta Hai</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>7</td>
+          <td><b>Application</b></td>
+          <td>User interaction</td>
+          <td>HTTP, DNS, FTP</td>
+          <td>Error messages, crashes, slow response</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><b>Presentation</b></td>
+          <td>Encryption/Format</td>
+          <td>SSL/TLS</td>
+          <td>SSL errors, weak encryption, encoding issues</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><b>Session</b></td>
+          <td>Connection management</td>
+          <td>Session start/stop</td>
+          <td>Bar bar disconnect, session timeout</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><b>Transport</b></td>
+          <td>Data delivery</td>
+          <td>TCP, UDP</td>
+          <td>Packet loss, latency, jitter</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><b>Network</b></td>
+          <td>Routing</td>
+          <td>IP address</td>
+          <td>IP conflicts, routing table errors</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><b>Data Link</b></td>
+          <td>Switching</td>
+          <td>MAC address</td>
+          <td>MAC address conflict, switch errors</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td><b>Physical</b></td>
+          <td>Signal transmission</td>
+          <td>Cables, Fiber</td>
+          <td>Cable damage, signal interference</td>
+        </tr>
+      </tbody>
+    </table>
+  `;
+
   const roadmapData = [
     { icon:'🌐', name:'Day 1-7: Network+ Concepts', days:'7 Days', tasks:[
       { title:'Watch Professor Messer N10-009 Playlist', link:'https://www.youtube.com/watch?v=k7IOn3TiUc8&list=PLG49S3nxzAnl_tQe3kvnmeMid0mjF8Le8' },
       { title:'Complete practice questions and exercises', link:null }
-    ]},
+    ], hasNotes: true },
     { icon:'🔐', name:'Day 8-14: Security+ Concepts', days:'7 Days', tasks:[
       { title:'Watch Professor Messer SY0-701 Playlist (Recommended)', link:'https://www.youtube.com/watch?v=KiEptGbnEBc&list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv' },
       { title:'Alternative: Pete Zerger SY0-701 Playlist', link:'https://www.youtube.com/watch?v=1E7pI7PB4KI&list=PL7XJSuT7Dq_UDJgYoQGIW9viwM5hc4C7n' },
@@ -514,6 +1011,15 @@
             <div class="expand-icon">▼</div>
           </div>
           <div class="phase-content">
+            ${phase.hasNotes ? `
+              <div class="study-notes-btn" onclick="toggleNotes(${pIdx}, event)">
+                <span>▤ STUDY NOTES — OSI MODEL (LAYER 1 to 7)</span>
+                <span class="notes-expand-icon" id="notes-expand-icon-${pIdx}">▼</span>
+              </div>
+              <div class="study-notes-container" id="notes-container-${pIdx}">
+                ${osiNotesHTML}
+              </div>
+            ` : ''}
             <ul class="task-list">
               ${phase.tasks.map((t, tIdx) => `
                 <li class="task-item" id="task-${pIdx}-${tIdx}" onclick="toggleTask(${pIdx}, ${tIdx}, event)">
@@ -538,6 +1044,19 @@
   function togglePhase(pIdx){
     document.getElementById(`phase-${pIdx}`).classList.toggle('expanded');
     saveProgress();
+  }
+
+  function toggleNotes(pIdx, event){
+    event.stopPropagation();
+    const container = document.getElementById(`notes-container-${pIdx}`);
+    const icon = document.getElementById(`notes-expand-icon-${pIdx}`);
+    if(container.classList.contains('expanded')){
+      container.classList.remove('expanded');
+      icon.textContent = '▼';
+    } else {
+      container.classList.add('expanded');
+      icon.textContent = '▲';
+    }
   }
 
   function toggleTask(pIdx, tIdx, event){
