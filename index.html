@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur-Latn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Case File — 90 Day Cybersecurity Roadmap</title>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta property="og:title" content="90-Day Cybersecurity Roadmap">
+<meta property="og:description" content="A comprehensive, interactive 90-day roadmap to start your career in Cybersecurity. Covers Network+, Security+, Linux, Python, and more.">
+<meta property="og:type" content="website">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  button.task-checkbox, button.ctb, button.cdel {
+    padding: 0; outline: none; cursor: pointer; border-radius: 0; font-family: inherit;
+  }
   :root{
     --paper:#EAF1F7;
     --card:#F4FAFD;
@@ -225,8 +235,9 @@
   }
   .phase.expanded .expand-icon{transform:rotate(180deg);}
 
-  .phase-content{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
-  .phase.expanded .phase-content{max-height:10000px;}
+  .phase-content{display:grid;grid-template-rows:0fr;transition:grid-template-rows 0.35s ease;}
+  .phase-content-inner{overflow:hidden;}
+  .phase.expanded .phase-content{grid-template-rows:1fr;}
 
   .task-list{list-style:none;margin:0;padding:0 16px 16px;}
   .task-list.top-tasks-list {
@@ -559,12 +570,17 @@
 </style>
 </head>
 <body>
+<noscript>
+  <div style="background: #F8DEDE; color: #C23A3A; padding: 15px; text-align: center; font-family: sans-serif; font-weight: bold; border-bottom: 2px solid #C23A3A;">
+    ⚠️ JavaScript is disabled in your browser. This interactive roadmap requires JavaScript to function properly. Please enable it to track your progress and view content.
+  </div>
+</noscript>
 <div class="wrap">
 
   <div class="lang-switch">
     <span class="eyebrow" id="lbl-lang-title" style="letter-spacing:0.05em; font-size:10px;">Language:</span>
-    <button id="btn-lang-roman" class="lang-btn active" onclick="switchLanguage('roman')">Roman Urdu</button>
-    <button id="btn-lang-en" class="lang-btn" onclick="switchLanguage('en')">English</button>
+    <button id="btn-lang-roman" class="lang-btn active" >Roman Urdu</button>
+    <button id="btn-lang-en" class="lang-btn" >English</button>
   </div>
 
   <div class="layout">
@@ -589,10 +605,10 @@
         </div>
 
         <div class="controls">
-          <button class="btn" id="btn-expand" onclick="expandAll()">Open All Files</button>
-          <button class="btn" id="btn-collapse" onclick="collapseAll()">Close All Files</button>
-          <button class="btn go" id="btn-export" onclick="exportProgress()">Export Progress</button>
-          <button class="btn danger" id="btn-reset" onclick="resetProgress()">Reset Case</button>
+          <button class="btn" id="btn-expand" >Open All Files</button>
+          <button class="btn" id="btn-collapse" >Close All Files</button>
+          <button class="btn go" id="btn-export" >Export Progress</button>
+          <button class="btn danger" id="btn-reset" >Reset Case</button>
         </div>
       </div>
 
@@ -611,7 +627,7 @@
           <div class="widget-title" id="lbl-checklist-title">➕ Apni List Banao</div>
           <div class="add-row">
             <input type="text" id="customInput" placeholder="Naya task type karo..." onkeydown="if(event.key==='Enter')addCustomTask()">
-            <button onclick="addCustomTask()">+</button>
+            <button id="btn-add-custom-task">+</button>
           </div>
           <ul class="custom-task-list" id="customTaskList"></ul>
         </div>
@@ -2525,7 +2541,7 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
       const headerHTML = `
         <div class="tab" onclick="togglePhase(${pIdx})">${String(pIdx+1).padStart(2,'0')}</div>
         <div class="phase-body">
-          <div class="phase-header" onclick="togglePhase(${pIdx})">
+          <div class="phase-header" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); togglePhase(${pIdx}); }" onclick="togglePhase(${pIdx})">
             <div class="phase-icon">${phase.icon}</div>
             <div class="phase-heading">
               <div class="file-title">${getTranslation(phase.name)}</div>
@@ -2538,6 +2554,7 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
             <div class="expand-icon">▼</div>
           </div>
           <div class="phase-content">
+            <div class="phase-content-inner">
             ${(() => {
               if (phase.notes && phase.notes.length) {
                 const topTasks = [];
@@ -2556,10 +2573,10 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
                     <ul class="task-list top-tasks-list">
                       ${topTasks.map(item => `
                         <li class="task-item" id="task-${pIdx}-${item.originalIdx}" onclick="toggleTask(${pIdx}, ${item.originalIdx}, event)">
-                          <div class="task-checkbox">✓</div>
+                          <button class="task-checkbox" aria-label="Toggle task">✓</button>
                           <div>
                             <div class="task-title">${getTranslation(item.task.title)}</div>
-                            ${item.task.link ? `<a href="${item.task.link}" target="_blank" class="task-link">${item.task.link}</a>` : ''}
+                            ${item.task.link ? `<a href="${item.task.link}" target="_blank" rel="noopener noreferrer" class="task-link">${item.task.link}</a>` : ''}
                           </div>
                         </li>
                       `).join('')}
@@ -2568,7 +2585,7 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
                   
                   ${phase.notes.map((note, nIdx) => `
                     <div class="study-notes-btn task-item" id="note-task-${pIdx}-${nIdx}" onclick="toggleNotes('${pIdx}-${nIdx}', event)">
-                      <div class="task-checkbox" onclick="toggleNoteCompleted('${pIdx}-${nIdx}', event)">✓</div>
+                      <button class="task-checkbox" aria-label="Toggle task" onclick="toggleNoteCompleted('${pIdx}-${nIdx}', event)">✓</button>
                       <div style="display:flex; justify-content:space-between; align-items:center; flex:1; min-width:0;">
                         <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px;">${getTranslation(note.title)}</span>
                         <span class="notes-expand-icon" id="notes-expand-icon-${pIdx}-${nIdx}">▼</span>
@@ -2583,10 +2600,10 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
                     <ul class="task-list bottom-tasks-list">
                       ${bottomTasks.map(item => `
                         <li class="task-item" id="task-${pIdx}-${item.originalIdx}" onclick="toggleTask(${pIdx}, ${item.originalIdx}, event)">
-                          <div class="task-checkbox">✓</div>
+                          <button class="task-checkbox" aria-label="Toggle task">✓</button>
                           <div>
                             <div class="task-title">${getTranslation(item.task.title)}</div>
-                            ${item.task.link ? `<a href="${item.task.link}" target="_blank" class="task-link">${item.task.link}</a>` : ''}
+                            ${item.task.link ? `<a href="${item.task.link}" target="_blank" rel="noopener noreferrer" class="task-link">${item.task.link}</a>` : ''}
                           </div>
                         </li>
                       `).join('')}
@@ -2598,10 +2615,10 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
                   <ul class="task-list">
                     ${phase.tasks.map((t, tIdx) => `
                       <li class="task-item" id="task-${pIdx}-${tIdx}" onclick="toggleTask(${pIdx}, ${tIdx}, event)">
-                        <div class="task-checkbox">✓</div>
+                        <button class="task-checkbox" aria-label="Toggle task">✓</button>
                         <div>
                           <div class="task-title">${getTranslation(t.title)}</div>
-                          ${t.link ? `<a href="${t.link}" target="_blank" class="task-link">${t.link}</a>` : ''}
+                          ${t.link ? `<a href="${t.link}" target="_blank" rel="noopener noreferrer" class="task-link">${t.link}</a>` : ''}
                         </div>
                       </li>
                     `).join('')}
@@ -2609,6 +2626,7 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
                 `;
               }
             })()}
+            </div>
           </div>
         </div>
       `;
@@ -2753,6 +2771,18 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
     localStorage.setItem('customChecklist', JSON.stringify(customTasks));
   }
 
+  function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag])
+    );
+  }
+
   function renderCustomTasks(){
     const list = document.getElementById('customTaskList');
     if(customTasks.length === 0){
@@ -2761,9 +2791,9 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
     }
     list.innerHTML = customTasks.map(t => `
       <li class="${t.done ? 'done' : ''}" data-id="${t.id}">
-        <div class="ctb" onclick="toggleCustomTask('${t.id}')">✓</div>
-        <div class="ctext" contenteditable="true" onblur="editCustomTask('${t.id}', this.textContent)">${t.text}</div>
-        <div class="cdel" onclick="deleteCustomTask('${t.id}')">×</div>
+        <button class="ctb" aria-label="Toggle task" onclick="toggleCustomTask('${t.id}')">✓</button>
+        <div class="ctext" contenteditable="true" onblur="editCustomTask('${t.id}', this.textContent)">${escapeHTML(t.text)}</div>
+        <button class="cdel" aria-label="Delete task" onclick="deleteCustomTask('${t.id}')">×</button>
       </li>
     `).join('');
   }
@@ -2897,6 +2927,15 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
   }
 
   function init(){
+    // Attach static event listeners
+    document.getElementById('btn-lang-roman').addEventListener('click', () => switchLanguage('roman'));
+    document.getElementById('btn-lang-en').addEventListener('click', () => switchLanguage('en'));
+    document.getElementById('btn-expand').addEventListener('click', expandAll);
+    document.getElementById('btn-collapse').addEventListener('click', collapseAll);
+    document.getElementById('btn-export').addEventListener('click', exportProgress);
+    document.getElementById('btn-reset').addEventListener('click', resetProgress);
+    document.getElementById('btn-add-custom-task').addEventListener('click', addCustomTask);
+
     // Set active language button state
     document.getElementById('btn-lang-roman').classList.toggle('active', currentLang === 'roman');
     document.getElementById('btn-lang-en').classList.toggle('active', currentLang === 'en');
