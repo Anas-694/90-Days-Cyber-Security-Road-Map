@@ -229,6 +229,12 @@
   .phase.expanded .phase-content{max-height:10000px;}
 
   .task-list{list-style:none;margin:0;padding:0 16px 16px;}
+  .task-list.top-tasks-list {
+    padding: 14px 16px 4px;
+  }
+  .task-list.bottom-tasks-list {
+    padding: 4px 16px 16px;
+  }
   .task-item{
     display:flex;
     align-items:flex-start;
@@ -1846,29 +1852,77 @@
             <div class="expand-icon">▼</div>
           </div>
           <div class="phase-content">
-            ${phase.notes ? phase.notes.map((note, nIdx) => `
-              <div class="study-notes-btn task-item" id="note-task-${pIdx}-${nIdx}" onclick="toggleNotes('${pIdx}-${nIdx}', event)">
-                <div class="task-checkbox" onclick="toggleNoteCompleted('${pIdx}-${nIdx}', event)">✓</div>
-                <div style="display:flex; justify-content:space-between; align-items:center; flex:1; min-width:0;">
-                  <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px;">${note.title}</span>
-                  <span class="notes-expand-icon" id="notes-expand-icon-${pIdx}-${nIdx}">▼</span>
-                </div>
-              </div>
-              <div class="study-notes-container" id="notes-container-${pIdx}-${nIdx}">
-                ${note.content}
-              </div>
-            `).join('') : ''}
-            <ul class="task-list">
-              ${phase.tasks.map((t, tIdx) => `
-                <li class="task-item" id="task-${pIdx}-${tIdx}" onclick="toggleTask(${pIdx}, ${tIdx}, event)">
-                  <div class="task-checkbox">✓</div>
-                  <div>
-                    <div class="task-title">${t.title}</div>
-                    ${t.link ? `<a href="${t.link}" target="_blank" class="task-link">${t.link}</a>` : ''}
-                  </div>
-                </li>
-              `).join('')}
-            </ul>
+            ${(() => {
+              if (phase.notes && phase.notes.length) {
+                const topTasks = [];
+                const bottomTasks = [];
+                phase.tasks.forEach((t, tIdx) => {
+                  const title = t.title.toLowerCase();
+                  if (title.includes('practice') || title.includes('review') || title.includes('apply to') || title.includes('hack the box') || title.includes('vulnhub')) {
+                    bottomTasks.push({ task: t, originalIdx: tIdx });
+                  } else {
+                    topTasks.push({ task: t, originalIdx: tIdx });
+                  }
+                });
+
+                return `
+                  ${topTasks.length ? `
+                    <ul class="task-list top-tasks-list">
+                      ${topTasks.map(item => `
+                        <li class="task-item" id="task-${pIdx}-${item.originalIdx}" onclick="toggleTask(${pIdx}, ${item.originalIdx}, event)">
+                          <div class="task-checkbox">✓</div>
+                          <div>
+                            <div class="task-title">${item.task.title}</div>
+                            ${item.task.link ? `<a href="${item.task.link}" target="_blank" class="task-link">${item.task.link}</a>` : ''}
+                          </div>
+                        </li>
+                      `).join('')}
+                    </ul>
+                  ` : ''}
+                  
+                  ${phase.notes.map((note, nIdx) => `
+                    <div class="study-notes-btn task-item" id="note-task-${pIdx}-${nIdx}" onclick="toggleNotes('${pIdx}-${nIdx}', event)">
+                      <div class="task-checkbox" onclick="toggleNoteCompleted('${pIdx}-${nIdx}', event)">✓</div>
+                      <div style="display:flex; justify-content:space-between; align-items:center; flex:1; min-width:0;">
+                        <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px;">${note.title}</span>
+                        <span class="notes-expand-icon" id="notes-expand-icon-${pIdx}-${nIdx}">▼</span>
+                      </div>
+                    </div>
+                    <div class="study-notes-container" id="notes-container-${pIdx}-${nIdx}">
+                      ${note.content}
+                    </div>
+                  `).join('')}
+
+                  ${bottomTasks.length ? `
+                    <ul class="task-list bottom-tasks-list">
+                      ${bottomTasks.map(item => `
+                        <li class="task-item" id="task-${pIdx}-${item.originalIdx}" onclick="toggleTask(${pIdx}, ${item.originalIdx}, event)">
+                          <div class="task-checkbox">✓</div>
+                          <div>
+                            <div class="task-title">${item.task.title}</div>
+                            ${item.task.link ? `<a href="${item.task.link}" target="_blank" class="task-link">${item.task.link}</a>` : ''}
+                          </div>
+                        </li>
+                      `).join('')}
+                    </ul>
+                  ` : ''}
+                `;
+              } else {
+                return `
+                  <ul class="task-list">
+                    ${phase.tasks.map((t, tIdx) => `
+                      <li class="task-item" id="task-${pIdx}-${tIdx}" onclick="toggleTask(${pIdx}, ${tIdx}, event)">
+                        <div class="task-checkbox">✓</div>
+                        <div>
+                          <div class="task-title">${t.title}</div>
+                          ${t.link ? `<a href="${t.link}" target="_blank" class="task-link">${t.link}</a>` : ''}
+                        </div>
+                      </li>
+                    `).join('')}
+                  </ul>
+                `;
+              }
+            })()}
           </div>
         </div>
       `;
