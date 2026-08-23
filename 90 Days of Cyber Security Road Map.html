@@ -2461,6 +2461,105 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
   `
 };
 
+    const cloudNotesHTML = { roman: `
+    <div class="notes-title">Cloud Computing & Virtual Networking</div>
+
+    <h3 style="margin-top: 15px; color: var(--tab);">Introduction to Cloud Computing</h3>
+    <ul>
+      <li><b>Transformational Technology:</b> Cloud computing ne technology ke approach ko completely change kar diya hai, jahan applications aur services ko one-click se unlimited resources ke sath deploy kiya ja sakta hai.</li>
+      <li><b>Elasticity & Scalability:</b> High demand ke waqt applications asani se scale up (barh) sakti hain aur demand kam hone par scale down ho sakti hain.</li>
+      <li><b>Global Accessibility:</b> Cloud-hosted applications ko dunya ke kisi bhi hissay se access aur scale kiya ja sakta hai.</li>
+      <li><b>Multitenancy:</b> Multiple customers same underlying cloud infrastructure share karte hain, jis se technology aur cost efficiency dono maximize hote hain.</li>
+    </ul>
+
+    <h3 style="margin-top: 15px; color: var(--tab);">Network Function Virtualization (NFV)</h3>
+    <ul>
+      <li><b>Virtualizing the Data Center:</b> Physical infrastructure (jaise hundreds of servers, routers, load balancers) maintain karne ke bajaye, ab organizations completely cloud par shift ho sakti hain.</li>
+      <li><b>Virtual Appliances:</b> Poora physical infrastructure ab virtual servers mein condense ho jata hai jo massive physical servers ke andar run kar rahe hote hain.</li>
+      <li><b>Virtualizing the Network:</b> Network devices (routers, switches, firewalls) ko unke virtual versions se replace kiya jata hai jo hypervisor par chalte hain. Isay NFV kehte hain.</li>
+      <li><b>Flexibility:</b> Network ki configuration aur nayi virtual firewalls/switches ki deployment ab sirf ek button dabane se instantly ho jati hai.</li>
+    </ul>
+
+    <h3 style="margin-top: 15px; color: var(--tab);">Virtual Private Cloud (VPC) & Connectivity</h3>
+    <ul>
+      <li><b>Virtual Private Cloud (VPC):</b> Ek virtual network environment jo web servers, databases, aur virtual routers/firewalls ko host karta hai.</li>
+      <li><b>Separation of Resources:</b> Large environments typically separate VPCs use karte hain taake mukhtalif departments ya apps isolated rahein par manageable bhi hon.</li>
+      <li><b>Transit Gateway:</b> Yeh ek "cloud router" ka kaam karta hai jo alag alag VPCs ko aapas mein connect karta hai taake unke darmiyan communication ho sake.</li>
+      <li><b>VPN Connections:</b> Remote sites ya users se transit gateway tak secure connection banane ke liye use hota hai, taake private VPCs tak access mil sake.</li>
+      <li><b>Internet Gateway (VPC Gateway):</b> Iski madad se VPC ke resources ko external public internet se access kiya ja sakta hai.</li>
+      <li><b>VPC NAT Gateway:</b> Private VPC subnets ko internet tak outbound (bahar ki taraf) access deta hai. Yeh private IPs ko public mein translate karta hai aur unwanted inbound traffic ko block karta hai.</li>
+      <li><b>VPC Endpoint:</b> Ek cloud provider ke VPC se dusre cloud provider ke resources (like cloud storage) tak direct aur private connection banata hai, public internet ko bypass karte hue.</li>
+    </ul>
+
+    <h3 style="margin-top: 15px; color: var(--tab);">Cloud Network Security</h3>
+    <ul>
+      <li><b>Security Groups and Lists:</b> Yeh cloud-based virtual firewalls hain jo VPCs ke inbound aur outbound traffic ko protocols, ports, aur IPs ki base par control karti hain.</li>
+      <li><b>Network Security Lists:</b>
+        <ul>
+          <li>Yeh broad security rules hote hain jo pooray subnet level par apply hote hain.</li>
+          <li><b>Challenge:</b> In mein granularity (bariki) nahi hoti. Rules sabhi par lag jate hain chahe zaroorat ho ya na ho.</li>
+        </ul>
+      </li>
+      <li><b>Network Security Groups (NSGs):</b>
+        <ul>
+          <li>Yeh fine-grained security control dete hain.</li>
+          <li>Rules ko direct individual Virtual Network Interface Cards (VNICs) par assign kiya ja sakta hai.</li>
+          <li><b>Trade-off:</b> Security behter hoti hai lekin administrative kaam barh jata hai.</li>
+        </ul>
+      </li>
+      <li><b>Advanced Security:</b> Agar in built-in tools se zaroorat poori na ho, to organizations 3rd-party virtual firewalls deploy kar sakti hain.</li>
+    </ul>
+`, en: `
+    <div class="notes-title">Cloud Computing & Virtual Networking</div>
+
+    <h3 style="margin-top: 15px; color: var(--tab);">Introduction to Cloud Computing</h3>
+    <ul>
+      <li><b>Transformational Technology:</b> Cloud computing has fundamentally changed how technology is approached, allowing for one-click deployment of applications and services with seemingly unlimited resources.</li>
+      <li><b>Elasticity & Scalability:</b> Applications can easily scale up during times of high demand and scale back down when demand decreases.</li>
+      <li><b>Global Accessibility:</b> Cloud-hosted applications can be scaled and accessed from anywhere in the world.</li>
+      <li><b>Multitenancy:</b> Multiple customers share the same underlying cloud infrastructure, which maximizes both technological and cost efficiency.</li>
+    </ul>
+
+    <h3 style="margin-top: 15px; color: var(--tab);">Network Function Virtualization (NFV)</h3>
+    <ul>
+      <li><b>Virtualizing the Data Center:</b> Instead of maintaining a physical infrastructure with hundreds of servers, routers, load balancers, and firewalls designed for redundancy and uptime, organizations can migrate to the cloud.</li>
+      <li><b>Virtual Appliances:</b> Entire physical infrastructures are condensed into virtual servers running inside massive physical servers.</li>
+      <li><b>Virtualizing the Network:</b> Network devices (routers, switches, firewalls) are replaced with virtual versions (Network Function Virtualization) running on a hypervisor.</li>
+      <li><b>Flexibility:</b> Network configuration, deployment of new virtual firewalls, and switches can be done instantly with the push of a button, offering massive flexibility for deploying and connecting global applications.</li>
+    </ul>
+
+    <h3 style="margin-top: 15px; color: var(--tab);">Virtual Private Cloud (VPC) & Connectivity</h3>
+    <ul>
+      <li><b>Virtual Private Cloud (VPC):</b> A virtual network environment that hosts application instances such as web servers, database servers, load balancers, virtual switches, routers, and virtual firewalls.</li>
+      <li><b>Separation of Resources:</b> Large environments typically use separate VPCs for different application instances or company departments to keep systems isolated while still manageable.</li>
+      <li><b>Transit Gateway:</b> Acts as a "cloud router" that connects multiple separate VPCs together, enabling communication between devices in different VPCs.</li>
+      <li><b>VPN Connections:</b> Used to provide secure, remote access from a remote site or user's workstation to the transit gateway, allowing communication with private VPCs.</li>
+      <li><b>Internet Gateway (VPC Gateway):</b> Makes application instances available to external users anywhere on the public internet.</li>
+      <li><b>VPC NAT Gateway (Network Address Translation):</b> Allows devices in private VPC subnets to communicate outbound over the internet to other resources. It translates private IPs to a public IP and includes security rules to prevent unwanted inbound access from the internet.</li>
+      <li><b>VPC Endpoint:</b> Creates a direct, private connection between a VPC on one cloud provider to resources (like cloud storage) on another cloud provider, bypassing the public internet for private subnets.</li>
+    </ul>
+
+    <h3 style="margin-top: 15px; color: var(--tab);">Cloud Network Security</h3>
+    <ul>
+      <li><b>Security Groups and Lists:</b> Act as cloud-based virtual firewalls to control inbound and outbound traffic to VPCs based on protocols, TCP/UDP port numbers, and Layer 3 IP addresses (IPv4/IPv6, CIDR blocks).</li>
+      <li><b>Network Security Lists:</b>
+        <ul>
+          <li>Broad security rules applied at the subnet level.</li>
+          <li>Automatically applied to all VPCs or virtual cloud networks.</li>
+          <li><b>Challenge:</b> They lack granularity. Rules are applied to all virtual cloud networks even if a specific network doesn't need them or requires different rules.</li>
+        </ul>
+      </li>
+      <li><b>Network Security Groups (NSGs):</b>
+        <ul>
+          <li>Provide fine-grained security control.</li>
+          <li>Rules can be assigned directly to individual Virtual Network Interface Cards (VNICs) within the same subnet.</li>
+          <li>Allows for different security rules for different virtual machines on the same subnet.</li>
+          <li><b>Trade-off:</b> Provides better security granularity but increases administrative overhead.</li>
+        </ul>
+      </li>
+      <li><b>Advanced Security:</b> For security needs beyond these built-in lists and groups, organizations can deploy dedicated third-party virtual firewalls.</li>
+    </ul>
+` };
   const roadmapData = [
     { icon:'🌐', name: { en:'Day 1-7: Network+ Concepts', roman:'Day 1-7: Network+ Concepts' }, days: { en:'7 Days', roman:'7 Days' }, tasks:[
       { title: { en:'Watch Professor Messer N10-009 Playlist', roman:'Watch Professor Messer N10-009 Playlist' }, link:'https://www.youtube.com/watch?v=k7IOn3TiUc8&list=PLG49S3nxzAnl_tQe3kvnmeMid0mjF8Le8' },
@@ -2520,6 +2619,8 @@ www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
       { title:'AWS Cloud Quest (Gamified Labs)', link:'https://aws.amazon.com/training/digital/aws-cloud-quest/' },
       { title:'Azure Fundamentals', link:'https://learn.microsoft.com/en-us/training/azure/' },
       { title:'Microsoft Learn Azure Labs', link:'https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/' }
+    ], notes: [
+      { title: { en: '▤ STUDY NOTES — CLOUD COMPUTING & VIRTUAL NETWORKING', roman: '▤ STUDY NOTES — CLOUD COMPUTING & VIRTUAL NETWORKING' }, content: cloudNotesHTML }
     ]},
     { icon:'⚡', name:'Day 78-84: Additional Practice', days:'7 Days', tasks:[
       { title:'TryHackMe - Structured Learning Paths', link:'https://tryhackme.com' },
