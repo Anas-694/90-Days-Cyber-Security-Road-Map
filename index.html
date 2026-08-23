@@ -116,6 +116,26 @@
   .progress-fill{
     height:100%;background:var(--tab);width:0%;transition:width 0.35s ease;
   }
+  .phase-progress-bar {
+    width:80px;
+    height:6px;
+    background:var(--tab-bg);
+    border:1px solid var(--line);
+    margin-left:12px;
+    flex-shrink:0;
+    display:block;
+  }
+  .phase-progress-fill {
+    height:100%;
+    background:var(--green);
+    width:0%;
+    transition:width 0.3s ease;
+  }
+  @media (max-width:600px) {
+    .phase-progress-bar {
+      display:none;
+    }
+  }
   /* tick marks like a ruler / case tracker */
   .progress-track::after{
     content:"";position:absolute;inset:0;
@@ -250,11 +270,28 @@
     letter-spacing: 0.05em;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin: 0 16px 14px;
     user-select: none;
     border-radius: 2px;
+    border-left: none !important;
+    transition: all 0.2s ease;
+  }
+  .study-notes-btn .task-checkbox {
+    border-color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    margin-top: 0;
+    margin-right: 12px;
+    align-self: center;
+  }
+  .study-notes-btn.completed .task-checkbox {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .study-notes-btn.completed {
+    opacity: 0.85;
+    background: var(--muted);
   }
   .study-notes-btn:hover {
     background: var(--ink);
@@ -1781,7 +1818,9 @@
     ]}
   ];
 
-  function getTotalTasks(){ return roadmapData.reduce((s,p)=>s+p.tasks.length,0); }
+  function getTotalTasks(){
+    return roadmapData.reduce((s,p)=>s + p.tasks.length + (p.notes ? p.notes.length : 0), 0);
+  }
 
   function renderRoadmap(){
     const roadmap = document.getElementById('roadmap');
@@ -1801,13 +1840,19 @@
               <div class="phase-days">${phase.days}</div>
             </div>
             <div class="phase-count" id="phase-count-${pIdx}"></div>
+            <div class="phase-progress-bar">
+              <div class="phase-progress-fill" id="phase-progress-fill-${pIdx}"></div>
+            </div>
             <div class="expand-icon">▼</div>
           </div>
           <div class="phase-content">
             ${phase.notes ? phase.notes.map((note, nIdx) => `
-              <div class="study-notes-btn" onclick="toggleNotes('${pIdx}-${nIdx}', event)">
-                <span>${note.title}</span>
-                <span class="notes-expand-icon" id="notes-expand-icon-${pIdx}-${nIdx}">▼</span>
+              <div class="study-notes-btn task-item" id="note-task-${pIdx}-${nIdx}" onclick="toggleNotes('${pIdx}-${nIdx}', event)">
+                <div class="task-checkbox" onclick="toggleNoteCompleted('${pIdx}-${nIdx}', event)">✓</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex:1; min-width:0;">
+                  <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px;">${note.title}</span>
+                  <span class="notes-expand-icon" id="notes-expand-icon-${pIdx}-${nIdx}">▼</span>
+                </div>
               </div>
               <div class="study-notes-container" id="notes-container-${pIdx}-${nIdx}">
                 ${note.content}
@@ -1840,6 +1885,7 @@
   }
 
   function toggleNotes(noteId, event){
+    if (event.target.classList.contains('task-checkbox')) return;
     event.stopPropagation();
     const container = document.getElementById(`notes-container-${noteId}`);
     const icon = document.getElementById(`notes-expand-icon-${noteId}`);
@@ -1850,6 +1896,14 @@
       container.classList.add('expanded');
       icon.textContent = '▲';
     }
+  }
+
+  function toggleNoteCompleted(noteId, event){
+    event.stopPropagation();
+    const btn = document.getElementById(`note-task-${noteId}`);
+    btn.classList.toggle('completed');
+    updateProgress();
+    saveProgress();
   }
 
   function toggleTask(pIdx, tIdx, event){
@@ -1868,9 +1922,16 @@
     document.getElementById('progressFill').style.width = pct + '%';
 
     roadmapData.forEach((phase, pIdx) => {
+      const totalPhaseTasks = phase.tasks.length + (phase.notes ? phase.notes.length : 0);
       const done = document.querySelectorAll(`#phase-${pIdx} .task-item.completed`).length;
       const countEl = document.getElementById(`phase-count-${pIdx}`);
-      if (countEl) countEl.textContent = `${done}/${phase.tasks.length}`;
+      if (countEl) countEl.textContent = `${done}/${totalPhaseTasks}`;
+
+      const fillEl = document.getElementById(`phase-progress-fill-${pIdx}`);
+      if (fillEl) {
+        const phasePct = totalPhaseTasks ? Math.round((done / totalPhaseTasks) * 100) : 0;
+        fillEl.style.width = phasePct + '%';
+      }
     });
 
     const stamp = document.getElementById('stamp');
@@ -2030,4 +2091,3 @@
 </script>
 </body>
 </html>
-Link copied
