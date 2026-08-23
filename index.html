@@ -1168,13 +1168,172 @@
     </div>
   `;
 
+  const functionsNotesHTML = `
+    <div class="notes-title">Networking Functions — CompTIA Network+ (N10-009 - 1.2)</div>
+    <p>Is video mein hum network ke <b>4 important functions</b> ke baray mein parhte hain: <b>CDN, VPN, QoS (Traffic Management), aur TTL (Time to Live)</b>. Yeh sab functions network ko fast, secure, aur organized rakhne mein madad dete hain.</p>
+
+    <!-- Function 1 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">1</div>
+        <div class="layer-title-text">CDN (Content Delivery Network)</div>
+        <div class="layer-subtitle-text">Geographical Caching</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>CDN ek aisa system hai jo data ko central server ke bajaye user ke geographically qareeb tareen server se deliver karta hai taake page loading speed fast ho sake.</p>
+      <div class="layer-section-title">KAAM KAISE KARTA HAI?</div>
+      <p>Duniya bhar ke regions (Asia, America, Europe, etc.) mein CDN servers local cache store karte hain. User jab data request karta hai, to use main server tak jane ke bajaye local region se data mil jata hai.</p>
+      <div class="layer-section-title">PRACTICAL EXAMPLE</div>
+      <p>YouTube, Netflix, aur badi dynamic websites CDN endpoints use karti hain taake buffer times ko minimal level par laya ja sake.</p>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">ACTIVE</span>
+        <div>Regional edge cache hit rate high, latency minimized</div>
+      </div>
+    </div>
+
+    <!-- Function 2 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">2</div>
+        <div class="layer-title-text">VPN (Virtual Private Network)</div>
+        <div class="layer-subtitle-text">Encrypted Remote Access</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>VPN client aur corporate networks ke darmiyan public networks (internet) par ek encrypted tunnel establish karta hai taake files aur applications securely transport ho sakein.</p>
+      <div class="layer-section-title">VPN CONCENTRATOR (HEADEND DEVICE)</div>
+      <p>Central gateway device jo real-time high-speed encryption aur decryption execute karti hai, taake thousands of active remote connections ek sath stable links par run ho sakein.</p>
+      <div class="layer-section-title">KAHAN OPERATE HOTA HAI?</div>
+      <p>As a standalone hardware appliance, Next-Generation Firewall (NGFW) module ke andar, ya software levels par (jaise OS built-in clients).</p>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">ACTIVE</span>
+        <div>Tunnels active, IPsec/SSL encryption handshakes successful</div>
+      </div>
+    </div>
+
+    <!-- Function 3 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">3</div>
+        <div class="layer-title-text">QoS (Quality of Service)</div>
+        <div class="layer-subtitle-text">Traffic & Packet Shaping</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>QoS network administrators ko applications ki network priority set karne ka control deta hai, taake critical apps ke liye minimum guaranteed bandwidth stable rahe.</p>
+      <div class="layer-section-title">TRAFFIC SHAPING EXAMPLES</div>
+      <ul>
+        <li><b>High Priority:</b> Real-time Voice (VoIP), Video conferencing streams.</li>
+        <li><b>Low Priority:</b> Large file transfers (FTP), backup sync jobs.</li>
+      </ul>
+      <div class="layer-section-title">CONFIGURATION POINTS</div>
+      <p>QoS rules routers, network switches, aur firewalls ke application engines par define kiye jate hain.</p>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">ACTIVE</span>
+        <div>VoIP queues prioritized, congestion handling active</div>
+      </div>
+    </div>
+
+    <!-- Function 4 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">4</div>
+        <div class="layer-title-text">TTL (Time to Live)</div>
+        <div class="layer-subtitle-text">Loop Prevention & Cache Expiry</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>TTL ek timer ya counters map hai jo data packets ya local cache ko infinite loops ya stale (purana) data banne se rokta hai.</p>
+      <div class="layer-section-title">TWO CORE USE CASES</div>
+      <ul>
+        <li><b>Routing Loop Prevention (Hops):</b> IP header mein TTL field har router par 1 se kam (-1) hoti hai. Value 0 hote hi packet discard (drop) ho jata hai.</li>
+        <li><b>DNS Cache Expiry (Seconds):</b> DNS records system cache mein save hone ka time limits define karte hain (in seconds). Record expiry par fresh query resolve ki jati hai.</li>
+      </ul>
+      <div class="layer-section-title">DEFAULT OPERATING SYSTEM TTL VALUES</div>
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Operating System</th>
+            <th>Default TTL Hops</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>macOS</td>
+            <td>64 Hops</td>
+          </tr>
+          <tr>
+            <td>Linux</td>
+            <td>64 Hops</td>
+          </tr>
+          <tr>
+            <td>Windows</td>
+            <td>128 Hops</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">ACTIVE</span>
+        <div>DNS cache sync updated, IP packets hop counters decremented</div>
+      </div>
+    </div>
+
+    <!-- Master Summary Table -->
+    <div class="notes-title" style="margin-top: 24px;">Networking Functions Master Summary Table</div>
+    <table class="notes-table">
+      <thead>
+        <tr>
+          <th>Function</th>
+          <th>Primary Action</th>
+          <th>Deployment Points</th>
+          <th>Key Takeaway</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>CDN</b></td>
+          <td>Geographical caching for performance</td>
+          <td>Global Edge Server networks</td>
+          <td>Data is delivered from the nearest location</td>
+        </tr>
+        <tr>
+          <td><b>VPN</b></td>
+          <td>Secure encrypted remote tunnels</td>
+          <td>VPN Concentrators, Firewalls</td>
+          <td>Enables secure access over public networks</td>
+        </tr>
+        <tr>
+          <td><b>QoS</b></td>
+          <td>Bandwidth allocation & traffic priority</td>
+          <td>Routers, Switches, Firewalls</td>
+          <td>Critical real-time traffic is prioritized</td>
+        </tr>
+        <tr>
+          <td><b>TTL</b></td>
+          <td>Loop prevention & cache expiration</td>
+          <td>IP headers (hops), DNS records (seconds)</td>
+          <td>Value drops to 0, data drops or refreshes</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="trick-box" style="text-align: left; background: var(--red-bg); border-color: var(--red);">
+      <div class="trick-title" style="color: var(--red); text-align: center;">Yaad Rakhne Wali Zaroori Baatein</div>
+      <ul style="margin: 6px 0 0; padding-left: 20px; font-size: 13px;">
+        <li><b>CDN</b> ka maqsad latency kam karna hai (nearest server delivery).</li>
+        <li><b>VPN Concentrator</b> high throughput real-time decryption handle karta hai.</li>
+        <li><b>QoS / Traffic Shaping</b> real-time audio/video ko file download par priority deta hai.</li>
+        <li><b>TTL Routing mein:</b> Counts hops (routers). Har hop par decrease hota hai.</li>
+        <li><b>TTL DNS mein:</b> Counts seconds. Duration complete hone par cache clear ho jati hai.</li>
+      </ul>
+    </div>
+  `;
+
   const roadmapData = [
     { icon:'🌐', name:'Day 1-7: Network+ Concepts', days:'7 Days', tasks:[
       { title:'Watch Professor Messer N10-009 Playlist', link:'https://www.youtube.com/watch?v=k7IOn3TiUc8&list=PLG49S3nxzAnl_tQe3kvnmeMid0mjF8Le8' },
       { title:'Complete practice questions and exercises', link:null }
     ], notes: [
       { title: '▤ STUDY NOTES — OSI MODEL (LAYER 1 to 7)', content: osiNotesHTML },
-      { title: '▤ STUDY NOTES — NETWORKING DEVICES (N10-009 - 1.2)', content: devicesNotesHTML }
+      { title: '▤ STUDY NOTES — NETWORKING DEVICES (N10-009 - 1.2)', content: devicesNotesHTML },
+      { title: '▤ STUDY NOTES — NETWORKING FUNCTIONS (N10-009 - 1.2)', content: functionsNotesHTML }
     ] },
     { icon:'🔐', name:'Day 8-14: Security+ Concepts', days:'7 Days', tasks:[
       { title:'Watch Professor Messer SY0-701 Playlist (Recommended)', link:'https://www.youtube.com/watch?v=KiEptGbnEBc&list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv' },
