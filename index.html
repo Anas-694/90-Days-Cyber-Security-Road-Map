@@ -564,8 +564,8 @@
 <script>
   const osiNotesHTML = `
     <div class="notes-title">OSI Model Kya Hai?</div>
-    <p><b>OSI (Open Systems Interconnection)</b> ek reference model/framework hai jo humein batata hai ke data hamare network se guzar kar kaise ek device se doosri device tak jata hai. Yeh koi actual protocol nahi hai, balke ek broad overview/tasveer hai jisay hum kisi bhi protocol (jaise TCP/IP) ko samajhne aur troubleshoot karne ke liye use karte hain.</p>
-    <p><b>Faida:</b> Jab IT professionals aapas mein baat karte hain, aur koi kahe <i>"yeh Layer 3 ka problem hai"</i> ya <i>"yeh Layer 7 ka issue hai"</i>, to har koi bina lambi tafseel ke samajh jata hai ke issue router mein hai ya application (website/app) mein.</p>
+    <p><b>OSI ka matlab hai Open Systems Interconnection.</b> Yeh ek model/reference hai jo humein batata hai ke data hamare network se guzar kar kaise ek jagah se doosri jagah jata hai. Yeh koi exact protocol nahi hai, balke ek broad overview/tasveer hai jisay hum kisi bhi protocol (jaise TCP/IP) ke sath samjhne ke liye use karte hain.</p>
+    <p><b>Faida:</b> Jab IT professionals aapas mein baat karte hain, aur koi kahe <i>"yeh Layer 3 ka problem hai"</i> ya <i>"yeh Layer 7 ka masla hai"</i>, to har koi samajh jata hai bina lambi tafseel diye.</p>
     
     <div class="trick-box">
       <div class="trick-title">Yaad Rakhne Ki Trick (Upar se Neeche)</div>
@@ -575,30 +575,35 @@
       </div>
     </div>
 
+    <p style="margin-top: 16px;"><b>Ab har layer ko neeche se upar detail mein samajhte hain:</b></p>
+
     <!-- Layer 1 -->
     <div class="layer-card">
       <div class="layer-card-header">
         <div class="layer-num">1</div>
-        <div class="layer-title-text">Physical Layer</div>
+        <div class="layer-title-text">Physical Layer (Thori Aur Detail)</div>
         <div class="layer-subtitle-text">Cables, Fiber, Wireless Signals</div>
       </div>
       <div class="layer-section-title">YEH KYA KARTI HAI?</div>
-      <p>Layer 1 sirf raw signal transmission ke baray mein hai — koi "smart" decision yahan nahi hota, bas bits (0s aur 1s) ko electrical, light ya radio waves mein convert kar ke wire ya air par bhejti hai.</p>
-      <div class="layer-section-title">DEVICES & CABLES</div>
+      <p>Layer 1 sirf raw signal transmission ke baray mein hai — koi "smart" decision yahan nahi hota, bas electrical/light/radio signals ek jagah se doosri jagah bhejna hota hai.</p>
+      <p>Yeh layer bilkul <b>"dumb"</b> hoti hai — isay pata nahi hota data kya hai, bas 0s aur 1s (bits) ko electrical ya light pulses mein convert kar ke bhejti hai.</p>
+      
+      <div class="layer-section-title">ADDITIONAL CONCEPTS (GENERAL KNOWLEDGE)</div>
       <ul>
-        <li>Cables: Copper cables (jaise Ethernet Cat5/Cat6), Fiber optic cables.</li>
-        <li>Wireless: Radio frequency waves (WiFi).</li>
-        <li>Devices: Hubs, Repeaters, Network Adapters (physical hardware).</li>
+        <li><b>Cables ki types:</b> Copper cables (jaise Ethernet Cat5/Cat6), Fiber optic cables</li>
+        <li><b>Wireless signals:</b> Radio frequency waves (WiFi)</li>
+        <li><b>Devices jo Layer 1 par kaam karte hain:</b> Hubs, Repeaters, Network adapters (physical hardware)</li>
+        <li><b>Common issues:</b> Loose cable, damaged fiber, signal attenuation (signal kamzor hona lambi distance ki wajah se), electromagnetic interference</li>
       </ul>
-      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
-      <p>Loose cable, damaged fiber, signal attenuation (lambi distance ki wajah se signal kamzor hona), ya electromagnetic interference. Troubleshooting ke liye loopback tests, cable testing, aur adapter cards check kiye jate hain.</p>
+      <div class="layer-section-title">TROUBLESHOOTING</div>
+      <p>Loopback tests, cable testing, aur adapter cards check karna.</p>
       <div class="layer-status-strip">
         <span class="status-tag bura">BURA</span>
-        <div>Signal weak, cable disconnect, interference</div>
+        <div>Signal weak, loose cable, damaged fiber, signal attenuation, electromagnetic interference</div>
       </div>
       <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
         <span class="status-tag acha">ACHA</span>
-        <div>Stable signal, active link lights, zero physical damage</div>
+        <div>Stable raw signal, correct cabling, no interference</div>
       </div>
     </div>
 
@@ -606,27 +611,38 @@
     <div class="layer-card">
       <div class="layer-card-header">
         <div class="layer-num">2</div>
-        <div class="layer-title-text">Data Link Layer</div>
+        <div class="layer-title-text">Data Link Layer (Deeply)</div>
         <div class="layer-subtitle-text">MAC Address & Switching</div>
       </div>
       <div class="layer-section-title">YEH KYA KARTI HAI?</div>
-      <p>Layer 2 do devices ke darmiyan direct communication ka fundamental tareeqa hai. Yeh Layer 1 ke raw bits ko organized "frames" mein convert karti hai taake data samajh mein aaye. Isay "MAC Address Layer" ya "Switching Layer" bhi kehte hain.</p>
-      <div class="layer-section-title">MAC ADDRESS & DEVICES</div>
+      <p>Layer 2 do devices ke darmiyan direct communication ka fundamental tareeqa hai. Yeh Layer 1 ke raw bits ko organized "frames" mein convert karti hai taake data samajh mein aaye. Isay <b>"MAC Address Layer"</b> ya <b>"Switching Layer"</b> bhi kehte hain.</p>
+      
+      <div class="layer-section-title">MAC ADDRESS</div>
       <ul>
-        <li>MAC Address: Media Access Control address, unique hardware identity jo network card par permanently burned-in hoti hai (factory se).</li>
-        <li>DLC (Data Link Control): Layer jo ensure karti hai ke data sahi device tak MAC address ke zariye pohnche.</li>
-        <li>Devices: Network Switches (MAC address dekh kar decide karte hain ke kis port par data bhejenge).</li>
-        <li>EUI Addresses: Extended Unique Identifier formats (jaise EUI-48 ya EUI-64).</li>
+        <li>Har network card (ethernet ya wireless) ka ek MAC address hota hai (Media Access Control address — operating system wala Mac nahi!).</li>
+        <li>MAC = Media Access Control — yeh operating system ka "Mac" (Apple) nahi hai, balke hardware address hai.</li>
+        <li>Yeh address device ke network card mein permanently burned-in hota hai (factory se).</li>
       </ul>
-      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
-      <p>Switch ports breakdown, invalid MAC configurations, frame drops, ya collision errors.</p>
+
+      <div class="layer-section-title">DLC LAYER</div>
+      <p>Isay Data Link Control (DLC) layer bhi kehte hain. Yeh layer ensure karti hai ke data sahi device tak pohanche, us device ke MAC address ke zariye.</p>
+
+      <div class="layer-section-title">SWITCHING LAYER</div>
+      <p>Network switches isi layer par operate karte hain — woh MAC address dekh kar decide karte hain ke traffic ko kis port se forward karna hai. Isi wajah se Layer 2 ko "Switching Layer" bhi kaha jata hai.</p>
+
+      <div class="layer-section-title">KAB KEHTE HAIN "YEH LAYER 2 KA MASLA HAI"?</div>
+      <p>Jab bhi baat ho: MAC address ke baray mein, Switch ke kaam na karne ke baray mein, Ethernet frame ke structure ke baray mein, ya EUI addresses (Extended Unique Identifier) — jaise EUI-48 ya EUI-64 — to samjho hum Layer 2 ki baat kar rahe hain.</p>
+
+      <div class="layer-section-title">YAAD RAKHNE WALI CHEEZ</div>
+      <p>Layer 1 sirf "signal" bhejti hai, lekin Layer 2 pehli layer hai jo actual device-to-device identification karti hai (MAC address ke zariye) — yehi wajah hai ke ise "fundamental communication layer" kaha gaya hai.</p>
+      
       <div class="layer-status-strip">
         <span class="status-tag bura">BURA</span>
-        <div>MAC address conflict, frame drops, switch error</div>
+        <div>MAC conflicts, switch configuration errors, corrupted ethernet frames, invalid EUI config</div>
       </div>
       <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
         <span class="status-tag acha">ACHA</span>
-        <div>Direct switching active, smooth local frame delivery</div>
+        <div>Correct MAC table mapping, error-free switching, proper DLC communication</div>
       </div>
     </div>
 
@@ -634,21 +650,28 @@
     <div class="layer-card">
       <div class="layer-card-header">
         <div class="layer-num">3</div>
-        <div class="layer-title-text">Network Layer</div>
+        <div class="layer-title-text">Network Layer (Deeply)</div>
         <div class="layer-subtitle-text">IP Address & Routing</div>
       </div>
       <div class="layer-section-title">YEH KYA KARTI HAI?</div>
-      <p>Layer 3 ko "Routing Layer" kehte hain. Iska main kaam hai data ko sahi destination tak routing Tables use kar ke path selection (routing) karwana.</p>
-      <div class="layer-section-title">IP ADDRESS & FRAGMENTATION</div>
-      <ul>
-        <li>IP Address: Logical address jo routing ke liye global address space faraham karta hai (poori duniya mein kisi bhi network tak data le jaane ke liye).</li>
-        <li>Routing: Routers destination IP aur Routing Tables use kar ke decide karte hain ke agla "hop" (agla step/router) kaunsa hoga.</li>
-        <li>Fragmentation: Bare packet size ko chote pieces mein todna taake network capacity ke mutabiq guzra ja sake, aur dosri taraf unhe jorna.</li>
-        <li>Subnet Mask: IP address ke Network ID aur Host ID ko divide karta hai (taake pata chale device local network mein hai ya kisi doosre network mein).</li>
-      </ul>
-      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
-      <p>IP conflicts, wrong gateway, routing loops, routing table errors, ya bad subnet configurations.</p>
+      <p>Layer 3 ko <b>"Routing Layer"</b> kehte hain kyunke yeh woh layer hai jahan routers kaam karte hain. Iska main kaam hai data ko sahi manzil (destination) tak pohanchane ka raasta (path) decide karna. IP address, subnet mask, aur routing se related har cheez Layer 3 hai.</p>
       
+      <div class="layer-section-title">IP ADDRESS KA KAAM</div>
+      <p>Layer 2 mein hum MAC address use karte thay (local device identify karne ke liye). Layer 3 mein hum IP Address use karte hain — yeh us se zyada "smart" address hai kyunke isay use karke data poori duniya mein kisi bhi network tak ja sakta hai. Router destination IP address dekh kar decide karta hai ke agla "hop" (agla step/router) kaunsa hoga.</p>
+
+      <div class="layer-section-title">ROUTING KYA HAI?</div>
+      <p>Jab aap ek website open karte hain, aapka data kai routers se guzar kar destination tak pohanchta hai. Har router apne paas ek "map" (routing table) rakhta hai jo usay batata hai ke kis IP address ke liye traffic kis direction mein bhejni hai. Yeh bilkul aise hai jaise dak (post) ka packet kai shehron se guzar kar apni manzil tak pohanchta hai.</p>
+
+      <div class="layer-section-title">FRAGMENTATION (FRAMES KO TODNA)</div>
+      <p>Kabhi kabhi network mein data ka packet size bara hota hai, lekin agla network sirf chote packets accept karta hai. Layer 3 par yeh bare frames ko chote pieces mein tod diya jata hai (fragmentation). Doosri taraf pohanch kar yeh chote pieces wapas jorr diye jate hain.</p>
+
+      <div class="layer-section-title">SUBNET MASK</div>
+      <p>IP address ke sath ek subnet mask bhi hota hai. Yeh batata hai ke IP address ka kaunsa hissa "network" hai aur kaunsa hissa "device" hai. Isi se pata chalta hai ke koi device usi local network mein hai ya kisi doosre network mein (jis ke liye router ki zaroorat paray gi).</p>
+
+      <div class="layer-section-title">KAB KEHTE HAIN "YEH LAYER 3 KA MASLA HAI"?</div>
+      <p>Jab bhi baat ho: IP address ke baray mein, Subnet mask ke baray mein, Router traffic forward na kar raha ho, ya Routing table mein koi issue ho — to samjho hum Layer 3 ki baat kar rahe hain.</p>
+
+      <div class="layer-section-title">LAYER 2 VS LAYER 3 DIFFERENCE</div>
       <table class="notes-table">
         <thead>
           <tr>
@@ -659,22 +682,22 @@
         </thead>
         <tbody>
           <tr>
-            <td><b>Address Type</b></td>
-            <td>MAC Address (Hardware)</td>
-            <td>IP Address (Logical)</td>
+            <td><b>Address</b></td>
+            <td>MAC Address</td>
+            <td>IP Address</td>
           </tr>
           <tr>
-            <td><b>Core Device</b></td>
+            <td><b>Device</b></td>
             <td>Switch</td>
             <td>Router</td>
           </tr>
           <tr>
             <td><b>Scope</b></td>
-            <td>Local network only</td>
-            <td>Internet / Multiple networks</td>
+            <td>Sirf local network</td>
+            <td>Pura internet / multiple networks</td>
           </tr>
           <tr>
-            <td><b>Primary Action</b></td>
+            <td><b>Kaam</b></td>
             <td>Switching</td>
             <td>Routing</td>
           </tr>
@@ -683,11 +706,11 @@
 
       <div class="layer-status-strip">
         <span class="status-tag bura">BURA</span>
-        <div>IP conflict, gateway unreachable, routing table error</div>
+        <div>IP conflicts, wrong subnet mask, router not forwarding, corrupted routing table</div>
       </div>
       <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
         <span class="status-tag acha">ACHA</span>
-        <div>Packets routed successfully, network range resolved</div>
+        <div>Successful routing, proper IP allocation, clear routing tables, correct subnets</div>
       </div>
     </div>
 
@@ -695,25 +718,31 @@
     <div class="layer-card">
       <div class="layer-card-header">
         <div class="layer-num">4</div>
-        <div class="layer-title-text">Transport Layer</div>
+        <div class="layer-title-text">Transport Layer (Deeply)</div>
         <div class="layer-subtitle-text">TCP/UDP & Ports</div>
       </div>
       <div class="layer-section-title">YEH KYA KARTI HAI?</div>
-      <p>Layer 4 ko "Post Office Layer" kehte hain — data ko reliably ek device se doosre tak deliver karti hai. Yahan data ko chote pieces (segments) mein tod kar bhejna aur dobara jorna hota hai.</p>
-      <div class="layer-section-title">TCP VS UDP & PORTS</div>
+      <p>Layer 4 ko <b>"Post Office Layer"</b> bhi kehte hain — data ko ek jagah se doosri jagah "deliver" karta hai. Bara data chote pieces mein tod kar bhejna aur dobara jorna yahan hota hai. TCP/UDP port numbers is layer se related hain.</p>
+      
+      <div class="layer-section-title">DO MAIN PROTOCOLS</div>
       <ul>
-        <li>TCP (Transmission Control Protocol): Reliable, connection-oriented (3-way handshake), error validation, checks for error, tracks packet delivery, resends lost packets. Use cases: HTTPS, Email, Files.</li>
-        <li>UDP (User Datagram Protocol): Fast, connectionless, no handshake or delivery confirmation. Use cases: Streaming, Gaming, VoIP.</li>
-        <li>Port Numbers: Application destinations ko resolve karti hai (HTTP=80, HTTPS=443, DNS=53).</li>
+        <li><b>1. TCP (Transmission Control Protocol):</b> Reliable connection banata hai. Pehle "handshake" karta hai (3-way handshake) — matlab connection start karne se pehle dono devices confirm karte hain ke woh baat karne ke liye tayyar hain. Har data packet ko track karta hai — agar koi packet miss ho jaye to woh dobara bhejta hai. Data ko sahi tarteeb (order) mein deliver karta hai. Use hota hai: websites (HTTP/HTTPS), email, file transfer — jahan data ka poora aur sahi pohanchna zaroori ho.</li>
+        <li><b>2. UDP (User Datagram Protocol):</b> Fast hai lekin reliability guarantee nahi karta. Koi handshake nahi, koi confirmation nahi ke packet pohancha ya nahi. Agar packet miss ho jaye, to woh dobara nahi bheja jata. Use hota hai: video streaming, online gaming, voice calls (VoIP) — jahan speed zaroori hai, aur agar ek packet miss ho jaye to koi bara farak nahi parta.</li>
       </ul>
-      <div class="layer-section-title">CONNECTION HEALTH MEASUREMENTS</div>
+
+      <div class="layer-section-title">PORTS (BOHAT ZAROORI CONCEPT)</div>
+      <p>Har application ka apna port number hota hai. Jaise: HTTP = Port 80, HTTPS = Port 443, DNS = Port 53. Router aur devices port number dekh kar samajhten hain ke data kis application ke liye hai.</p>
+
+      <div class="layer-section-title">"ACHA" YA "BURA" CONNECTION KAISE MEASURE KARTE HAIN?</div>
+      <p>Troubleshooting mein yeh cheezein dekhi jati hain:</p>
       <ul>
-        <li><b>Packet Loss:</b> Lost packets ki count. High loss = Bura connection.</li>
-        <li><b>Latency:</b> Device se server tak time delay (in milliseconds).</li>
-        <li><b>Jitter:</b> Packet arrival delay mein variations.</li>
-        <li><b>Retransmissions:</b> TCP packets ko agar bar bar dobara bhejna pare.</li>
-        <li><b>Throughput & Tools:</b> Kitna data per second transfer ho raha hai. Tools: Wireshark, ping, traceroute, netstat.</li>
+        <li><b>Packet Loss:</b> Kitne packets bheje aur kitne kho gaye. Zyada packet loss = bura connection.</li>
+        <li><b>Latency (Delay):</b> Data ko ek jagah se doosri jagah pohanchne mein kitna time lagta hai (milliseconds mein). Kam latency = acha.</li>
+        <li><b>Retransmissions:</b> TCP mein agar bar bar packets dobara bhejne pare, iska matlab hai network mein masla hai.</li>
+        <li><b>Jitter:</b> Packets ke arrival time mein variation. Zyada jitter video calls/gaming ko kharab karta hai.</li>
+        <li><b>Throughput:</b> Kitna data per second transfer ho raha hai.</li>
       </ul>
+      <p><i>Tools jo yeh measure karte hain:</i> Wireshark, ping, traceroute, aur netstat command.</p>
 
       <table class="notes-table">
         <thead>
@@ -726,34 +755,34 @@
         <tbody>
           <tr>
             <td><b>Reliability</b></td>
-            <td>High (Guaranteed delivery)</td>
-            <td>Low (No guarantee)</td>
+            <td>High (guaranteed delivery)</td>
+            <td>Low (no guarantee)</td>
           </tr>
           <tr>
             <td><b>Speed</b></td>
-            <td>Slower (Due to validation)</td>
-            <td>Fast / Real-time</td>
+            <td>Thora slow (extra checks ki wajah se)</td>
+            <td>Fast</td>
           </tr>
           <tr>
-            <td><b>Handshake</b></td>
-            <td>Yes (3-way handshake)</td>
-            <td>No</td>
+            <td><b>Use case</b></td>
+            <td>Web browsing, email, file download</td>
+            <td>Gaming, video call, streaming</td>
           </tr>
           <tr>
-            <td><b>Common Ports</b></td>
-            <td>80, 443, 22</td>
-            <td>53 (DNS), 67/68 (DHCP)</td>
+            <td><b>Example</b></td>
+            <td>HTTPS (Port 443)</td>
+            <td>DNS queries, VoIP</td>
           </tr>
         </tbody>
       </table>
 
       <div class="layer-status-strip">
         <span class="status-tag bura">BURA</span>
-        <div>High packet loss, high latency/jitter, retransmissions</div>
+        <div>High packet loss, high latency/delay, multiple retransmissions, high jitter</div>
       </div>
       <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
         <span class="status-tag acha">ACHA</span>
-        <div>Stable transmission, low latency, active TCP sessions</div>
+        <div>Zero packet loss, low latency, zero retransmissions, stable jitter, high throughput</div>
       </div>
     </div>
 
@@ -761,30 +790,38 @@
     <div class="layer-card">
       <div class="layer-card-header">
         <div class="layer-num">5</div>
-        <div class="layer-title-text">Session Layer</div>
+        <div class="layer-title-text">Session Layer (Deeply)</div>
         <div class="layer-subtitle-text">Connection Management</div>
       </div>
       <div class="layer-section-title">YEH KYA KARTI HAI?</div>
-      <p>Layer 5 do endpoints ke darmiyan communication sessions ko coordinate, authenticate, aur manage karti hai (start, maintain, stop/restart).</p>
-      <div class="layer-section-title">SESSION CONTROL & TUNNELING</div>
+      <p>Session Layer do devices ke darmiyan session (connection) start, stop, ya restart karta hai. Communication management ka kaam karta hai point A se point B tak. Tunneling protocols bhi is layer se juray hote hain.</p>
+      <p>Isay aap aisay samjhein: agar Layer 4 (Transport) "chithi bhejne" ka kaam karti hai, to Layer 5 yeh decide karti hai ke "conversation" kab shuru hui, kab tak chali, aur kab khatam hui.</p>
+      <p>Layer 5 thori "halki" layer hai (matlab is par utni detail available nahi hoti jitni Layer 3/4 par), lekin main jo kuch hai woh acchi tarah samjhata hoon.</p>
+      
+      <div class="layer-section-title">PRACTICAL EXAMPLE</div>
+      <p>Jab aap kisi website par login karte hain: Session Layer woh mechanism hai jo track karti hai ke aap "logged in" hain. Jab tak aap active hain, session zinda rehta hai. Agar aap inactive ho jayein ya logout karein, session end ho jata hai. Isi tarah agar aap koi video call kar rahe hain — call start hona, call ke doran connection maintain rehna, aur call end hona — yeh sab session management hai.</p>
+
+      <div class="layer-section-title">TUNNELING</div>
+      <p>Transcript mein yeh bhi mention hua ke agar koi application data ko tunnel kar rahi hai (matlab ek protocol ke andar doosra protocol chala rahi hai), to woh bhi Layer 5 se related hota hai.</p>
+
+      <div class="layer-section-title">"ACHA" YA "BURA" SESSION KAISE DETECT KARTE HAIN?</div>
       <ul>
-        <li>Session Lifecycle: Active login session monitor karna aur logouts / timeouts ko handle karna (jaise active website login states or video calls).</li>
-        <li>Tunneling Protocols: Ek protocol ke packet ko doosre protocol ke andar tunnel karna bhi is layer se related hota hai.</li>
+        <li><b>Session Timeout:</b> Agar session bar bar expire ho raha hai ya disconnect ho raha hai, to yeh masla hai.</li>
+        <li><b>Session Drops:</b> Agar video call ya connection bar bar toot raha hai (reconnect karna par raha hai), matlab session layer mein instability hai.</li>
+        <li><b>Re-authentication ki frequency:</b> Agar aapko bar bar login karna par raha hai, session properly maintain nahi ho raha.</li>
+        <li><b>Concurrent Sessions:</b> Kitne sessions ek time par active hain, aur server unhe handle kar pa raha hai ya nahi.</li>
       </ul>
-      <div class="layer-section-title">CONNECTION HEALTH FACTORS</div>
-      <ul>
-        <li><b>Session Timeout:</b> Connection bina activity ke expire ho jana.</li>
-        <li><b>Session Drops:</b> Active call/session ka toot jana.</li>
-        <li><b>Re-authentication frequency:</b> Bar bar login prompts aana.</li>
-        <li><b>Concurrent Sessions:</b> Kitne sessions ek time par active hain, aur server unhe handle kar pa raha hai.</li>
-      </ul>
+
+      <div class="layer-section-title">YAAD RAKHNE WALI BAAT</div>
+      <p>Layer 5 real-world mein kum discuss hoti hai kyunke modern protocols (jaise TCP khud, ya HTTP) session management ka kaam bhi apne andar hi kar lete hain. Isi liye is layer ko Layer 6 (Presentation) ke sath mila kar samjha jata hai jaisa professor ne bhi bataya.</p>
+
       <div class="layer-status-strip">
         <span class="status-tag bura">BURA</span>
-        <div>Frequent session timeout, connection drops, repetitive login prompts</div>
+        <div>Frequent session timeouts, connection/call drops, constant re-login requests</div>
       </div>
       <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
         <span class="status-tag acha">ACHA</span>
-        <div>Persistent login state, stable tunneling sessions</div>
+        <div>Stable connection session, persistence login, active tunnels without drops</div>
       </div>
     </div>
 
@@ -792,26 +829,39 @@
     <div class="layer-card">
       <div class="layer-card-header">
         <div class="layer-num">6</div>
-        <div class="layer-title-text">Presentation Layer</div>
-        <div class="layer-subtitle-text">Data Formatting & Encryption</div>
+        <div class="layer-title-text">Presentation Layer (Deeply)</div>
+        <div class="layer-subtitle-text">Format & Encryption</div>
       </div>
       <div class="layer-section-title">YEH KYA KARTI HAI?</div>
-      <p>Layer 6 data ko compatible formats mein convert karti hai taake applications isay read kar sakein (character encoding, compression, encryption).</p>
-      <div class="layer-section-title">ENCRYPTION & ENCODING</div>
+      <p>Presentation Layer ka kaam hai data ko us format mein convert karna jo doosri taraf wala device samajh sake, aur eventually jo hum apni screen par insaan-parhne-laiq (human-readable) tareeqe se dekh sakein. Encryption/decryption (jaise SSL/TLS), character encoding, aur formatting/compression is layer ka kaam hai. Yeh Layer 7 ke sath mil kar kaam karta hai.</p>
+      
+      <div class="layer-section-title">TEEN MAIN KAAM</div>
       <ul>
-        <li>Encryption/Decryption: SSL/TLS handshakes aur securely locked data transfer (HTTPS).</li>
-        <li>Character Encoding: Standard maps jaise ASCII, UTF-8, Unicode. Ensure karti hai ke Roman Urdu ya koi bhi language standard format mein read ho sake.</li>
-        <li>Formats & Compression: Media formatting (JPEG, MP4, MP3) aur data compression (ZIP).</li>
+        <li><b>1. Encryption/Decryption (Sabse Important):</b> Jab bhi aap koi website browse karte hain jo SSL/TLS use karti hai (yani HTTPS wali websites), toh yeh encryption/decryption ka kaam Layer 6 par hota hai. Encryption ka matlab: data ko is tarah "lock" karna ke agar koi beech mein data churaye bhi, to woh usay parh na sake. Decryption: doosri taraf jaake usay wapas "unlock" karna taake original data mil jaye.</li>
+        <li><b>2. Character Encoding:</b> Data ko aisay format mein convert karna jo har system samajh sake — jaise ASCII, Unicode, UTF-8. Example: agar aap Urdu ya Roman Urdu mein text bhejte hain, character encoding yeh ensure karti hai ke doosri taraf bhi wahi text sahi tarah dikhe.</li>
+        <li><b>3. Data Formatting:</b> Images, videos, files ka format (jaise JPEG, MP4, ZIP compression) bhi is layer se related mana jata hai.</li>
       </ul>
-      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
-      <p>Invalid/expired SSL certificates, weak protocols (TLS 1.0/1.1), characters mismatch (garbled text / question marks).</p>
+
+      <div class="layer-section-title">PRACTICAL EXAMPLE</div>
+      <p>Jab aap Gmail (jaisa pichli video mein Wireshark example mein dikhaya gaya tha) kholte hain: Aapka browser SSL/TLS handshake karta hai. Data encrypt hoke bheja jata hai. Gmail server par decrypt hota hai. Yeh poora encryption/decryption process Layer 6 hai.</p>
+
+      <div class="layer-section-title">"ACHA" YA "BURA" PRESENTATION LAYER KAISE DETECT KARTE HAIN?</div>
+      <ul>
+        <li><b>SSL/TLS Certificate Errors:</b> Agar browser "Not Secure" ya "Certificate Invalid" dikhaye, matlab encryption mein masla hai.</li>
+        <li><b>Encryption Strength:</b> Purane/weak encryption (jaise SSL 3.0 ya TLS 1.0) ko bura/insecure mana jata hai. Modern TLS 1.2 ya 1.3 ko acha/secure mana jata hai.</li>
+        <li><b>Handshake Failures:</b> Agar SSL/TLS handshake complete nahi ho raha, connection fail ho jata hai.</li>
+        <li><b>Character/Encoding Errors:</b> Agar text galat symbols (jaise ???? ya ghalat characters) dikhaye, to encoding ka masla hai.</li>
+        <li><b>Slow Encryption Overhead:</b> Bohat purana ya weak hardware encryption/decryption mein time zyada le sakta hai, jis se connection slow ho jata hai.</li>
+      </ul>
+      <p><i>Tools Jo Yeh Check Karte Hain:</i> Browser ka padlock icon aur certificate details, SSL Labs jaisi websites (jo TLS configuration ki security grade deti hain), aur Wireshark mein encryption handshake.</p>
+
       <div class="layer-status-strip">
         <span class="status-tag bura">BURA</span>
-        <div>Invalid SSL warning, encoding errors (garbled text), compression corrupt</div>
+        <div>SSL/TLS cert warnings, weak TLS version, handshake failure, garbled characters (????)</div>
       </div>
       <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
         <span class="status-tag acha">ACHA</span>
-        <div>Valid TLS padlock, properly rendered text and media assets</div>
+        <div>Valid SSL padlock, modern TLS 1.3 active, clean text rendering, efficient compression</div>
       </div>
     </div>
 
@@ -819,29 +869,75 @@
     <div class="layer-card">
       <div class="layer-card-header">
         <div class="layer-num">7</div>
-        <div class="layer-title-text">Application Layer</div>
-        <div class="layer-subtitle-text">User Interaction</div>
+        <div class="layer-title-text">Application Layer (Deeply)</div>
+        <div class="layer-subtitle-text">User Interface</div>
       </div>
       <div class="layer-section-title">YEH KYA KARTI HAI?</div>
-      <p>Layer 7 sabse upar wali layer hai jis se user browser, email, ya games ke zariye direct network par interaction karta hai.</p>
-      <div class="layer-section-title">APPLICATION PROTOCOLS</div>
+      <p>Layer 7 sabse upar wali layer hai — jo hum apni screen par dekhte hain. HTTP, HTTPS, FTP, DNS, POP3 jaisay hazaron application protocols yahan operate karte hain. Jab bhi aap kisi app (jaise browser, email) use karte hain, to aap Layer 7 par kaam kar rahe hote hain.</p>
+      
+      <div class="layer-section-title">COMMON APPLICATION PROTOCOLS</div>
       <ul>
-        <li>Web Browsing: HTTP, HTTPS.</li>
-        <li>Files & Directories: FTP, SFTP.</li>
-        <li>Names Resolution: DNS.</li>
-        <li>Mails: SMTP, POP3, IMAP.</li>
+        <li><b>HTTP/HTTPS:</b> Web browsing ke liye.</li>
+        <li><b>FTP:</b> File transfer ke liye.</li>
+        <li><b>DNS:</b> Website ka naam (jaise google.com) ko IP address mein convert karna.</li>
+        <li><b>POP3/IMAP/SMTP:</b> Email bhejne/receive karne ke liye.</li>
       </ul>
-      <div class="layer-section-title">MASLA KAB HOTA HAI?</div>
-      <p>Application crashes, website loads slow, DNS resolution failures, server errors (404, 500).</p>
+
+      <div class="layer-section-title">PRACTICAL EXAMPLE</div>
+      <p>Jab aap Gmail kholte hain aur email parhte/likhte hain — yeh interaction Layer 7 hai. Gmail ka front-end (jo aap dekh rahe hain) is layer par operate karta hai.</p>
+
+      <div class="layer-section-title">"ACHA" YA "BURA" APPLICATION LAYER KAISE DETECT KARTE HAIN?</div>
+      <ul>
+        <li><b>Response Time:</b> Application (website/app) kitni jaldi respond kar rahi hai. Slow loading = bura.</li>
+        <li><b>Error Messages:</b> Jaise "404 Not Found", "500 Server Error" — yeh application-level problems hain.</li>
+        <li><b>DNS Resolution Failure:</b> Agar website ka naam IP address mein convert nahi ho pa raha ("DNS not found" error).</li>
+        <li><b>Application Crashes:</b> App bar bar band ho jaye ya hang ho jaye.</li>
+        <li><b>Data Correctness:</b> Application sahi data dikha rahi hai ya nahi (jaise corrupted webpage).</li>
+      </ul>
+
       <div class="layer-status-strip">
         <span class="status-tag bura">BURA</span>
-        <div>Server error (500), Not found (404), DNS resolve fail, App crash</div>
+        <div>Slow app loading, 404/500 HTTP errors, DNS resolve failure, app crash</div>
       </div>
       <div class="layer-status-strip" style="border-top:none; margin-top:4px; padding-top:0;">
         <span class="status-tag acha">ACHA</span>
-        <div>Fast response time, seamless user experience, zero error pages</div>
+        <div>Instant response time, clean page render, error-free operations</div>
       </div>
     </div>
+
+    <!-- Wireshark Example -->
+    <div class="notes-title" style="margin-top: 24px;">Real-World Example (Wireshark se)</div>
+    <p>Video mein professor ne Wireshark software mein ek captured data frame dikhaya jismein Gmail (mail.google.com) khulne ka traffic tha. Ek hi network packet mein saari 7 layers ek sath maujood hoti hain, sirf har layer apna alag kaam kar rahi hoti hai:</p>
+    <table class="notes-table">
+      <thead>
+        <tr>
+          <th>OSI Layer</th>
+          <th>Wireshark mein Kya Dikha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Layer 1 (Physical)</b></td>
+          <td>Frame ka size — bytes on wire</td>
+        </tr>
+        <tr>
+          <td><b>Layer 2 (Data Link)</b></td>
+          <td>Source aur Destination MAC address</td>
+        </tr>
+        <tr>
+          <td><b>Layer 3 (Network)</b></td>
+          <td>Source aur Destination IP address</td>
+        </tr>
+        <tr>
+          <td><b>Layer 4 (Transport)</b></td>
+          <td>TCP port numbers (Port 443 = HTTPS)</td>
+        </tr>
+        <tr>
+          <td><b>Layer 5-7 (Session, Presentation, Application)</b></td>
+          <td>SSL/TLS encryption aur Gmail application ka data</td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- Summary Table -->
     <div class="notes-title" style="margin-top: 24px;">OSI Model Quick Summary Table</div>
@@ -921,14 +1017,20 @@
         <div class="layer-subtitle-text">OSI Layer 3 (Network)</div>
       </div>
       <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>Router ka main kaam data ko ek IP subnet se doosre IP subnet tak pohanchana (routing) hai. Yeh subnets local data centers mein ho sakte hain ya internet ke zariye duniya bhar mein.</p>
-      <div class="layer-section-title">LAN & WAN CONNECTIVITY</div>
-      <p>Router LAN (Local Area Network) ko WAN (Wide Area Network) se connect karta hai. Yeh copper ya fiber based physical interfaces (ports) ko target kar sakta hai.</p>
-      <div class="layer-section-title">LAYER 3 SWITCHING</div>
-      <p>Jab switching aur routing functionality ko ek hi physical device mein merge kiya jaye, to usay <b>Layer 3 Switch</b> kehte hain. Yeh device switch ports aur hardware routing engine dono hold karti hai.</p>
+      <p>Router ka main kaam hai data ko <b>ek IP subnet se doosre IP subnet</b> tak pohanchana. Yeh subnets same data center mein bhi ho sakte hain, ya duniya ke alag alag hisso mein bhi.</p>
+      
+      <div class="layer-section-title">OSI LAYER</div>
+      <p>Router ko <b>Layer 3 (Network Layer) device</b> kehte hain. Kyunke Layer 3 IP addresses se related hai, aur router bhi <b>IP address dekh kar</b> decide karta hai ke data ka next hop kahan jayega.</p>
+      
+      <div class="layer-section-title">ROUTER KYA CONNECT KARTA HAI?</div>
+      <p><b>LAN (Local Area Network)</b> ko <b>WAN (Wide Area Network)</b> se connect karta hai. Copper based ya Fiber based connections dono use kar sakta hai. Ek router mein bohat saray <b>interfaces (ports)</b> ho sakte hain, jo alag alag networks ko connect karte hain.</p>
+      
+      <div class="layer-section-title">LAYER 3 SWITCH KYA HAI?</div>
+      <p>Kabhi kabhi routing functionality <b>switch ke andar</b> bhi hoti hai — isay <b>"Layer 3 Switch"</b> kehte hain. Yeh matlab nahi ke switch ab Layer 3 par operate kar raha hai — balke <b>ek hi device ke andar Layer 2 switch aur Layer 3 router dono maujood hain</b>.</p>
+      
       <div class="layer-status-strip">
         <span class="status-tag acha">OPERATIONAL</span>
-        <div>IP routing paths resolved, next hop accessible</div>
+        <div>IP routing paths resolved, subnets interconnected, next hop accessible</div>
       </div>
     </div>
 
@@ -940,14 +1042,17 @@
         <div class="layer-subtitle-text">OSI Layer 2 (Data Link)</div>
       </div>
       <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>Switch destination MAC address dekh kar local network segments mein traffic forward (switching) karta hai.</p>
-      <div class="layer-section-title">ASIC (APPLICATION SPECIFIC INTEGRATED CIRCUIT)</div>
-      <p>Switching operations hardware levels par process hoti hain using a specialized chip called **ASIC**. Yeh execution speed ko extremely fast aur latency free banata hai.</p>
+      <p>Switch <b>MAC address</b> dekh kar traffic forward karta hai. Isi liye isay <b>OSI Layer 2 (Data Link Layer) device</b> kehte hain.</p>
+      
+      <div class="layer-section-title">HARDWARE</div>
+      <p>Switch zyada tar <b>hardware par</b> kaam karta hai. Iska hardware <b>ASIC (Application Specific Integrated Circuit)</b> kehlata hai — yeh ek khaas chip hai jo sirf switching ke liye design ki gayi hoti hai (isi liye switch bohat fast hota hai).</p>
+      
       <div class="layer-section-title">PoE (POWER OVER ETHERNET)</div>
-      <p>Ethernet cable ke data link wires ke sath hi electrical power transport karna taake remote devices (WiFi Access Points, IP Cameras) ko external electrical lines ke baghair operate kiya ja sake.</p>
+      <p>Enterprise switches mein ek khaas feature hota hai: <b>Power over Ethernet (PoE)</b>. Iska matlab hai ke ethernet cable ke zariye <b>data ke sath sath bijli (power)</b> bhi bhej sakte hain. Example: IP camera ya WiFi access point ko power dene ke liye alag se power cable ki zaroorat nahi, sirf ek ethernet cable kaafi hai.</p>
+      
       <div class="layer-status-strip">
         <span class="status-tag acha">OPERATIONAL</span>
-        <div>ASIC switching table active, PoE power levels stable</div>
+        <div>ASIC switching active, PoE power lines stable, MAC table updated</div>
       </div>
     </div>
 
@@ -959,17 +1064,22 @@
         <div class="layer-subtitle-text">OSI Layer 3-7 Security</div>
       </div>
       <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>Firewall internal aur external networks ke boundary points par baith kar protocols, ports, aur rules ke mutabiq connections filter (allow/block) karta hai.</p>
-      <div class="layer-section-title">TRADITIONAL VS NEXT-GEN (NGFW)</div>
+      <p>Firewall network <b>security</b> ke liye use hota hai — ghar mein bhi aur office mein bhi.</p>
       <ul>
-        <li><b>Traditional Firewall:</b> Sirf Layer 3/4 (IP Address, TCP/UDP Port Numbers) ke patterns filter karta hai.</li>
-        <li><b>Next-Generation Firewall (NGFW):</b> Yeh application-level (Layer 7) identification kar sakta hai (jaise user traffic identify karna, specific web tools filter karna).</li>
+        <li><b>Traditional Firewall:</b> TCP ya UDP <b>port number</b> ke hisaab se traffic filter karta hai (allow ya block).</li>
+        <li><b>Next Generation Firewall (NGFW):</b> Yeh zyada advanced hai — yeh <b>applications ko identify</b> kar sakta hai jo network se guzar rahe hain, aur decide kar sakta hai ke kaunsi application allow ho aur kaunsi nahi.</li>
       </ul>
-      <div class="layer-section-title">EXTRA UTILITIES</div>
-      <p>VPN tunnels establish karna, NAT (Network Address Translation) handle karna, aur Dynamic Routing protocols support karna.</p>
+      
+      <div class="layer-section-title">EXTRA FEATURES</div>
+      <ul>
+        <li><b>VPN (Virtual Private Network):</b> Firewall encrypted "tunnel" bana sakta hai do remote sites ke darmiyan, taake data safely travel kare.</li>
+        <li><b>Layer 3 Device Ki Tarah Kaam:</b> Firewall khud bhi <b>router ki tarah</b> kaam kar sakta hai, kyunke yeh network ke andar aur bahar (ingress/egress point) ke beech baitha hota hai.</li>
+        <li><b>NAT (Network Address Translation):</b> Firewall yeh bhi provide karta hai — yeh private IP addresses ko public IP mein convert karta hai.</li>
+        <li><b>Dynamic Routing Protocols:</b> Chunke firewall ek router ki tarah bhi kaam karta hai, isay dynamic routing protocols bhi support karta hai.</li>
+      </ul>
       <div class="layer-status-strip">
         <span class="status-tag acha">OPERATIONAL</span>
-        <div>Security rules active, VPN tunnels encrypted and online</div>
+        <div>Security rules active, VPN tunnels encrypted, NAT translation operational</div>
       </div>
     </div>
 
@@ -977,19 +1087,23 @@
     <div class="layer-card">
       <div class="layer-card-header">
         <div class="layer-num">4</div>
-        <div class="layer-title-text">IDS aur IPS</div>
-        <div class="layer-subtitle-text">Intrusion Detection & Prevention</div>
+        <div class="layer-title-text">IDS aur IPS (Intrusion Detection/Prevention System)</div>
+        <div class="layer-subtitle-text">Threat Monitoring</div>
       </div>
-      <div class="layer-section-title">KYA KAAM KARTE HAIN?</div>
-      <ul>
-        <li><b>IDS (Intrusion Detection System):</b> Network packets scan kar ke anomalous / bad patterns detect karta hai aur only **alerts/alarms** raise karta hai. Action block nahi kar sakta.</li>
-        <li><b>IPS (Intrusion Prevention System):</b> Active threat detect hote hi traffic stream ko blocking points par dynamically stop kar deta hai.</li>
-      </ul>
-      <div class="layer-section-title">ATTACK TYPE DETECTION</div>
-      <p>Operating system vulnerabilities, Buffer overflows, Cross-Site Scripting (XSS), aur signature matching alerts.</p>
+      <div class="layer-section-title">IDS — INTRUSION DETECTION SYSTEM</div>
+      <p>Yeh network mein aane wale <b>attacks ko detect</b> karta hai. Yeh sirf <b>alert/alarm</b> deta hai — lekin attack ko <b>rok nahi sakta</b>.</p>
+      
+      <div class="layer-section-title">IPS — INTRUSION PREVENTION SYSTEM</div>
+      <p>Yeh IDS se ek qadam aage hai — yeh attack ko <b>detect kar ke rok bhi sakta hai</b>. Isi liye Enterprise networks mein zyada tar <b>IPS</b> use hota hai (IDS ke bajaye).</p>
+
+      <div class="layer-section-title">YEH KAUNSE ATTACKS PAKARTE HAIN?</div>
+      <p>Known vulnerabilities jaise: <b>Buffer overflow, Cross-site scripting (XSS), Operating system ya application ki weaknesses</b>.</p>
+      
+      <div class="layer-section-title">NOTE</div>
+      <p>Modern <b>NGFW (Next Gen Firewall)</b> mein yeh IDS/IPS functionality already built-in hoti hai, isi liye standalone IDS/IPS devices ab kam use hoti hain.</p>
       <div class="layer-status-strip">
         <span class="status-tag acha">OPERATIONAL</span>
-        <div>Signatures up-to-date, prevention engine actively scanning</div>
+        <div>Active threat scanning, signature database synced, prevention engine ready</div>
       </div>
     </div>
 
@@ -1001,16 +1115,20 @@
         <div class="layer-subtitle-text">OSI Layer 4-7 Distribution</div>
       </div>
       <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>Incoming customer traffic ko backend redundant servers/nodes par distribute karta hai taake systems load-balanced rahein aur network overload na ho.</p>
-      <div class="layer-section-title">UTILITIES</div>
-      <ul>
-        <li><b>Failure Detection:</b> Health checks run karna taake crash servers automatically pool se drop ho jayein.</li>
-        <li><b>TCP/SSL Offloading:</b> Encryption workload / handshake compute resources ko balancer levels par execute karna taake main application servers free rahein.</li>
-        <li><b>Caching & QoS:</b> Frequently used data static storage par hold karna.</li>
-      </ul>
+      <p>Jab lakhon log ek website use karte hain (jaise Google, Facebook), to ek hi server yeh load handle nahi kar sakta. **Load Balancer** traffic ko **multiple servers** mein distribute karta hai. User ko lagta hai woh sirf ek server se baat kar raha hai, lekin real mein woh **load balancer** se baat kar raha hota hai jo peeche kai servers mein traffic split kar raha hota hai.</p>
+      
+      <div class="layer-section-title">EXTRA FUNCTIONS</div>
+      <ol>
+        <li><b>Failure Detection:</b> Agar koi server fail ho jaye, load balancer usay automatically <b>rotation se nikaal deta hai</b>.</li>
+        <li><b>TCP Offloading:</b> Communication ko fast banane ke liye.</li>
+        <li><b>SSL Offloading:</b> Encryption/Decryption ka kaam khud karta hai, taake servers par load kam ho.</li>
+        <li><b>Caching:</b> Data ko load balancer par hi store kar leta hai taake bar bar server tak jane ki zaroorat na pare.</li>
+        <li><b>QoS (Quality of Service):</b> Zyada important traffic ko priority deta hai.</li>
+        <li><b>Application-Centric Load Balancing:</b> Specific pages ko specific servers tak route karna.</li>
+      </ol>
       <div class="layer-status-strip">
         <span class="status-tag acha">OPERATIONAL</span>
-        <div>Server pools healthy, SSL termination active</div>
+        <div>Traffic distributed, server pool check completed, SSL offload active</div>
       </div>
     </div>
 
@@ -1022,17 +1140,24 @@
         <div class="layer-subtitle-text">OSI Layer 7 Mediator</div>
       </div>
       <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>User connection client endpoints aur target external network resources ke darmiyan intermediate filter/bridge banta hai.</p>
-      <div class="layer-section-title">FEATURES</div>
+      <p>Proxy user aur internet ke <b>beech mein</b> baitha hota hai. Jab user koi request karta hai, proxy woh request <b>khud</b> internet par bhejta hai, jawab leta hai, check karta hai ke koi malicious cheez to nahi, aur phir user ko deta hai.</p>
+      
+      <div class="layer-section-title">FAIDE</div>
+      <ol>
+        <li><b>Caching:</b> Agar request pehlay se cached hai, proxy seedha jawab de deta hai (internet tak jane ki zaroorat nahi).</li>
+        <li><b>Access Control:</b> Username/password maang kar internet access control kar sakta hai.</li>
+        <li><b>URL Filtering:</b> Kuch websites ko block kar sakta hai.</li>
+        <li><b>Content Scanning:</b> Malicious software se bachata hai.</li>
+      </ol>
+
+      <div class="layer-section-title">TYPES</div>
       <ul>
-        <li><b>Caching:</b> Bar bar visit kiye jane wale static files store karna.</li>
-        <li><b>Access Control:</b> User credentials base internet permissions assign karna.</li>
-        <li><b>URL & Content Filtering:</b> Bad websites aur malware code check karna.</li>
-        <li><b>Types:</b> Explicit (manual settings requirements) aur Transparent (seamless automatic routing).</li>
+        <li><b>Explicit Proxy:</b> User ko apni device/application mein proxy settings manually configure karni parti hain.</li>
+        <li><b>Transparent Proxy:</b> Yeh invisible tareeqe se kaam karta hai — user ko pata bhi nahi chalta ke proxy use ho raha hai.</li>
       </ul>
       <div class="layer-status-strip">
         <span class="status-tag acha">OPERATIONAL</span>
-        <div>Filters active, client requests routing properly</div>
+        <div>Explicit/Transparent proxies active, URL filters synced</div>
       </div>
     </div>
 
@@ -1040,16 +1165,20 @@
     <div class="layer-card">
       <div class="layer-card-header">
         <div class="layer-num">7</div>
-        <div class="layer-title-text">Network Storage (NAS & SAN)</div>
+        <div class="layer-title-text">Network Storage — NAS aur SAN</div>
         <div class="layer-subtitle-text">File vs Block Access</div>
       </div>
-      <div class="layer-section-title">NAS (NETWORK ATTACHED STORAGE)</div>
-      <p>File-level network sharing. Changes ke liye poori file network par transport karni parti hai. Common Protocols: NFS, SMB/CIFS.</p>
-      <div class="layer-section-title">SAN (STORAGE AREA NETWORK)</div>
-      <p>Block-level storage network. Server ko network storage raw hard-drive space ki tarah block partitions mein milti hai. Changes par sirf direct sectors/blocks update hote hain. Very fast and high-bandwidth. Protocols: Fibre Channel (FC), iSCSI.</p>
+      <div class="layer-section-title">NAS — NETWORK ATTACHED STORAGE</div>
+      <p>Yeh <b>file-level access</b> deta hai. Matlab agar file mein koi cheez change karni ho, to <b>poori file</b> network se copy karni parti hai, change karo, aur wapas <b>poori file</b> likhni parti hai.</p>
+      
+      <div class="layer-section-title">SAN — STORAGE AREA NETWORK</div>
+      <p>Yeh <b>block-level access</b> deta hai (zyada efficient). Matlab agar file ka koi hissa change karna ho, to sirf woh <b>specific block</b> modify hota hai — poori file dobara nahi likhni parti. Bari files ke liye yeh zyada fast aur efficient hai.</p>
+
+      <div class="layer-section-title">COMMON PRACTICE</div>
+      <p>NAS/SAN ko commonly apna <b>alag/isolated network</b> diya jata hai jo <b>high bandwidth</b> wala hota hai, taake file transfer fast ho.</p>
       <div class="layer-status-strip">
         <span class="status-tag acha">OPERATIONAL</span>
-        <div>Fibre Channel fabric online, block replication stable</div>
+        <div>NAS mounts operational, SAN block replication online</div>
       </div>
     </div>
 
@@ -1061,12 +1190,16 @@
         <div class="layer-subtitle-text">OSI Layer 2 Bridge</div>
       </div>
       <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>Wireless devices ko wired ethernet network se bridge/translate karta hai. 802.11 (WiFi) frames ko 802.3 (Ethernet) protocols mein convert karta hai.</p>
-      <div class="layer-section-title">HOME VS ENTERPRISE APs</div>
-      <p>Ghar ka wireless router: 3-in-1 device (Router + Switch + AP). Enterprise environment: Purpose-built separate devices (Dedicated Access Points linked to core network switches).</p>
+      <p>Access Point wireless devices ko network se connect karta hai. Yeh <b>802.11 (WiFi)</b> aur <b>802.3 (Ethernet)</b> network ke darmiyan translation/bridge ka kaam karta hai.</p>
+      
+      <div class="layer-section-title">GHAR WALA ROUTER VS OFFICE WALA ACCESS POINT</div>
+      <p>Ghar mein jo "wireless router" hota hai, woh asal mein <b>3 cheezein ek sath</b> hota hai: Router + Access Point + Switch. Enterprise mein alag alag <b>purpose-built devices</b> hoti hain — sirf ek kaam karne wali (jaise sirf Access Point, sirf Switch, sirf Router).</p>
+
+      <div class="layer-section-title">OSI LAYER</div>
+      <p>Access Point ko <b>Layer 2 device</b> kehte hain kyunke yeh wireless aur wired network ke darmiyan MAC address level par bridging karta hai.</p>
       <div class="layer-status-strip">
         <span class="status-tag acha">OPERATIONAL</span>
-        <div>802.11ax/ac radio bands active, SSID broadcasting</div>
+        <div>SSID broadcasting, 802.11 bridging active, MAC translations stable</div>
       </div>
     </div>
 
@@ -1078,99 +1211,117 @@
         <div class="layer-subtitle-text">Centralized AP Management</div>
       </div>
       <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>Badi buildings mein lagay gaye hazaron access points ko centralized manage, deploy, aur monitoring tools provide karta hai.</p>
-      <div class="layer-section-title">FUNCTIONS</div>
-      <ul>
-        <li>Auto configurations push karna to new Access Points.</li>
-        <li>Bulk security firmware updates deployment.</li>
-        <li>Seamless Roaming (endpoints building mein switch hote waqt network drops se bachte hain).</li>
-      </ul>
+      <p>Bare offices/buildings mein <b>kai saare Access Points</b> hote hain. Har ek ko <b>individually manage</b> karna mushkil hota hai. **Wireless LAN Controller** ek **centralized system** hai jahan se aap **saare access points ko ek jagah se control** kar sakte hain.</p>
+      
+      <div class="layer-section-title">YEH KYA KYA CONTROL KARTA HAI?</div>
+      <ol>
+        <li><b>New Access Points Deploy Karna</b> — full configuration ke sath</li>
+        <li><b>Performance/Security Monitoring</b> — alerts milti hain agar koi masla ho</li>
+        <li><b>Bulk Configuration Changes</b> — ek click se saare access points update ho jate hain</li>
+        <li><b>Usage Reports</b> — pata chal jata hai kaunsa access point zyada use ho raha hai</li>
+        <li><b>Seamless Roaming</b> — user ek jagah se doosri jagah move kare (building mein), to WiFi automatically switch hoti rahe bina connection tootay</li>
+      </ol>
+
+      <div class="layer-section-title">NOTE</div>
+      <p>Zyada tar yeh systems <b>proprietary</b> hote hain — matlab agar aap ek company (jaise Cisco) ke Access Points use kar rahe hain, to aapko usi company ka Wireless LAN Controller bhi use karna parega.</p>
       <div class="layer-status-strip">
         <span class="status-tag acha">OPERATIONAL</span>
-        <div>AP profiles synced, controller roaming active</div>
+        <div>Controller managing AP network, roaming sessions verified</div>
       </div>
     </div>
 
-    <!-- Devices Summary Table -->
-    <div class="notes-title" style="margin-top: 24px;">Devices OSI Layers Summary Table</div>
+    <!-- Summary Table -->
+    <div class="notes-title" style="margin-top: 24px;">Summary Table — Har Device Ki OSI Layer</div>
     <table class="notes-table">
       <thead>
         <tr>
           <th>Device</th>
           <th>OSI Layer</th>
-          <th>Primary Purpose</th>
+          <th>Kaam</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><b>Router</b></td>
           <td>Layer 3 (Network)</td>
-          <td>IP routing between subnets</td>
+          <td>Subnets ke darmiyan data route karna</td>
         </tr>
         <tr>
           <td><b>Switch</b></td>
           <td>Layer 2 (Data Link)</td>
-          <td>Local MAC-based switching using ASIC</td>
+          <td>MAC address ke zariye traffic forward karna</td>
         </tr>
         <tr>
           <td><b>Firewall</b></td>
-          <td>Layer 3-7 (Variable)</td>
-          <td>Stateful packet/application security filtering, NAT, VPN</td>
+          <td>Layer 3-7 (mostly 3)</td>
+          <td>Security, filtering, VPN, NAT</td>
         </tr>
         <tr>
           <td><b>IDS/IPS</b></td>
-          <td>Multiple Layers</td>
-          <td>Threat signature detection and prevention</td>
+          <td>Multiple layers</td>
+          <td>Attacks detect/prevent karna</td>
         </tr>
         <tr>
           <td><b>Load Balancer</b></td>
           <td>Layer 4-7</td>
-          <td>Traffic distribution, SSL offloading</td>
+          <td>Traffic ko multiple servers mein distribute karna</td>
         </tr>
         <tr>
           <td><b>Proxy</b></td>
           <td>Layer 7 (Application)</td>
-          <td>Intermediate content filtering and caching</td>
+          <td>User aur internet ke beech mediator</td>
         </tr>
         <tr>
           <td><b>NAS</b></td>
           <td>N/A (Storage)</td>
-          <td>File-level shared access network storage</td>
+          <td>File-level network storage</td>
         </tr>
         <tr>
           <td><b>SAN</b></td>
           <td>N/A (Storage)</td>
-          <td>Block-level high-bandwidth raw storage array</td>
+          <td>Block-level network storage</td>
         </tr>
         <tr>
           <td><b>Access Point</b></td>
           <td>Layer 2 (Data Link)</td>
-          <td>Bridging wireless and wired ethernet traffic</td>
+          <td>Wireless ko wired network se bridge karna</td>
         </tr>
         <tr>
-          <td><b>Wireless Controller</b></td>
+          <td><b>Wireless LAN Controller</b></td>
           <td>N/A (Management)</td>
-          <td>Centralized provisioning and roaming optimization for APs</td>
+          <td>Saare Access Points ko centrally manage karna</td>
         </tr>
       </tbody>
     </table>
 
     <div class="trick-box" style="text-align: left; background: var(--red-bg); border-color: var(--red);">
-      <div class="trick-title" style="color: var(--red); text-align: center;">Yaad Rakhne Wali Zaroori Baatein</div>
+      <div class="trick-title" style="color: var(--red); text-align: center;">Yaad Rakhne Ki Zaroori Baatein</div>
       <ul style="margin: 6px 0 0; padding-left: 20px; font-size: 13px;">
-        <li><b>Router = Layer 3</b>, IP address check karta hai.</li>
-        <li><b>Switch = Layer 2</b>, MAC address check karta hai.</li>
-        <li><b>Layer 3 Switch</b> = Switch + Router functionalities ek box mein.</li>
-        <li><b>IDS sirf alert karta hai, IPS proactively block karta hai</b>.</li>
-        <li><b>NAS = poori file process hoti hai, SAN = block level (fast/efficient)</b>.</li>
-        <li>Ghar ka wireless router = Router + Switch + Access Point teeno cheezein ek hi hardware mein hain.</li>
+        <li><b>Router = Layer 3</b>, kyunke IP address dekh kar decide karta hai.</li>
+        <li><b>Switch = Layer 2</b>, kyunke MAC address dekh kar decide karta hai.</li>
+        <li><b>Layer 3 Switch</b> matlab ek device mein switch + router dono functionality.</li>
+        <li><b>Firewall</b> modern zamane mein baat-hi-baat mein bohat kuch karta hai — sirf security nahi, balke routing, NAT, VPN bhi.</li>
+        <li><b>IDS sirf alert karta hai, IPS block bhi kar sakta hai</b>.</li>
+        <li><b>NAS = poori file copy karni parti hai, SAN = sirf block modify hota hai (zyada efficient)</b>.</li>
+        <li><b>Access Point = Layer 2</b>, kyunke yeh wireless aur wired network ke darmiyan bridge karta hai.</li>
+        <li>Ghar ka "WiFi router" = Router + Switch + Access Point, teeno ek device mein.</li>
       </ul>
     </div>
   `;
 
   const functionsNotesHTML = `
     <div class="notes-title">Networking Functions — CompTIA Network+ (N10-009 - 1.2)</div>
-    <p>Is video mein hum network ke <b>4 important functions</b> ke baray mein parhte hain: <b>CDN, VPN, QoS (Traffic Management), aur TTL (Time to Live)</b>. Yeh sab functions network ko fast, secure, aur organized rakhne mein madad dete hain.</p>
+    <div class="trick-box" style="text-align: left; background: var(--tab-bg); border-color: var(--tab);">
+      <div class="trick-title" style="color: var(--tab); text-align: center;">Intro — Network Par Kya Kya Chal Raha Hota Hai?</div>
+      <p style="margin: 6px 0 0; font-size: 13.5px;">Agar aap network cable ke andar dekh sakein, to aapko pata chalega ke bohat sari cheezein simultaneously ho rahi hoti hain:</p>
+      <ul style="margin: 6px 0 0; padding-left: 20px; font-size: 13px;">
+        <li>Data ko duniya ke doosre hisse tak bhejna</li>
+        <li>Remote system tak access karna (technical support, screen sharing)</li>
+        <li>Traffic management — kuch applications ko doosri applications se zyada priority dena</li>
+        <li>Systems ko hamesha available/up rakhna, jiske liye specialized protocols chahiye hote hain</li>
+      </ul>
+      <p style="margin: 6px 0 0; font-size: 13px;"><i>Yeh sab kaam alag alag <b>functions/protocols</b> ke zariye hote hain, jo hum is notes mein parhenge.</i></p>
+    </div>
 
     <!-- Function 1 -->
     <div class="layer-card">
@@ -1179,12 +1330,45 @@
         <div class="layer-title-text">CDN (Content Delivery Network)</div>
         <div class="layer-subtitle-text">Geographical Caching</div>
       </div>
-      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>CDN ek aisa system hai jo data ko central server ke bajaye user ke geographically qareeb tareen server se deliver karta hai taake page loading speed fast ho sake.</p>
-      <div class="layer-section-title">KAAM KAISE KARTA HAI?</div>
-      <p>Duniya bhar ke regions (Asia, America, Europe, etc.) mein CDN servers local cache store karte hain. User jab data request karta hai, to use main server tak jane ke bajaye local region se data mil jata hai.</p>
+      <div class="layer-section-title">YEH KYA HAI?</div>
+      <p><b>CDN</b> ek aisa system hai jo data ko <b>bohat efficient tareeqe se</b> central point se end-user tak pohanchata hai. Yeh <b>geographical areas</b> mein set up hote hain — matlab har continent/region mein alag CDN server hota hai.</p>
+      
+      <div class="layer-section-title">KAISE KAAM KARTA HAI?</div>
+      <p>Duniya bhar mein CDN servers hote hain — jaise <b>North America, South America, Africa, Asia</b> waghera mein alag alag servers. Har region ka data <b>cache</b> ho jata hai us region ke CDN server par. Agar North America ka user data access kare, to woh <b>North American CDN server</b> se lega — na ke Europe ke centralized server se. Isse <b>speed bohat fast</b> ho jati hai, kyunke data ko lambi distance travel nahi karni parti.</p>
+      
       <div class="layer-section-title">PRACTICAL EXAMPLE</div>
-      <p>YouTube, Netflix, aur badi dynamic websites CDN endpoints use karti hain taake buffer times ko minimal level par laya ja sake.</p>
+      <p>Agar aap yeh video <b>YouTube</b> ya <b>Professor Messer website</b> par dekh rahe hain, to aap abhi <b>CDN use kar rahe hain!</b></p>
+      
+      <div class="layer-section-title">FAIDA</div>
+      <p>Chote aur bare dono size ki websites CDN use karti hain. Duniya bhar ke users ko <b>fast aur efficient</b> data access milta hai.</p>
+
+      <div class="layer-section-title">QUICK SUMMARY</div>
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Point</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Kaam</b></td>
+            <td>Data ko efficiently distribute karna</td>
+          </tr>
+          <tr>
+            <td><b>Setup</b></td>
+            <td>Geographical regions mein servers</td>
+          </tr>
+          <tr>
+            <td><b>Faida</b></td>
+            <td>Speed — nearest server se data milta hai</td>
+          </tr>
+          <tr>
+            <td><b>Example</b></td>
+            <td>YouTube, Netflix, websites</td>
+          </tr>
+        </tbody>
+      </table>
       <div class="layer-status-strip">
         <span class="status-tag acha">ACTIVE</span>
         <div>Regional edge cache hit rate high, latency minimized</div>
@@ -1198,12 +1382,58 @@
         <div class="layer-title-text">VPN (Virtual Private Network)</div>
         <div class="layer-subtitle-text">Encrypted Remote Access</div>
       </div>
-      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>VPN client aur corporate networks ke darmiyan public networks (internet) par ek encrypted tunnel establish karta hai taake files aur applications securely transport ho sakein.</p>
+      <div class="layer-section-title">YEH KYA HAI?</div>
+      <p>VPN aapko ek <b>remote network</b> se connect karne deta hai, jabke aapka saara data <b>encrypted</b> hoke jata hai. Yeh ek <b>secure tareeqa</b> hai data transfer karne ka, chahe network <b>insecure</b> ho (jaise public internet).</p>
+      
+      <div class="layer-section-title">KIS KE LIYE USEFUL HAI?</div>
+      <ul>
+        <li>Jo log <b>corporate office se bahar</b> kaam karte hain.</li>
+        <li>Jo log <b>ghar se (work from home)</b> kaam karte hain.</li>
+      </ul>
+
       <div class="layer-section-title">VPN CONCENTRATOR (HEADEND DEVICE)</div>
-      <p>Central gateway device jo real-time high-speed encryption aur decryption execute karti hai, taake thousands of active remote connections ek sath stable links par run ho sakein.</p>
-      <div class="layer-section-title">KAHAN OPERATE HOTA HAI?</div>
-      <p>As a standalone hardware appliance, Next-Generation Firewall (NGFW) module ke andar, ya software levels par (jaise OS built-in clients).</p>
+      <p>VPN connections ke liye ek <b>central connection point</b> hota hai jisay <b>Concentrator</b> ya <b>Headend Device</b> kehte hain. Yeh device <b>high-speed encryption/decryption</b> real-time mein karta hai. Isse <b>kai users ek sath</b> secure data bhej sakte hain.</p>
+
+      <div class="layer-section-title">VPN CONCENTRATOR KAISE MILTA HAI?</div>
+      <ol>
+        <li><b>Standalone Device:</b> Alag purpose-built hardware appliance.</li>
+        <li><b>Next Generation Firewall Ke Andar:</b> Bohat common hai ke VPN concentrator firewall ke andar hi integrated ho.</li>
+        <li><b>Software Based:</b> Chote networks ke liye, operating system par software ke zariye bhi VPN chalaya ja sakta hai (Windows, macOS, Linux mein already VPN software built-in hota hai).</li>
+      </ol>
+
+      <div class="layer-section-title">PURPOSE-BUILT APPLIANCE KAB CHAHIYE?</div>
+      <ul>
+        <li>Jab <b>hundreds ya thousands</b> users ek sath VPN use kar rahe hon.</li>
+        <li>High throughput chahiye ho.</li>
+      </ul>
+
+      <div class="layer-section-title">QUICK SUMMARY</div>
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Point</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Kaam</b></td>
+            <td>Encrypted connection remote network tak</td>
+          </tr>
+          <tr>
+            <td><b>Central Device</b></td>
+            <td>VPN Concentrator/Headend</td>
+          </tr>
+          <tr>
+            <td><b>Kahan Milta Hai</b></td>
+            <td>Standalone device, NGFW ke andar, ya software</td>
+          </tr>
+          <tr>
+            <td><b>Use Case</b></td>
+            <td>Remote work, work from home</td>
+          </tr>
+        </tbody>
+      </table>
       <div class="layer-status-strip">
         <span class="status-tag acha">ACTIVE</span>
         <div>Tunnels active, IPsec/SSL encryption handshakes successful</div>
@@ -1217,18 +1447,65 @@
         <div class="layer-title-text">QoS (Quality of Service)</div>
         <div class="layer-subtitle-text">Traffic & Packet Shaping</div>
       </div>
-      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>QoS network administrators ko applications ki network priority set karne ka control deta hai, taake critical apps ke liye minimum guaranteed bandwidth stable rahe.</p>
-      <div class="layer-section-title">TRAFFIC SHAPING EXAMPLES</div>
+      <div class="layer-section-title">YEH KYA HAI?</div>
+      <p>Har application ko <b>barabar priority</b> nahi di ja sakti. Kuch applications organization ke liye <b>zyada important</b> hoti hain doosron se. **QoS (Quality of Service)** — jisay **Traffic Shaping** ya **Packet Shaping** bhi kehte hain — administrator ko yeh control deta hai ke kaunsi application ko kitni priority milegi.</p>
+      
+      <div class="layer-section-title">EXAMPLE</div>
       <ul>
-        <li><b>High Priority:</b> Real-time Voice (VoIP), Video conferencing streams.</li>
-        <li><b>Low Priority:</b> Large file transfers (FTP), backup sync jobs.</li>
+        <li><b>Real-time audio/video stream</b> (jaise video call) ko zyada priority milni chahiye.</li>
+        <li><b>File transfer</b> ko kam priority di ja sakti hai (kyunke thora slow hone se koi bara farak nahi parta).</li>
       </ul>
-      <div class="layer-section-title">CONFIGURATION POINTS</div>
-      <p>QoS rules routers, network switches, aur firewalls ke application engines par define kiye jate hain.</p>
+
+      <div class="layer-section-title">KYA CONTROL KIYA JA SAKTA HAI?</div>
+      <ul>
+        <li><b>Bandwidth usage</b> ke hisaab se applications ko control karna.</li>
+        <li><b>Data rates</b> set karna.</li>
+        <li>Real-time applications ko <b>full access</b> dena, aur baaki ko <b>lower priority</b>.</li>
+      </ul>
+
+      <div class="layer-section-title">KAHAN CONFIGURE HOTA HAI?</div>
+      <p>QoS ko configure karne ke liye in devices mein changes karni parti hain:</p>
+      <ul>
+        <li><b>Firewall</b></li>
+        <li><b>Router</b></li>
+        <li><b>Switch</b></li>
+      </ul>
+      <p>Yeh devices apne paas ek <b>pre-built applications list</b> rakhte hain, aur aap apni khud ki applications bhi add kar sakte hain aur unko priority assign kar sakte hain.</p>
+
+      <div class="layer-section-title">QUICK SUMMARY</div>
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Point</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Doosra Naam</b></td>
+            <td>Traffic Shaping / Packet Shaping</td>
+          </tr>
+          <tr>
+            <td><b>Kaam</b></td>
+            <td>Applications ko priority dena</td>
+          </tr>
+          <tr>
+            <td><b>High Priority Example</b></td>
+            <td>Video/Audio calls</td>
+          </tr>
+          <tr>
+            <td><b>Low Priority Example</b></td>
+            <td>File transfer</td>
+          </tr>
+          <tr>
+            <td><b>Configure Kahan</b></td>
+            <td>Firewall, Router, Switch</td>
+          </tr>
+        </tbody>
+      </table>
       <div class="layer-status-strip">
         <span class="status-tag acha">ACTIVE</span>
-        <div>VoIP queues prioritized, congestion handling active</div>
+        <div>VoIP prioritized, bandwidth shaping online</div>
       </div>
     </div>
 
@@ -1237,16 +1514,30 @@
       <div class="layer-card-header">
         <div class="layer-num">4</div>
         <div class="layer-title-text">TTL (Time to Live)</div>
-        <div class="layer-subtitle-text">Loop Prevention & Cache Expiry</div>
+        <div class="layer-subtitle-text">Loop Prevention & Expiry</div>
       </div>
-      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
-      <p>TTL ek timer ya counters map hai jo data packets ya local cache ko infinite loops ya stale (purana) data banne se rokta hai.</p>
-      <div class="layer-section-title">TWO CORE USE CASES</div>
+      <div class="layer-section-title">YEH KYA HAI?</div>
+      <p>Technology bohat acchi hoti hai task perform karne mein — lekin kabhi kabhi ek task <b>bar bar loop</b> mein phans jata hai aur kabhi khatam nahi hota. Isko rokne ke liye <b>Time to Live (TTL)</b> use hota hai — yeh ek <b>timer</b> hai. Jab yeh timer <b>zero</b> tak pohanch jata hai, task <b>automatically stop/drop</b> ho jata hai.</p>
+      
+      <div class="layer-section-title">TTL KE DO COMMON USE CASES</div>
       <ul>
-        <li><b>Routing Loop Prevention (Hops):</b> IP header mein TTL field har router par 1 se kam (-1) hoti hai. Value 0 hote hi packet discard (drop) ho jata hai.</li>
-        <li><b>DNS Cache Expiry (Seconds):</b> DNS records system cache mein save hone ka time limits define karte hain (in seconds). Record expiry par fresh query resolve ki jati hai.</li>
+        <li>
+          <b>A) Routing Loop Rokne Ke Liye:</b>
+          <p>Routing Loop tab hoti hai jaise Router A sochta hai next hop Router B hai, aur Router B sochta hai next hop Router A hai. Is se packet dono routers ke darmiyan bar bar back and forth jata rehta hai.</p>
+          <p>Agar aap <b>traceroute</b> karein to yeh loop dikhega:</p>
+          <pre style="background: var(--paper); padding: 8px; border: 1px solid var(--line); font-size: 12px; overflow-x: auto;">10.1.1.1 &rarr; 10.2.2.2 &rarr; 10.1.1.1 &rarr; 10.2.2.2 &rarr; ... (aisay hi chalta rahega)</pre>
+          <p>Yeh masla aksar hota hai kyunke network mein bohat saray routers hote hain, aur ek single IP address ki galti (static route mein) yeh loop create kar sakti hai.</p>
+        </li>
+        <li>
+          <b>B) Cache Clear Karne Ke Liye:</b>
+          <p>Jab hum koi website access karte hain, to woh data cache ho jata hai. Cache sirf kuch waqt (60 seconds, minutes) ke liye available rehta hai. Jab timer zero ho jata hai, cache clear ho jati hai. Agli dafa website access karne par, dobara data fresh laya jata hai aur naya timer start hota hai.</p>
+        </li>
       </ul>
-      <div class="layer-section-title">DEFAULT OPERATING SYSTEM TTL VALUES</div>
+
+      <div class="layer-section-title">KAISE KAAM KARTA HAI (IP PACKETS MEIN)</div>
+      <p>IP packet ke andar ek <b>TTL field</b> hoti hai. <b>Har router</b> jab packet ko process karta hai, TTL ki value <b>1 se kam</b> kar देता hai. Jab TTL value <b>zero</b> tak pohanch jati hai, router us packet ko <b>discard (drop)</b> kar deta hai — isse loop automatically khatam ho jati hai.</p>
+
+      <div class="layer-section-title">DEFAULT TTL VALUES</div>
       <table class="notes-table">
         <thead>
           <tr>
@@ -1257,71 +1548,149 @@
         <tbody>
           <tr>
             <td>macOS</td>
-            <td>64 Hops</td>
+            <td>64 hops</td>
           </tr>
           <tr>
             <td>Linux</td>
-            <td>64 Hops</td>
+            <td>64 hops</td>
           </tr>
           <tr>
             <td>Windows</td>
-            <td>128 Hops</td>
+            <td>128 hops</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="layer-section-title">REAL-WORLD EXAMPLE</div>
+      <p>Sample packet mein TTL value 58 thi — matlab yeh packet abhi 58 aur routers se guzar sakta hai us se pehle ke woh drop ho jaye. Normal internet browsing mein hum 12 se 16 hops ke around use karte hain destination tak pohanchne ke liye. Chunke default TTL (64 ya 128) is se kaafi zyada hai, isliye normal traffic kabhi accidentally drop nahi hota.</p>
+
+      <div class="layer-section-title">WIRESHARK MEIN KYA DIKHTA HAI?</div>
+      <p>Jab aap ek IP header expand karte hain, aapko yeh fields milti hain:</p>
+      <ul>
+        <li>Version number</li>
+        <li>Header length</li>
+        <li>Type of service</li>
+        <li>Total length</li>
+        <li>Differentiated Services field</li>
+        <li>Identification field</li>
+        <li><b>Time to Live field</b> &larr; yehi field router use karta hai decide karne ke liye</li>
+      </ul>
+
+      <div class="layer-section-title">TTL — DNS MEIN ALAG MATLAB!</div>
+      <p><b>Bohat important concept:</b> TTL ka matlab protocol ke hisaab se badal jata hai:</p>
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            <th>TTL Ka Matlab</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Routing (IP packets)</b></td>
+            <td>Number of <b>hops</b> (routers)</td>
+          </tr>
+          <tr>
+            <td><b>DNS</b></td>
+            <td>Number of <b>seconds</b></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="layer-section-title">DNS TTL EXAMPLE</div>
+      <p><code>dig www.professormesser.com</code> command chalane par response milta hai jismein website ka IP address aur us ke sath ek TTL value — jaise <b>300</b> — milti hai. Iska matlab: aapka system is IP address ko apni cache mein <b>300 seconds (= 5 minutes)</b> tak rakhega. 5 minutes ke baad, cache automatically clear ho jayegi. Agar aap dobara us website ko access karein, to system naya DNS query karega aur naya IP address (agar admin ne change kiya ho) le aayega.</p>
+      <p><b>DNS TTL Ka Faida:</b> Website ke administrator ke liye — agar woh apna server ka IP address change kare, to woh yaqeen se keh sakta hai ke 5 minutes ke andar zyada tar users ka system automatically updated IP address le lega.</p>
+
+      <div class="layer-section-title">QUICK SUMMARY</div>
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Point</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Kaam</b></td>
+            <td>Loop ya expired data ko automatically remove karna</td>
+          </tr>
+          <tr>
+            <td><b>Routing Mein Matlab</b></td>
+            <td>Number of hops</td>
+          </tr>
+          <tr>
+            <td><b>DNS Mein Matlab</b></td>
+            <td>Number of seconds</td>
+          </tr>
+          <tr>
+            <td><b>Default TTL (macOS/Linux)</b></td>
+            <td>64 hops</td>
+          </tr>
+          <tr>
+            <td><b>Default TTL (Windows)</b></td>
+            <td>128 hops</td>
+          </tr>
+          <tr>
+            <td><b>Typical Internet Hops</b></td>
+            <td>12–16 hops</td>
           </tr>
         </tbody>
       </table>
       <div class="layer-status-strip">
         <span class="status-tag acha">ACTIVE</span>
-        <div>DNS cache sync updated, IP packets hop counters decremented</div>
+        <div>DNS cache timer working, packet loops drop-off secured</div>
       </div>
     </div>
 
     <!-- Master Summary Table -->
-    <div class="notes-title" style="margin-top: 24px;">Networking Functions Master Summary Table</div>
+    <div class="notes-title" style="margin-top: 24px;">Master Summary Table — Saari 4 Functions Ek Nazar Mein</div>
     <table class="notes-table">
       <thead>
         <tr>
           <th>Function</th>
-          <th>Primary Action</th>
-          <th>Deployment Points</th>
-          <th>Key Takeaway</th>
+          <th>Kaam</th>
+          <th>Kahan Use Hota Hai</th>
+          <th>Key Point</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><b>CDN</b></td>
-          <td>Geographical caching for performance</td>
-          <td>Global Edge Server networks</td>
-          <td>Data is delivered from the nearest location</td>
+          <td>Data ko region ke hisaab se fast deliver karna</td>
+          <td>Websites, streaming (YouTube)</td>
+          <td>Nearest server se data milna</td>
         </tr>
         <tr>
           <td><b>VPN</b></td>
-          <td>Secure encrypted remote tunnels</td>
-          <td>VPN Concentrators, Firewalls</td>
-          <td>Enables secure access over public networks</td>
+          <td>Encrypted connection remote network tak</td>
+          <td>Work from home, remote offices</td>
+          <td>Concentrator/Headend device use hota hai</td>
         </tr>
         <tr>
           <td><b>QoS</b></td>
-          <td>Bandwidth allocation & traffic priority</td>
-          <td>Routers, Switches, Firewalls</td>
-          <td>Critical real-time traffic is prioritized</td>
+          <td>Applications ko priority dena</td>
+          <td>Firewall, Router, Switch configuration</td>
+          <td>Real-time apps &gt; File transfer</td>
         </tr>
         <tr>
           <td><b>TTL</b></td>
-          <td>Loop prevention & cache expiration</td>
-          <td>IP headers (hops), DNS records (seconds)</td>
-          <td>Value drops to 0, data drops or refreshes</td>
+          <td>Loops/expired data ko automatically remove karna</td>
+          <td>Routing (hops), DNS (seconds)</td>
+          <td>Router har hop par TTL -1 karta hai</td>
         </tr>
       </tbody>
     </table>
 
     <div class="trick-box" style="text-align: left; background: var(--red-bg); border-color: var(--red);">
-      <div class="trick-title" style="color: var(--red); text-align: center;">Yaad Rakhne Wali Zaroori Baatein</div>
+      <div class="trick-title" style="color: var(--red); text-align: center;">Yaad Rakhne Ki Zaroori Baatein</div>
       <ul style="margin: 6px 0 0; padding-left: 20px; font-size: 13px;">
-        <li><b>CDN</b> ka maqsad latency kam karna hai (nearest server delivery).</li>
-        <li><b>VPN Concentrator</b> high throughput real-time decryption handle karta hai.</li>
-        <li><b>QoS / Traffic Shaping</b> real-time audio/video ko file download par priority deta hai.</li>
-        <li><b>TTL Routing mein:</b> Counts hops (routers). Har hop par decrease hota hai.</li>
-        <li><b>TTL DNS mein:</b> Counts seconds. Duration complete hone par cache clear ho jati hai.</li>
+        <li><b>CDN</b> = Data ko geographically nearest server se milna, taake speed fast ho.</li>
+        <li><b>VPN</b> = Encrypted connection, aur central device ko Concentrator/Headend kehte hain.</li>
+        <li><b>QoS</b> = Traffic ko priority dena — real-time (video call) &gt; file transfer.</li>
+        <li><b>TTL (Routing)</b> = Har router packet ka TTL 1 kam karta hai, zero hone par packet drop ho jata hai.</li>
+        <li><b>TTL (DNS)</b> = Yeh seconds mein hoti hai, batati hai IP address ko kitni der cache mein rakhna hai.</li>
+        <li>Default TTL: macOS/Linux = 64, Windows = 128.</li>
+        <li>Normal internet traffic sirf 12-16 hops use karta hai — isliye TTL kabhi normally packet ko accidentally drop nahi karti.</li>
       </ul>
     </div>
   `;
