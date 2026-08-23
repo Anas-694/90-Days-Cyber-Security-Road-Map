@@ -909,11 +909,273 @@
     </table>
   `;
 
+  const devicesNotesHTML = `
+    <div class="notes-title">Networking Devices — CompTIA Network+ (N10-009 - 1.2)</div>
+    <p>Network devices hamare networks ke building blocks hain jo data ko link karne, filter karne, aur secure routing faraham karne ke liye operate hote hain. Chaliye unhe tafseel se samajhte hain:</p>
+
+    <!-- Device 1 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">1</div>
+        <div class="layer-title-text">Router</div>
+        <div class="layer-subtitle-text">OSI Layer 3 (Network)</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>Router ka main kaam data ko ek IP subnet se doosre IP subnet tak pohanchana (routing) hai. Yeh subnets local data centers mein ho sakte hain ya internet ke zariye duniya bhar mein.</p>
+      <div class="layer-section-title">LAN & WAN CONNECTIVITY</div>
+      <p>Router LAN (Local Area Network) ko WAN (Wide Area Network) se connect karta hai. Yeh copper ya fiber based physical interfaces (ports) ko target kar sakta hai.</p>
+      <div class="layer-section-title">LAYER 3 SWITCHING</div>
+      <p>Jab switching aur routing functionality ko ek hi physical device mein merge kiya jaye, to usay <b>Layer 3 Switch</b> kehte hain. Yeh device switch ports aur hardware routing engine dono hold karti hai.</p>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>IP routing paths resolved, next hop accessible</div>
+      </div>
+    </div>
+
+    <!-- Device 2 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">2</div>
+        <div class="layer-title-text">Network Switch</div>
+        <div class="layer-subtitle-text">OSI Layer 2 (Data Link)</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>Switch destination MAC address dekh kar local network segments mein traffic forward (switching) karta hai.</p>
+      <div class="layer-section-title">ASIC (APPLICATION SPECIFIC INTEGRATED CIRCUIT)</div>
+      <p>Switching operations hardware levels par process hoti hain using a specialized chip called **ASIC**. Yeh execution speed ko extremely fast aur latency free banata hai.</p>
+      <div class="layer-section-title">PoE (POWER OVER ETHERNET)</div>
+      <p>Ethernet cable ke data link wires ke sath hi electrical power transport karna taake remote devices (WiFi Access Points, IP Cameras) ko external electrical lines ke baghair operate kiya ja sake.</p>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>ASIC switching table active, PoE power levels stable</div>
+      </div>
+    </div>
+
+    <!-- Device 3 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">3</div>
+        <div class="layer-title-text">Firewall</div>
+        <div class="layer-subtitle-text">OSI Layer 3-7 Security</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>Firewall internal aur external networks ke boundary points par baith kar protocols, ports, aur rules ke mutabiq connections filter (allow/block) karta hai.</p>
+      <div class="layer-section-title">TRADITIONAL VS NEXT-GEN (NGFW)</div>
+      <ul>
+        <li><b>Traditional Firewall:</b> Sirf Layer 3/4 (IP Address, TCP/UDP Port Numbers) ke patterns filter karta hai.</li>
+        <li><b>Next-Generation Firewall (NGFW):</b> Yeh application-level (Layer 7) identification kar sakta hai (jaise user traffic identify karna, specific web tools filter karna).</li>
+      </ul>
+      <div class="layer-section-title">EXTRA UTILITIES</div>
+      <p>VPN tunnels establish karna, NAT (Network Address Translation) handle karna, aur Dynamic Routing protocols support karna.</p>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>Security rules active, VPN tunnels encrypted and online</div>
+      </div>
+    </div>
+
+    <!-- Device 4 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">4</div>
+        <div class="layer-title-text">IDS aur IPS</div>
+        <div class="layer-subtitle-text">Intrusion Detection & Prevention</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTE HAIN?</div>
+      <ul>
+        <li><b>IDS (Intrusion Detection System):</b> Network packets scan kar ke anomalous / bad patterns detect karta hai aur only **alerts/alarms** raise karta hai. Action block nahi kar sakta.</li>
+        <li><b>IPS (Intrusion Prevention System):</b> Active threat detect hote hi traffic stream ko blocking points par dynamically stop kar deta hai.</li>
+      </ul>
+      <div class="layer-section-title">ATTACK TYPE DETECTION</div>
+      <p>Operating system vulnerabilities, Buffer overflows, Cross-Site Scripting (XSS), aur signature matching alerts.</p>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>Signatures up-to-date, prevention engine actively scanning</div>
+      </div>
+    </div>
+
+    <!-- Device 5 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">5</div>
+        <div class="layer-title-text">Load Balancer</div>
+        <div class="layer-subtitle-text">OSI Layer 4-7 Distribution</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>Incoming customer traffic ko backend redundant servers/nodes par distribute karta hai taake systems load-balanced rahein aur network overload na ho.</p>
+      <div class="layer-section-title">UTILITIES</div>
+      <ul>
+        <li><b>Failure Detection:</b> Health checks run karna taake crash servers automatically pool se drop ho jayein.</li>
+        <li><b>TCP/SSL Offloading:</b> Encryption workload / handshake compute resources ko balancer levels par execute karna taake main application servers free rahein.</li>
+        <li><b>Caching & QoS:</b> Frequently used data static storage par hold karna.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>Server pools healthy, SSL termination active</div>
+      </div>
+    </div>
+
+    <!-- Device 6 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">6</div>
+        <div class="layer-title-text">Proxy Server</div>
+        <div class="layer-subtitle-text">OSI Layer 7 Mediator</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>User connection client endpoints aur target external network resources ke darmiyan intermediate filter/bridge banta hai.</p>
+      <div class="layer-section-title">FEATURES</div>
+      <ul>
+        <li><b>Caching:</b> Bar bar visit kiye jane wale static files store karna.</li>
+        <li><b>Access Control:</b> User credentials base internet permissions assign karna.</li>
+        <li><b>URL & Content Filtering:</b> Bad websites aur malware code check karna.</li>
+        <li><b>Types:</b> Explicit (manual settings requirements) aur Transparent (seamless automatic routing).</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>Filters active, client requests routing properly</div>
+      </div>
+    </div>
+
+    <!-- Device 7 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">7</div>
+        <div class="layer-title-text">Network Storage (NAS & SAN)</div>
+        <div class="layer-subtitle-text">File vs Block Access</div>
+      </div>
+      <div class="layer-section-title">NAS (NETWORK ATTACHED STORAGE)</div>
+      <p>File-level network sharing. Changes ke liye poori file network par transport karni parti hai. Common Protocols: NFS, SMB/CIFS.</p>
+      <div class="layer-section-title">SAN (STORAGE AREA NETWORK)</div>
+      <p>Block-level storage network. Server ko network storage raw hard-drive space ki tarah block partitions mein milti hai. Changes par sirf direct sectors/blocks update hote hain. Very fast and high-bandwidth. Protocols: Fibre Channel (FC), iSCSI.</p>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>Fibre Channel fabric online, block replication stable</div>
+      </div>
+    </div>
+
+    <!-- Device 8 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">8</div>
+        <div class="layer-title-text">Access Point</div>
+        <div class="layer-subtitle-text">OSI Layer 2 Bridge</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>Wireless devices ko wired ethernet network se bridge/translate karta hai. 802.11 (WiFi) frames ko 802.3 (Ethernet) protocols mein convert karta hai.</p>
+      <div class="layer-section-title">HOME VS ENTERPRISE APs</div>
+      <p>Ghar ka wireless router: 3-in-1 device (Router + Switch + AP). Enterprise environment: Purpose-built separate devices (Dedicated Access Points linked to core network switches).</p>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>802.11ax/ac radio bands active, SSID broadcasting</div>
+      </div>
+    </div>
+
+    <!-- Device 9 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">9</div>
+        <div class="layer-title-text">Wireless LAN Controller (WLC)</div>
+        <div class="layer-subtitle-text">Centralized AP Management</div>
+      </div>
+      <div class="layer-section-title">KYA KAAM KARTA HAI?</div>
+      <p>Badi buildings mein lagay gaye hazaron access points ko centralized manage, deploy, aur monitoring tools provide karta hai.</p>
+      <div class="layer-section-title">FUNCTIONS</div>
+      <ul>
+        <li>Auto configurations push karna to new Access Points.</li>
+        <li>Bulk security firmware updates deployment.</li>
+        <li>Seamless Roaming (endpoints building mein switch hote waqt network drops se bachte hain).</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>AP profiles synced, controller roaming active</div>
+      </div>
+    </div>
+
+    <!-- Devices Summary Table -->
+    <div class="notes-title" style="margin-top: 24px;">Devices OSI Layers Summary Table</div>
+    <table class="notes-table">
+      <thead>
+        <tr>
+          <th>Device</th>
+          <th>OSI Layer</th>
+          <th>Primary Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Router</b></td>
+          <td>Layer 3 (Network)</td>
+          <td>IP routing between subnets</td>
+        </tr>
+        <tr>
+          <td><b>Switch</b></td>
+          <td>Layer 2 (Data Link)</td>
+          <td>Local MAC-based switching using ASIC</td>
+        </tr>
+        <tr>
+          <td><b>Firewall</b></td>
+          <td>Layer 3-7 (Variable)</td>
+          <td>Stateful packet/application security filtering, NAT, VPN</td>
+        </tr>
+        <tr>
+          <td><b>IDS/IPS</b></td>
+          <td>Multiple Layers</td>
+          <td>Threat signature detection and prevention</td>
+        </tr>
+        <tr>
+          <td><b>Load Balancer</b></td>
+          <td>Layer 4-7</td>
+          <td>Traffic distribution, SSL offloading</td>
+        </tr>
+        <tr>
+          <td><b>Proxy</b></td>
+          <td>Layer 7 (Application)</td>
+          <td>Intermediate content filtering and caching</td>
+        </tr>
+        <tr>
+          <td><b>NAS</b></td>
+          <td>N/A (Storage)</td>
+          <td>File-level shared access network storage</td>
+        </tr>
+        <tr>
+          <td><b>SAN</b></td>
+          <td>N/A (Storage)</td>
+          <td>Block-level high-bandwidth raw storage array</td>
+        </tr>
+        <tr>
+          <td><b>Access Point</b></td>
+          <td>Layer 2 (Data Link)</td>
+          <td>Bridging wireless and wired ethernet traffic</td>
+        </tr>
+        <tr>
+          <td><b>Wireless Controller</b></td>
+          <td>N/A (Management)</td>
+          <td>Centralized provisioning and roaming optimization for APs</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="trick-box" style="text-align: left; background: var(--red-bg); border-color: var(--red);">
+      <div class="trick-title" style="color: var(--red); text-align: center;">Yaad Rakhne Wali Zaroori Baatein</div>
+      <ul style="margin: 6px 0 0; padding-left: 20px; font-size: 13px;">
+        <li><b>Router = Layer 3</b>, IP address check karta hai.</li>
+        <li><b>Switch = Layer 2</b>, MAC address check karta hai.</li>
+        <li><b>Layer 3 Switch</b> = Switch + Router functionalities ek box mein.</li>
+        <li><b>IDS sirf alert karta hai, IPS proactively block karta hai</b>.</li>
+        <li><b>NAS = poori file process hoti hai, SAN = block level (fast/efficient)</b>.</li>
+        <li>Ghar ka wireless router = Router + Switch + Access Point teeno cheezein ek hi hardware mein hain.</li>
+      </ul>
+    </div>
+  `;
+
   const roadmapData = [
     { icon:'🌐', name:'Day 1-7: Network+ Concepts', days:'7 Days', tasks:[
       { title:'Watch Professor Messer N10-009 Playlist', link:'https://www.youtube.com/watch?v=k7IOn3TiUc8&list=PLG49S3nxzAnl_tQe3kvnmeMid0mjF8Le8' },
       { title:'Complete practice questions and exercises', link:null }
-    ], hasNotes: true },
+    ], notes: [
+      { title: '▤ STUDY NOTES — OSI MODEL (LAYER 1 to 7)', content: osiNotesHTML },
+      { title: '▤ STUDY NOTES — NETWORKING DEVICES (N10-009 - 1.2)', content: devicesNotesHTML }
+    ] },
     { icon:'🔐', name:'Day 8-14: Security+ Concepts', days:'7 Days', tasks:[
       { title:'Watch Professor Messer SY0-701 Playlist (Recommended)', link:'https://www.youtube.com/watch?v=KiEptGbnEBc&list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv' },
       { title:'Alternative: Pete Zerger SY0-701 Playlist', link:'https://www.youtube.com/watch?v=1E7pI7PB4KI&list=PL7XJSuT7Dq_UDJgYoQGIW9viwM5hc4C7n' },
@@ -1014,15 +1276,15 @@
             <div class="expand-icon">▼</div>
           </div>
           <div class="phase-content">
-            ${phase.hasNotes ? `
-              <div class="study-notes-btn" onclick="toggleNotes(${pIdx}, event)">
-                <span>▤ STUDY NOTES — OSI MODEL (LAYER 1 to 7)</span>
-                <span class="notes-expand-icon" id="notes-expand-icon-${pIdx}">▼</span>
+            ${phase.notes ? phase.notes.map((note, nIdx) => `
+              <div class="study-notes-btn" onclick="toggleNotes('${pIdx}-${nIdx}', event)">
+                <span>${note.title}</span>
+                <span class="notes-expand-icon" id="notes-expand-icon-${pIdx}-${nIdx}">▼</span>
               </div>
-              <div class="study-notes-container" id="notes-container-${pIdx}">
-                ${osiNotesHTML}
+              <div class="study-notes-container" id="notes-container-${pIdx}-${nIdx}">
+                ${note.content}
               </div>
-            ` : ''}
+            `).join('') : ''}
             <ul class="task-list">
               ${phase.tasks.map((t, tIdx) => `
                 <li class="task-item" id="task-${pIdx}-${tIdx}" onclick="toggleTask(${pIdx}, ${tIdx}, event)">
@@ -1049,10 +1311,10 @@
     saveProgress();
   }
 
-  function toggleNotes(pIdx, event){
+  function toggleNotes(noteId, event){
     event.stopPropagation();
-    const container = document.getElementById(`notes-container-${pIdx}`);
-    const icon = document.getElementById(`notes-expand-icon-${pIdx}`);
+    const container = document.getElementById(`notes-container-${noteId}`);
+    const icon = document.getElementById(`notes-expand-icon-${noteId}`);
     if(container.classList.contains('expanded')){
       container.classList.remove('expanded');
       icon.textContent = '▼';
