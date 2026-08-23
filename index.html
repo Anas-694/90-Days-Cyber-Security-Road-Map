@@ -535,10 +535,37 @@
     line-height:1.7;
     text-align:center;
   }
+  .lang-switch {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+  .lang-btn {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    background: var(--card);
+    border: 1px solid var(--ink);
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: 'Special Elite', monospace;
+  }
+  .lang-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
+
+  <div class="lang-switch">
+    <span class="eyebrow" id="lbl-lang-title" style="letter-spacing:0.05em; font-size:10px;">Language:</span>
+    <button id="btn-lang-roman" class="lang-btn active" onclick="switchLanguage('roman')">Roman Urdu</button>
+    <button id="btn-lang-en" class="lang-btn" onclick="switchLanguage('en')">English</button>
+  </div>
 
   <div class="layout">
     <div class="main-col">
@@ -552,7 +579,7 @@
 
         <div class="progress-block">
           <div class="progress-top">
-            <span>Investigation Progress</span>
+            <span id="lbl-progress-title">Investigation Progress</span>
             <span class="count"><span id="completedCount">0</span> / <span id="totalCount">0</span> tasks</span>
           </div>
           <div class="progress-track">
@@ -562,16 +589,16 @@
         </div>
 
         <div class="controls">
-          <button class="btn" onclick="expandAll()">Open All Files</button>
-          <button class="btn" onclick="collapseAll()">Close All Files</button>
-          <button class="btn go" onclick="exportProgress()">Export Progress</button>
-          <button class="btn danger" onclick="resetProgress()">Reset Case</button>
+          <button class="btn" id="btn-expand" onclick="expandAll()">Open All Files</button>
+          <button class="btn" id="btn-collapse" onclick="collapseAll()">Close All Files</button>
+          <button class="btn go" id="btn-export" onclick="exportProgress()">Export Progress</button>
+          <button class="btn danger" id="btn-reset" onclick="resetProgress()">Reset Case</button>
         </div>
       </div>
 
       <div id="roadmap"></div>
 
-      <footer>
+      <footer id="lbl-footer-text">
         Har phase ke resources free hain (YouTube, free courses, labs). Progress browser localStorage mein save hoti hai — dusre device par carry nahi hogi. "Export Progress" se JSON backup nikal sakte ho.
       </footer>
     </div>
@@ -579,9 +606,9 @@
     <div class="side-col">
       <!-- Custom editable checklist -->
       <div class="side-widget custom-checklist">
-        <div class="widget-tab">My Own Checklist</div>
+        <div class="widget-tab" id="lbl-checklist-tab">My Own Checklist</div>
         <div class="widget-body">
-          <div class="widget-title">➕ Apni List Banao</div>
+          <div class="widget-title" id="lbl-checklist-title">➕ Apni List Banao</div>
           <div class="add-row">
             <input type="text" id="customInput" placeholder="Naya task type karo..." onkeydown="if(event.key==='Enter')addCustomTask()">
             <button onclick="addCustomTask()">+</button>
@@ -592,9 +619,9 @@
 
       <!-- Sticky note -->
       <div class="side-widget sticky-note">
-        <div class="widget-tab">Sticky Note</div>
+        <div class="widget-tab" id="lbl-sticky-tab">Sticky Note</div>
         <div class="widget-body">
-          <div class="widget-title">📌 Quick Notes</div>
+          <div class="widget-title" id="lbl-sticky-title">📌 Quick Notes</div>
           <textarea id="stickyNote" placeholder="Yahan kuch bhi likho — reminders, links, ideas... khud save ho jayega."></textarea>
           <div class="note-status" id="noteStatus">saved</div>
         </div>
@@ -605,7 +632,8 @@
 </div>
 
 <script>
-  const osiNotesHTML = `
+  const osiNotesHTML = {
+    roman: `
     <div class="notes-title">OSI Model Kya Hai?</div>
     <p><b>OSI ka matlab hai Open Systems Interconnection.</b> Yeh ek model/reference hai jo humein batata hai ke data hamare network se guzar kar kaise ek jagah se doosri jagah jata hai. Yeh koi exact protocol nahi hai, balke ek broad overview/tasveer hai jisay hum kisi bhi protocol (jaise TCP/IP) ke sath samjhne ke liye use karte hain.</p>
     <p><b>Faida:</b> Jab IT professionals aapas mein baat karte hain, aur koi kahe <i>"yeh Layer 3 ka problem hai"</i> ya <i>"yeh Layer 7 ka masla hai"</i>, to har koi samajh jata hai bina lambi tafseel diye.</p>
@@ -1046,9 +1074,274 @@
         </tr>
       </tbody>
     </table>
-  `;
+  `,
+  en: `
+    <div class="notes-title">OSI Model Notes</div>
+    <p><b>What is the OSI Model?</b><br>
+    OSI stands for <b>Open Systems Interconnection</b>. It is a reference model that explains how data moves from one device to another through a network. It is not an exact protocol, but a conceptual overview to help understand protocols like TCP/IP.</p>
+    
+    <p><b>Benefit:</b> When IT professionals discuss network issues, saying "this is a Layer 3 problem" or "a Layer 7 issue" allows everyone to immediately understand the context without long explanations.</p>
 
-  const devicesNotesHTML = `
+    <div class="trick-box">
+      <div class="trick-title">Mnemonic Trick to Remember the 7 Layers</div>
+      <div class="trick-text">"All People Seem To Need Data Processing"</div>
+      <div style="font-size:11px; color:var(--muted); margin-top:4px;">(Application, Presentation, Session, Transport, Network, Data Link, Physical)</div>
+    </div>
+
+    <!-- Layer 7 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">7</div>
+        <div class="layer-title-text">Application Layer</div>
+        <div class="layer-subtitle-text">User Interface & Apps</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>This layer interfaces directly with applications like web browsers or email clients. It enables applications to communicate over the network.</p>
+      
+      <div class="layer-section-title">COMMON PROTOCOLS</div>
+      <p>HTTP, HTTPS (Web), FTP (File Transfer), DNS (Domain Name Resolution), SMTP (Email).</p>
+
+      <div class="layer-section-title">HOW IT BEHAVES IN REAL LIFE</div>
+      <ul>
+        <li><b>Web Browser:</b> When you open a website, your browser talks to the web server using HTTP/HTTPS.</li>
+        <li><b>Email Client:</b> Sends emails using SMTP.</li>
+      </ul>
+
+      <div class="layer-section-title">REAL-WORLD TROUBLESHOOTING</div>
+      <ul>
+        <li><b>Symptoms:</b> "Page Cannot Be Displayed" errors (404 Not Found, 500 Internal Server Error) or application crashes.</li>
+        <li><b>Action:</b> Check if the application service is running on the server, check DNS resolution, or look at the web browser console logs.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">SUCCESS</span>
+        <div>Application loads successfully, HTTP 200 OK responses returned.</div>
+      </div>
+    </div>
+
+    <!-- Layer 6 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">6</div>
+        <div class="layer-title-text">Presentation Layer</div>
+        <div class="layer-subtitle-text">Formatting, Encryption & Compression</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>This layer translates data between the application and the network. It handles data formatting (so the receiving system can read it), encryption/decryption, and data compression.</p>
+
+      <div class="layer-section-title">KEY CONCEPTS</div>
+      <ul>
+        <li><b>Data Formatting:</b> Ensuring character encodings (ASCII, UTF-8, Unicode) are standardized.</li>
+        <li><b>Encryption:</b> Securing data (SSL/TLS encryption for HTTPS).</li>
+      </ul>
+
+      <div class="layer-section-title">REAL-WORLD TROUBLESHOOTING</div>
+      <ul>
+        <li><b>Symptoms:</b> Scrambled text on screen (character encoding glitch), SSL/TLS handshake failures, or browser alerts warning "Your connection is not private".</li>
+        <li><b>Action:</b> Check website SSL certificates (e.g., via SSL Labs), verify certificate expiration, or check text encoding settings.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">SUCCESS</span>
+        <div>Data decrypted successfully, browser shows padlock icon (HTTPS active).</div>
+      </div>
+    </div>
+
+    <!-- Layer 5 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">5</div>
+        <div class="layer-title-text">Session Layer</div>
+        <div class="layer-subtitle-text">Session Control & Tunnels</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>Manages the lifecycle of a network connection. It establishes, maintains, and terminates communication sessions between local and remote applications.</p>
+
+      <div class="layer-section-title">KEY FUNCTIONS</div>
+      <ul>
+        <li><b>Session Management:</b> Keeps track of active tunnels, authentication states, and login sessions.</li>
+        <li><b>Re-connection:</b> Automatically logs back in if the connection drops briefly.</li>
+      </ul>
+
+      <div class="layer-section-title">REAL-WORLD TROUBLESHOOTING</div>
+      <ul>
+        <li><b>Symptoms:</b> Sudden logouts, database session timeout errors, or VPN tunnels disconnecting.</li>
+        <li><b>Action:</b> Check session timeout configurations, keep-alive packets, or firewall timeout policies.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag bura">DISCONNECTED</span>
+        <div>Session idle timeout reached, VPN tunnel closed by peer.</div>
+      </div>
+    </div>
+
+    <!-- Layer 4 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">4</div>
+        <div class="layer-title-text">Transport Layer</div>
+        <div class="layer-subtitle-text">TCP/UDP & Port Connections</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>This layer manages end-to-end communication, flow control, and data segmentation/reassembly. It determines how data is sent and handles error checking.</p>
+
+      <div class="layer-section-title">TCP VS UDP COMPARISON</div>
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>TCP (Transmission Control Protocol)</th>
+            <th>UDP (User Datagram Protocol)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Type</b></td>
+            <td>Connection-Oriented</td>
+            <td>Connectionless</td>
+          </tr>
+          <tr>
+            <td><b>Reliability</b></td>
+            <td>Reliable (checks for lost packets)</td>
+            <td>Unreliable (fire-and-forget)</td>
+          </tr>
+          <tr>
+            <td><b>Speed</b></td>
+            <td>Slower (due to checks/handshakes)</td>
+            <td>Very Fast</td>
+          </tr>
+          <tr>
+            <td><b>Use Case</b></td>
+            <td>Web browsing, Email, SSH</td>
+            <td>Video streaming, VoIP, Gaming</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="layer-section-title">THE TCP THREE-WAY HANDSHAKE</div>
+      <ol>
+        <li><b>SYN:</b> Client sends a synchronization request packet.</li>
+        <li><b>SYN-ACK:</b> Server acknowledges and sends its own synchronization request.</li>
+        <li><b>ACK:</b> Client acknowledges back. Connection established.</li>
+      </ol>
+
+      <div class="layer-section-title">KEY PERFORMANCE METRICS</div>
+      <ul>
+        <li><b>Throughput:</b> The actual amount of data transmitted over time.</li>
+        <li><b>Latency:</b> The round-trip time delay for data to travel.</li>
+        <li><b>Packet Loss:</b> Packets that fail to reach their destination.</li>
+        <li><b>Jitter:</b> The variation in packet arrival delays (crucial for clear voice calls).</li>
+      </ul>
+
+      <div class="layer-section-title">REAL-WORLD TROUBLESHOOTING</div>
+      <ul>
+        <li><b>Symptoms:</b> Choppy voice calls (jitter/packet loss), slow downloads (latency/flow control), or connection refused errors.</li>
+        <li><b>Action:</b> Run <code>netstat -an</code> to see active TCP/UDP ports and connection states.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">ESTABLISHED</span>
+        <div>TCP 3-way handshake completed successfully on port 443.</div>
+      </div>
+    </div>
+
+    <!-- Layer 3 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">3</div>
+        <div class="layer-title-text">Network Layer</div>
+        <div class="layer-subtitle-text">IP Routing & Fragmentation</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>Responsible for routing packets across different networks. It handles logical addressing (IP addresses) and fragmentation (breaking large packets to fit the MTU of a link).</p>
+
+      <div class="layer-section-title">LAYER 3 VS LAYER 2 COMPARISON</div>
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Layer 3 (Network Layer)</th>
+            <th>Layer 2 (Data Link Layer)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Address Type</b></td>
+            <td>Logical IP Address (e.g., 192.168.1.1)</td>
+            <td>Physical MAC Address (e.g., 00:1A:2B:3C:4D:5E)</td>
+          </tr>
+          <tr>
+            <td><b>Device</b></td>
+            <td>Router</td>
+            <td>Switch</td>
+          </tr>
+          <tr>
+            <td><b>Scope</b></td>
+            <td>Between different networks/subnets</td>
+            <td>Within the same local network (LAN)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="layer-section-title">REAL-WORLD TROUBLESHOOTING</div>
+      <ul>
+        <li><b>Symptoms:</b> "Destination Host Unreachable" errors, unable to ping external websites, or packet routing loops.</li>
+        <li><b>Action:</b> Use <code>ping</code> to test basic connectivity, and <code>traceroute</code> (or <code>tracert</code> on Windows) to find where packets drop.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag bura">MTU EXCEEDED</span>
+        <div>Packet size exceeds MTU and Don't Fragment (DF) flag is set.</div>
+      </div>
+    </div>
+
+    <!-- Layer 2 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">2</div>
+        <div class="layer-title-text">Data Link Layer</div>
+        <div class="layer-subtitle-text">MAC Addressing & Frames</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>Manages physical addressing and packaging data into frames for transmission over a local link. It contains two sub-layers: LLC (Logical Link Control) and MAC (Media Access Control).</p>
+
+      <div class="layer-section-title">KEY CONCEPTS</div>
+      <ul>
+        <li><b>MAC Address:</b> Physical hardware address burned into the NIC by the manufacturer.</li>
+        <li><b>ARP (Address Resolution Protocol):</b> Translates a known IP address to a physical MAC address on the local segment.</li>
+      </ul>
+
+      <div class="layer-section-title">REAL-WORLD TROUBLESHOOTING</div>
+      <ul>
+        <li><b>Symptoms:</b> IP conflict errors, ARP spoofing attacks, or MAC address table overflows on switches.</li>
+        <li><b>Action:</b> Run <code>arp -a</code> to view the local ARP cache table, and inspect switch MAC tables.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">ARP RESOLVED</span>
+        <div>IP 192.168.1.10 resolved to MAC 00:11:22:33:44:55.</div>
+      </div>
+    </div>
+
+    <!-- Layer 1 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">1</div>
+        <div class="layer-title-text">Physical Layer</div>
+        <div class="layer-subtitle-text">Cables, Signals & Bits</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>Transmits raw bits (0s and 1s) over physical mediums like copper cables, fiber optic glass, or wireless radio frequencies.</p>
+
+      <div class="layer-section-title">REAL-WORLD TROUBLESHOOTING</div>
+      <ul>
+        <li><b>Symptoms:</b> "Network Cable Unplugged" alerts, flapping links (connecting/disconnecting repeatedly), or high CRC packet error rates.</li>
+        <li><b>Action:</b> Inspect physical cables, verify fiber connections are clean, look for electromagnetic interference sources, or test with a cable tester.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag bura">NO LINK</span>
+        <div>Physical link down. Check cable connections or ports.</div>
+      </div>
+    </div>
+  `
+};
+
+  const devicesNotesHTML = {
+    roman: `
     <div class="notes-title">Networking Devices — CompTIA Network+ (N10-009 - 1.2)</div>
     <p>Network devices hamare networks ke building blocks hain jo data ko link karne, filter karne, aur secure routing faraham karne ke liye operate hote hain. Chaliye unhe tafseel se samajhte hain:</p>
 
@@ -1350,9 +1643,243 @@
         <li>Ghar ka "WiFi router" = Router + Switch + Access Point, teeno ek device mein.</li>
       </ul>
     </div>
-  `;
+  `,
+  en: `
+    <div class="notes-title">Networking Devices — CompTIA Network+ (N10-009 - 1.2)</div>
+    <p>Network devices are the building blocks of our networks. They operate to link, filter, and securely route data. Let's understand them in detail:</p>
 
-  const functionsNotesHTML = `
+    <!-- Device 1 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">1</div>
+        <div class="layer-title-text">Router</div>
+        <div class="layer-subtitle-text">OSI Layer 3 (Network)</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>The main task of a router is to forward data <b>from one IP subnet to another IP subnet</b>. These subnets can be in the same data center or in different parts of the world.</p>
+      
+      <div class="layer-section-title">OSI LAYER</div>
+      <p>A router is a <b>Layer 3 (Network Layer) device</b>. Because Layer 3 relates to IP addresses, and routers make routing decisions <b>based on IP addresses</b> to determine the next hop for data.</p>
+      
+      <div class="layer-section-title">WHAT DOES A ROUTER CONNECT?</div>
+      <p>Connects a <b>LAN (Local Area Network)</b> to a <b>WAN (Wide Area Network)</b>. It can use copper-based or fiber-based connections. A router can have many <b>interfaces (ports)</b> that connect different networks.</p>
+      
+      <div class="layer-section-title">WHAT IS A LAYER 3 SWITCH?</div>
+      <p>Sometimes routing functionality is built <b>inside a switch</b> — this is called a <b>"Layer 3 Switch"</b>. This does not mean the switch only operates at Layer 3; rather, <b>a single device contains both Layer 2 switching and Layer 3 routing functionalities</b>.</p>
+      
+      <div class="layer-status-strip">
+        <span class="status-tag acha">OPERATIONAL</span>
+        <div>IP routing paths resolved, subnets interconnected, next hop accessible</div>
+      </div>
+    </div>
+
+    <!-- Device 2 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">2</div>
+        <div class="layer-title-text">Network Switch</div>
+        <div class="layer-subtitle-text">OSI Layer 2 (Data Link)</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>A switch connects devices within the same local network (LAN). It forwards data based on physical <b>MAC addresses</b>. Modern switches use <b>ASIC (Application-Specific Integrated Circuit)</b> chips to switch traffic at hardware wire-speed.</p>
+      
+      <div class="layer-section-title">PoE (POWER OVER ETHERNET)</div>
+      <p>Many switches support <b>PoE (Power over Ethernet)</b>. This allows both power and network data to run over a single Ethernet cable, which is extremely useful for IP phones, wireless access points, and security cameras.</p>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">ACTIVE</span>
+        <div>ASIC forwarding tables active, PoE power negotiated on port 5</div>
+      </div>
+    </div>
+
+    <!-- Device 3 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">3</div>
+        <div class="layer-title-text">Firewall</div>
+        <div class="layer-subtitle-text">OSI Layer 3 / 4 (NGFW: Layer 7)</div>
+      </div>
+      <div class="layer-section-title">TRADITIONAL VS NEXT-GEN FIREWALL (NGFW)</div>
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Traditional Firewall</th>
+            <th>Next-Generation Firewall (NGFW)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Filtering Basis</b></td>
+            <td>Ports and IP addresses only</td>
+            <td>Application identification (App-ID)</td>
+          </tr>
+          <tr>
+            <td><b>Inspection</b></td>
+            <td>Packet header inspection</td>
+            <td>Deep Packet Inspection (DPI)</td>
+          </tr>
+          <tr>
+            <td><b>Features</b></td>
+            <td>Simple ACLs (Access Control Lists)</td>
+            <td>Integrated IDS/IPS, User-ID, SSL decryption</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="layer-section-title">NAT (NETWORK ADDRESS TRANSLATION)</div>
+      <p>Firewalls often handle <b>NAT (Network Address Translation)</b>. This translates private internal IP addresses to a public external IP address, saving public IPv4 addresses and adding security.</p>
+      
+      <div class="layer-section-title">PLACEMENT</div>
+      <p>Firewalls are typically placed at the <b>network boundary (ingress/egress points)</b>, such as between the internal network (LAN) and the internet.</p>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">FILTERING ACTIVE</span>
+        <div>Deep packet inspection enabled, NAT translation mappings successful</div>
+      </div>
+    </div>
+
+    <!-- Device 4 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">4</div>
+        <div class="layer-title-text">IDS / IPS</div>
+        <div class="layer-subtitle-text">Intrusion Detection & Prevention</div>
+      </div>
+      <div class="layer-section-title">IDS VS IPS DIFFERENCE</div>
+      <ul>
+        <li><b>IDS (Intrusion Detection System):</b> Monitors traffic and sends alerts when an attack is detected. It is **passive** (does not block traffic).</li>
+        <li><b>IPS (Intrusion Prevention System):</b> Sits directly in the traffic path (inline). It monitors, alerts, and **actively blocks** the attack.</li>
+      </ul>
+
+      <div class="layer-section-title">DETECTION METHODS</div>
+      <ul>
+        <li><b>Signature-Based:</b> Looks for known patterns of attacks (like an antivirus). Highly effective against known threats.</li>
+        <li><b>Anomaly-Based:</b> Establishes a baseline of normal traffic. If something unusual happens (like a sudden traffic spike), it flags it. Excellent for finding zero-day attacks.</li>
+      </ul>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">MONITORING</span>
+        <div>IDS signatures up to date, traffic anomaly analysis running</div>
+      </div>
+    </div>
+
+    <!-- Device 5 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">5</div>
+        <div class="layer-title-text">Load Balancer</div>
+        <div class="layer-subtitle-text">OSI Layer 4 (Transport) / Layer 7 (Application)</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>A load balancer distributes network or application traffic across multiple servers. This ensures high availability and reliability.</p>
+      
+      <div class="layer-section-title">KEY FEATURES</div>
+      <ul>
+        <li><b>Failure Detection (Health Checks):</b> If a server goes down, the load balancer detects it and routes traffic only to healthy servers.</li>
+        <li><b>TCP/SSL Offloading:</b> Handles SSL decryption on the load balancer itself, reducing the processing load on backend servers.</li>
+        <li><b>Content Caching:</b> Caches static content to speed up response times.</li>
+      </ul>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">BALANCING</span>
+        <div>All backend servers healthy, traffic distribution active</div>
+      </div>
+    </div>
+
+    <!-- Device 6 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">6</div>
+        <div class="layer-title-text">Proxy Server</div>
+        <div class="layer-subtitle-text">OSI Layer 7 (Application)</div>
+      </div>
+      <div class="layer-section-title">EXPLICIT VS TRANSPARENT PROXY</div>
+      <ul>
+        <li><b>Explicit Proxy:</b> The client device must be configured to send traffic to the proxy.</li>
+        <li><b>Transparent Proxy:</b> Intercepts client traffic automatically at the gateway level. No configuration required on the client device.</li>
+      </ul>
+
+      <div class="layer-section-title">BENEFITS</div>
+      <ul>
+        <li><b>Caching:</b> Saves bandwidth by caching frequently accessed web pages.</li>
+        <li><b>Web Filtering:</b> Restricts access to specific websites (e.g., blocking social media at work).</li>
+        <li><b>Anonymity:</b> Hides the client's internal IP address from the destination server.</li>
+      </ul>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">FORWARDING</span>
+        <div>Web caching hit rate 34%, url filtering database active</div>
+      </div>
+    </div>
+
+    <!-- Device 7 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">7</div>
+        <div class="layer-title-text">Network Storage: NAS vs SAN</div>
+      </div>
+      <div class="layer-section-title">NAS (NETWORK ATTACHED STORAGE)</div>
+      <p>Provides **file-level access** over standard TCP/IP networks. It acts like a shared folder (e.g., using NFS or SMB/CIFS protocols). If you want to modify a file, you must copy the entire file over the network, modify it, and write it back.</p>
+      
+      <div class="layer-section-title">SAN (STORAGE AREA NETWORK)</div>
+      <p>Provides **block-level access** over a dedicated high-speed network (using Fibre Channel or iSCSI). It appears to the client OS as a local hard drive. If you want to modify a file, you only modify the specific data blocks, which is much faster and more efficient.</p>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">SAN MOUNTED</span>
+        <div>iSCSI target connected, block-level read/write successful</div>
+      </div>
+    </div>
+
+    <!-- Device 8 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">8</div>
+        <div class="layer-title-text">Access Point (AP)</div>
+        <div class="layer-subtitle-text">OSI Layer 2 (Data Link)</div>
+      </div>
+      <div class="layer-section-title">WIRELESS ROUTER VS ACCESS POINT</div>
+      <p>A home wireless router is actually a **3-in-1 device** containing a router, a switch, and an access point. A standalone **Access Point (AP)** only bridges wireless clients to a wired LAN and does not route traffic or perform DHCP/NAT.</p>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">AP ASSOCIATED</span>
+        <div>SSID broadcasting active, WPA3 security enabled</div>
+      </div>
+    </div>
+
+    <!-- Device 9 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">9</div>
+        <div class="layer-title-text">WLC (Wireless LAN Controller)</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>A **Wireless LAN Controller (WLC)** provides centralized management for multiple Access Points. It automates AP channel allocation, transmit power levels, and manages client roaming metrics seamlessly.</p>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">CONTROLLER ONLINE</span>
+        <div>CAPWAP tunnels established, active client roaming monitored</div>
+      </div>
+    </div>
+
+    <div class="trick-box" style="text-align: left; background: var(--red-bg); border-color: var(--red);">
+      <div class="trick-title" style="color: var(--red); text-align: center;">Important Takeaways to Remember</div>
+      <ul style="margin: 6px 0 0; padding-left: 20px; font-size: 13px;">
+        <li><b>Router = Layer 3</b>, routes traffic based on IP addresses.</li>
+        <li><b>Switch = Layer 2</b>, forwards frames based on MAC addresses.</li>
+        <li><b>Layer 3 Switch</b> combines switch and router functionality in one device.</li>
+        <li><b>Firewall</b> handles security filtering, routing, NAT, and VPN.</li>
+        <li><b>IDS alerts only, IPS blocks active threats</b>.</li>
+        <li><b>NAS = file-level storage, SAN = block-level storage (more efficient)</b>.</li>
+        <li><b>Access Point = Layer 2</b> bridge between wireless and wired networks.</li>
+        <li>Home "WiFi router" = Router + Switch + AP in a single chassis.</li>
+      </ul>
+    </div>
+  `
+};
+
+  const functionsNotesHTML = {
+    roman: `
     <div class="notes-title">Networking Functions — CompTIA Network+ (N10-009 - 1.2)</div>
     <div class="trick-box" style="text-align: left; background: var(--tab-bg); border-color: var(--tab);">
       <div class="trick-title" style="color: var(--tab); text-align: center;">Intro — Network Par Kya Kya Chal Raha Hota Hai?</div>
@@ -1736,16 +2263,175 @@
         <li>Normal internet traffic sirf 12-16 hops use karta hai — isliye TTL kabhi normally packet ko accidentally drop nahi karti.</li>
       </ul>
     </div>
-  `;
+  `,
+  en: `
+    <div class="notes-title">Networking Functions — CompTIA Network+ (N10-009 - 1.2)</div>
+    <div class="trick-box" style="text-align: left; background: var(--tab-bg); border-color: var(--tab);">
+      <div class="trick-title" style="color: var(--tab); text-align: center;">Intro — What is running on the network?</div>
+      <p style="margin: 6px 0 0; font-size: 13.5px;">If you could look inside a network cable, you would find that many things are happening simultaneously:</p>
+      <ul style="margin: 6px 0 0; padding-left: 20px; font-size: 13px;">
+        <li>Sending data to the other side of the world</li>
+        <li>Accessing remote systems for technical support or screen sharing</li>
+        <li>Streaming video/audio calls with zero delay</li>
+        <li>Managing paths so packets don't get lost in loops</li>
+      </ul>
+    </div>
+
+    <!-- Function 1 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">1</div>
+        <div class="layer-title-text">CDN (Content Delivery Network)</div>
+        <div class="layer-subtitle-text">Global Caching & Edge Servers</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>A Content Delivery Network (CDN) is a system of distributed servers that deliver web content to users based on their geographic location. It caches static content (images, videos, HTML) on <b>Edge Servers</b> globally to reduce latency and speed up load times.</p>
+      
+      <div class="layer-section-title">HOW IT WORKS</div>
+      <ul>
+        <li>If a user in Lahore requests a website hosted in New York, routing all the way to NY takes time.</li>
+        <li>If a CDN is used, the CDN edge server in Karachi or Lahore stores a copy of the site and serves it instantly to the user.</li>
+      </ul>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">HIT</span>
+        <div>Content served from local Edge Cache. Response time: 14ms</div>
+      </div>
+    </div>
+
+    <!-- Function 2 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">2</div>
+        <div class="layer-title-text">VPN (Virtual Private Network)</div>
+        <div class="layer-subtitle-text">Encrypted Tunnels</div>
+      </div>
+      <div class="layer-section-title">VPN CONCENTRATOR</div>
+      <p>A dedicated hardware device designed to handle a large volume of VPN tunnels. It establishes secure, encrypted connections across public networks (like the internet).</p>
+      
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>Key Metric</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Encryption Type</b></td>
+            <td>IPsec or SSL/TLS tunnels</td>
+          </tr>
+          <tr>
+            <td><b>Central Device</b></td>
+            <td>VPN Concentrator / Security Gateway</td>
+          </tr>
+          <tr>
+            <td><b>Placement</b></td>
+            <td>Network boundary, DMZ edge</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="layer-status-strip">
+        <span class="status-tag acha">CONNECTED</span>
+        <div>Tunnels active, encryption handshakes successful</div>
+      </div>
+    </div>
+
+    <!-- Function 3 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">3</div>
+        <div class="layer-title-text">QoS (Quality of Service)</div>
+        <div class="layer-subtitle-text">Traffic & Packet Shaping</div>
+      </div>
+      <div class="layer-section-title">WHAT DOES IT DO?</div>
+      <p>Quality of Service (QoS) allows administrators to prioritize specific types of network traffic. Critical real-time traffic like VoIP or video conferencing is given priority over bulk file downloads to prevent lag and audio drops.</p>
+      
+      <div class="layer-status-strip">
+        <span class="status-tag acha">ACTIVE</span>
+        <div>VoIP queue prioritized, file downloads rate-limited</div>
+      </div>
+    </div>
+
+    <!-- Function 4 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">4</div>
+        <div class="layer-title-text">Traceroute (TTL in IP Packets)</div>
+        <div class="layer-subtitle-text">Time to Live & Hop Counting</div>
+      </div>
+      <div class="layer-section-title">WHAT IS IT?</div>
+      <p>To prevent IP packets from looping infinitely in a network, every IP header contains a <b>TTL (Time to Live)</b> field. As the packet passes through each router (hop), the router decrements the TTL value by 1. If TTL reaches 0, the packet is discarded, and the router sends an ICMP Time Exceeded message back to the sender.</p>
+      
+      <div class="layer-section-title">TRACEROUTE WORKING PRINCIPLE</div>
+      <p>Traceroute uses this behavior to identify routing paths. It sends packets starting with TTL=1, then TTL=2, and so on, prompting each hop along the path to identify itself by returning an ICMP time-exceeded message.</p>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">SUCCESS</span>
+        <div>Traceroute hop path mapped, no routing loops detected</div>
+      </div>
+    </div>
+
+    <!-- Function 5 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">5</div>
+        <div class="layer-title-text">DNS TTL (Time to Live)</div>
+        <div class="layer-subtitle-text">DNS Caching Duration</div>
+      </div>
+      <div class="layer-section-title">WHAT IS IT?</div>
+      <p>In DNS, TTL determines how many seconds a DNS resolver or browser should cache a query record before checking the authoritative DNS server again for updates.</p>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">CACHED</span>
+        <div>DNS A record cached for 300 seconds</div>
+      </div>
+    </div>
+
+    <!-- Function 6 -->
+    <div class="layer-card">
+      <div class="layer-card-header">
+        <div class="layer-num">6</div>
+        <div class="layer-title-text">DNS Resolution (dig command)</div>
+        <div class="layer-subtitle-text">DNS Diagnostics</div>
+      </div>
+      <div class="layer-section-title">WHAT IS IT?</div>
+      <p>The <code>dig</code> (Domain Information Groper) command is used to query DNS servers. It returns complete DNS information including A records, CNAME records, and query response times.</p>
+      
+      <div class="layer-section-title">EXAMPLE DIG OUTPUT</div>
+      <pre style="background:var(--paper); padding:10px; font-size:11px; overflow-x:auto;">
+; <<>> DiG 9.10.6 <<>> www.dentistanas.com
+;; ANSWER SECTION:
+www.dentistanas.com.        300  IN  CNAME  www.dentistanas.com.cdn.hstgr.net.
+www.dentistanas.com.cdn.hstgr.net.  90   IN  A      145.79.24.152
+      </pre>
+
+      <div class="layer-status-strip">
+        <span class="status-tag acha">RESOLVED</span>
+        <div>DNS query completed in 45 msec</div>
+      </div>
+    </div>
+
+    <div class="trick-box" style="text-align: left; background: var(--red-bg); border-color: var(--red);">
+      <div class="trick-title" style="color: var(--red); text-align: center;">Important Takeaways to Remember</div>
+      <ul style="margin: 6px 0 0; padding-left: 20px; font-size: 13px;">
+        <li><b>CDN</b> = Serves data from geographically nearest servers for speed.</li>
+        <li><b>VPN</b> = Encrypted tunnel, using a Concentrator/Headend.</li>
+        <li><b>QoS</b> = Prioritizes real-time audio/video over file downloads.</li>
+        <li><b>TTL (IP)</b> = Prevent loops by decrementing hop counts.</li>
+        <li><b>TTL (DNS)</b> = Seconds a query remains cached in memory.</li>
+      </ul>
+    </div>
+  `
+};
 
   const roadmapData = [
-    { icon:'🌐', name:'Day 1-7: Network+ Concepts', days:'7 Days', tasks:[
-      { title:'Watch Professor Messer N10-009 Playlist', link:'https://www.youtube.com/watch?v=k7IOn3TiUc8&list=PLG49S3nxzAnl_tQe3kvnmeMid0mjF8Le8' },
-      { title:'Complete practice questions and exercises', link:null }
+    { icon:'🌐', name: { en:'Day 1-7: Network+ Concepts', roman:'Day 1-7: Network+ Concepts' }, days: { en:'7 Days', roman:'7 Days' }, tasks:[
+      { title: { en:'Watch Professor Messer N10-009 Playlist', roman:'Watch Professor Messer N10-009 Playlist' }, link:'https://www.youtube.com/watch?v=k7IOn3TiUc8&list=PLG49S3nxzAnl_tQe3kvnmeMid0mjF8Le8' },
+      { title: { en:'Complete practice questions and exercises', roman:'Complete practice questions and exercises' }, link:null }
     ], notes: [
-      { title: '▤ STUDY NOTES — OSI MODEL (LAYER 1 to 7)', content: osiNotesHTML },
-      { title: '▤ STUDY NOTES — NETWORKING DEVICES (N10-009 - 1.2)', content: devicesNotesHTML },
-      { title: '▤ STUDY NOTES — NETWORKING FUNCTIONS (N10-009 - 1.2)', content: functionsNotesHTML }
+      { title: { en: '▤ STUDY NOTES — OSI MODEL (LAYER 1 to 7)', roman: '▤ STUDY NOTES — OSI MODEL (LAYER 1 to 7)' }, content: osiNotesHTML },
+      { title: { en: '▤ STUDY NOTES — NETWORKING DEVICES (N10-009 - 1.2)', roman: '▤ STUDY NOTES — NETWORKING DEVICES (N10-009 - 1.2)' }, content: devicesNotesHTML },
+      { title: { en: '▤ STUDY NOTES — NETWORKING FUNCTIONS (N10-009 - 1.2)', roman: '▤ STUDY NOTES — NETWORKING FUNCTIONS (N10-009 - 1.2)' }, content: functionsNotesHTML }
     ] },
     { icon:'🔐', name:'Day 8-14: Security+ Concepts', days:'7 Days', tasks:[
       { title:'Watch Professor Messer SY0-701 Playlist (Recommended)', link:'https://www.youtube.com/watch?v=KiEptGbnEBc&list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv' },
@@ -1842,8 +2528,8 @@
           <div class="phase-header" onclick="togglePhase(${pIdx})">
             <div class="phase-icon">${phase.icon}</div>
             <div class="phase-heading">
-              <div class="file-title">${phase.name}</div>
-              <div class="phase-days">${phase.days}</div>
+              <div class="file-title">${getTranslation(phase.name)}</div>
+              <div class="phase-days">${getTranslation(phase.days)}</div>
             </div>
             <div class="phase-count" id="phase-count-${pIdx}"></div>
             <div class="phase-progress-bar">
@@ -1857,7 +2543,7 @@
                 const topTasks = [];
                 const bottomTasks = [];
                 phase.tasks.forEach((t, tIdx) => {
-                  const title = t.title.toLowerCase();
+                  const title = getTranslation(t.title).toLowerCase();
                   if (title.includes('practice') || title.includes('review') || title.includes('apply to') || title.includes('hack the box') || title.includes('vulnhub')) {
                     bottomTasks.push({ task: t, originalIdx: tIdx });
                   } else {
@@ -1872,7 +2558,7 @@
                         <li class="task-item" id="task-${pIdx}-${item.originalIdx}" onclick="toggleTask(${pIdx}, ${item.originalIdx}, event)">
                           <div class="task-checkbox">✓</div>
                           <div>
-                            <div class="task-title">${item.task.title}</div>
+                            <div class="task-title">${getTranslation(item.task.title)}</div>
                             ${item.task.link ? `<a href="${item.task.link}" target="_blank" class="task-link">${item.task.link}</a>` : ''}
                           </div>
                         </li>
@@ -1884,12 +2570,12 @@
                     <div class="study-notes-btn task-item" id="note-task-${pIdx}-${nIdx}" onclick="toggleNotes('${pIdx}-${nIdx}', event)">
                       <div class="task-checkbox" onclick="toggleNoteCompleted('${pIdx}-${nIdx}', event)">✓</div>
                       <div style="display:flex; justify-content:space-between; align-items:center; flex:1; min-width:0;">
-                        <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px;">${note.title}</span>
+                        <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px;">${getTranslation(note.title)}</span>
                         <span class="notes-expand-icon" id="notes-expand-icon-${pIdx}-${nIdx}">▼</span>
                       </div>
                     </div>
                     <div class="study-notes-container" id="notes-container-${pIdx}-${nIdx}">
-                      ${note.content}
+                      ${getTranslation(note.content)}
                     </div>
                   `).join('')}
 
@@ -1899,7 +2585,7 @@
                         <li class="task-item" id="task-${pIdx}-${item.originalIdx}" onclick="toggleTask(${pIdx}, ${item.originalIdx}, event)">
                           <div class="task-checkbox">✓</div>
                           <div>
-                            <div class="task-title">${item.task.title}</div>
+                            <div class="task-title">${getTranslation(item.task.title)}</div>
                             ${item.task.link ? `<a href="${item.task.link}" target="_blank" class="task-link">${item.task.link}</a>` : ''}
                           </div>
                         </li>
@@ -1914,7 +2600,7 @@
                       <li class="task-item" id="task-${pIdx}-${tIdx}" onclick="toggleTask(${pIdx}, ${tIdx}, event)">
                         <div class="task-checkbox">✓</div>
                         <div>
-                          <div class="task-title">${t.title}</div>
+                          <div class="task-title">${getTranslation(t.title)}</div>
                           ${t.link ? `<a href="${t.link}" target="_blank" class="task-link">${t.link}</a>` : ''}
                         </div>
                       </li>
@@ -2129,7 +2815,93 @@
     });
   }
 
+  // ===== LANGUAGE TRANSLATION ENGINE =====
+  let currentLang = localStorage.getItem('cybersecurity90DaysLang') || 'roman';
+
+  const uiTranslations = {
+    en: {
+      langTitle: "Language:",
+      progressTitle: "Investigation Progress",
+      openAll: "Open All Files",
+      closeAll: "Close All Files",
+      export: "Export Progress",
+      reset: "Reset Case",
+      checklistTab: "My Own Checklist",
+      checklistTitle: "➕ Create Your List",
+      placeholderChecklist: "Type new task...",
+      stickyTab: "Sticky Note",
+      stickyTitle: "📌 Quick Notes",
+      placeholderSticky: "Type notes, reminders, links here... saves automatically.",
+      footerText: "Every phase resources are free (YouTube, free courses, labs). Progress is saved locally in browser localStorage — it will not sync to other devices. Use 'Export Progress' to save a JSON backup."
+    },
+    roman: {
+      langTitle: "Language:",
+      progressTitle: "Investigation Progress (Tafteesh Ki Raftaar)",
+      openAll: "Saari Files Kholo",
+      closeAll: "Saari Files Band Karo",
+      export: "Export Progress",
+      reset: "Reset Case",
+      checklistTab: "My Own Checklist",
+      checklistTitle: "➕ Apni List Banao",
+      placeholderChecklist: "Naya task type karo...",
+      stickyTab: "Sticky Note",
+      stickyTitle: "📌 Quick Notes",
+      placeholderSticky: "Yahan kuch bhi likho — reminders, links, ideas... khud save ho jayega.",
+      footerText: "Har phase ke resources free hain (YouTube, free courses, labs). Progress browser localStorage mein save hoti hai — dusre device par carry nahi hogi. \"Export Progress\" se JSON backup nikal sakte ho."
+    }
+  };
+
+  function getTranslation(obj){
+    if(!obj) return '';
+    if(typeof obj === 'string') return obj;
+    return obj[currentLang] || obj['roman'] || '';
+  }
+
+  function translateUI() {
+    const trans = uiTranslations[currentLang];
+    
+    // Labels
+    document.getElementById('lbl-lang-title').textContent = trans.langTitle;
+    document.getElementById('lbl-progress-title').textContent = trans.progressTitle;
+    document.getElementById('lbl-footer-text').textContent = trans.footerText;
+    
+    // Controls Buttons
+    document.getElementById('btn-expand').textContent = trans.openAll;
+    document.getElementById('btn-collapse').textContent = trans.closeAll;
+    document.getElementById('btn-export').textContent = trans.export;
+    document.getElementById('btn-reset').textContent = trans.reset;
+    
+    // Sidebar widgets
+    document.getElementById('lbl-checklist-tab').textContent = trans.checklistTab;
+    document.getElementById('lbl-checklist-title').textContent = trans.checklistTitle;
+    document.getElementById('customInput').placeholder = trans.placeholderChecklist;
+    
+    document.getElementById('lbl-sticky-tab').textContent = trans.stickyTab;
+    document.getElementById('lbl-sticky-title').textContent = trans.stickyTitle;
+    document.getElementById('stickyNote').placeholder = trans.placeholderSticky;
+  }
+
+  function switchLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('cybersecurity90DaysLang', lang);
+    
+    // Update active button state
+    document.getElementById('btn-lang-roman').classList.toggle('active', lang === 'roman');
+    document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+    
+    // Redraw and restore
+    translateUI();
+    renderRoadmap();
+    loadProgress();
+    updateProgress();
+  }
+
   function init(){
+    // Set active language button state
+    document.getElementById('btn-lang-roman').classList.toggle('active', currentLang === 'roman');
+    document.getElementById('btn-lang-en').classList.toggle('active', currentLang === 'en');
+    
+    translateUI();
     renderRoadmap();
     loadProgress();
     updateProgress();
