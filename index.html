@@ -26,13 +26,13 @@
     background-image:
       repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 1px, transparent 1px, transparent 3px);
   }
-  .wrap{max-width:1180px;margin:0 auto;padding:34px 20px 70px;}
-  .top-section{max-width:800px;}
+  .wrap{max-width:1450px;margin:0 auto;padding:34px 20px 70px;}
+  .top-section{max-width:1000px;}
 
   /* LAYOUT: main roadmap (left) + sidebar (right) */
   .layout{display:flex;gap:26px;align-items:flex-start;}
-  .main-col{flex:1;min-width:0;max-width:800px;}
-  .side-col{width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:20px;position:sticky;top:20px;}
+  .main-col{flex:1;min-width:0;max-width:1000px;}
+  .side-col{width:380px;flex-shrink:0;display:flex;flex-direction:column;gap:20px;position:sticky;top:20px;}
   @media (max-width:960px){
     .layout{flex-direction:column;}
     .side-col{width:100%;position:static;}
@@ -262,12 +262,12 @@
   .study-notes-container {
     display: none;
     margin: 0 16px 16px;
-    padding: 18px;
+    padding: 20px;
     background: #fff;
     border: 1px solid var(--line);
-    font-size: 13.5px;
-    line-height: 1.65;
-    max-height: 550px; /* Limit height so it doesn't take too much vertical space */
+    font-size: 15px;
+    line-height: 1.7;
+    max-height: 580px; /* Limit height so it doesn't take too much vertical space */
     overflow-y: auto;  /* Add dedicated vertical scrollbar */
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.06); /* Styling detail */
   }
@@ -275,9 +275,9 @@
     display: block;
   }
   .notes-title {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     color: var(--ink);
   }
   .trick-box {
@@ -329,23 +329,23 @@
     border-radius: 2px;
   }
   .layer-title-text {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
     color: var(--ink);
   }
   .layer-subtitle-text {
-    font-size: 12px;
+    font-size: 13.5px;
     color: var(--muted);
     margin-left: auto;
   }
   .layer-section-title {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--tab);
-    margin-top: 10px;
-    margin-bottom: 4px;
+    margin-top: 12px;
+    margin-bottom: 5px;
   }
   .layer-status-strip {
     display: flex;
@@ -353,7 +353,7 @@
     margin-top: 12px;
     padding-top: 10px;
     border-top: 1px dashed var(--line);
-    font-size: 12px;
+    font-size: 13.5px;
   }
   .status-tag {
     font-size: 9.5px;
@@ -381,7 +381,7 @@
   .notes-table th, .notes-table td {
     border: 1px solid var(--line);
     padding: 8px 10px;
-    font-size: 12.5px;
+    font-size: 14px;
   }
   .notes-table th {
     background: var(--tab-bg);
@@ -408,7 +408,7 @@
   .widget-body{padding:14px 14px 16px;}
   .widget-title{
     font-family:'Special Elite',monospace;
-    font-size:13.5px;margin-bottom:10px;
+    font-size:15px;margin-bottom:10px;
   }
 
   /* Custom checklist */
@@ -416,7 +416,7 @@
   .add-row input{
     flex:1;min-width:0;
     font-family:'Inter',sans-serif;
-    font-size:12.5px;
+    font-size:14px;
     padding:7px 9px;
     border:1px solid var(--line);
     background:var(--paper);
@@ -448,7 +448,7 @@
   }
   .custom-task-list li.done .ctb{background:var(--green);border-color:var(--green);color:#fff;}
   .custom-task-list .ctext{
-    flex:1;font-size:12.5px;line-height:1.5;
+    flex:1;font-size:14px;line-height:1.5;
     outline:none;border-bottom:1px dashed transparent;cursor:text;
   }
   .custom-task-list .ctext:focus{border-bottom:1px dashed var(--muted);}
@@ -467,8 +467,8 @@
     min-height:180px;
     resize:vertical;
     font-family:'Inter',sans-serif;
-    font-size:13px;
-    line-height:1.8;
+    font-size:14.5px;
+    line-height:1.85;
     color:var(--ink);
     background:
       repeating-linear-gradient(var(--card) 0 27px, var(--line) 27px 28px);
